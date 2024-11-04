@@ -12,21 +12,21 @@ import java.util.List;
 
 public class SparkPingPong {
 
-    private static final String PING_FILE = "ping_pong_responses.txt";
+    private static final String PING_PONG_FILE = "ping_pong_responses.txt";
 
     public static void main(String[] args) {
         // Configuration and Spark context initialization
-        SparkConf conf = new SparkConf().setAppName("File-Based Ping-Pong").setMaster("local[*]");
+        SparkConf conf = new SparkConf().setAppName("File-Based Ping-Pong").setMaster("local[2]");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         // Clean up any existing files
         try {
-            Files.deleteIfExists(Paths.get(PING_FILE));
+            Files.deleteIfExists(Paths.get(PING_PONG_FILE));
             // Create new empty file
-            Files.createFile(Paths.get(PING_FILE));
+            Files.createFile(Paths.get(PING_PONG_FILE));
 
             // Define the number of ping-pong messages
-            final int numMessages = 10; // number of ping-pong messages
+            final int numMessages = 100; // number of ping-pong messages
 
             // Prepare the initial data for ping-pong
             List<Integer> data = new ArrayList<>();
@@ -51,7 +51,7 @@ public class SparkPingPong {
             // Ensure the Spark context is stopped and the file is deleted
             sc.close();
             try {
-                Files.deleteIfExists(Paths.get(PING_FILE));
+                Files.deleteIfExists(Paths.get(PING_PONG_FILE));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -60,7 +60,7 @@ public class SparkPingPong {
 
     // Method to send a ping by writing to the ping file
     private static void sendPing(int message) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PING_FILE, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PING_PONG_FILE, true))) {
             writer.write("Ping from task " + message + "\n");
             // writer.flush(); // Optional: Not necessary since BufferedWriter flushes on close
         } catch (IOException e) {
@@ -72,7 +72,7 @@ public class SparkPingPong {
     private static String receivePong() {
         StringBuilder pongResponse = new StringBuilder();
         try {
-            List<String> lines = Files.readAllLines(Paths.get(PING_FILE));
+            List<String> lines = Files.readAllLines(Paths.get(PING_PONG_FILE));
             for (String line : lines) {
                 pongResponse.append(line).append("\n");
             }
