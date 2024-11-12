@@ -37,7 +37,7 @@ public class PongIO {
                     byte[] sizeBuffer = new byte[8];
                     in.read(sizeBuffer);
                     long messageSize = ByteBuffer.wrap(sizeBuffer).getLong();
-                    System.out.println("Expected message size: " + messageSize);
+                    // System.out.println("Expected message size: " + messageSize);
                     // consume two separators
                     in.read();
                     byte[] fileNameBytes = new byte[256];
@@ -48,7 +48,7 @@ public class PongIO {
                         index++;
                     }
                     String fileName = new String(fileNameBytes, 0, index);
-                    System.out.println("Received file name: " + fileName);
+                    // System.out.println("Received file name: " + fileName);
                     // Create a file at the given path
                     try (FileOutputStream fileOutputStream = new FileOutputStream(filePath+fileName)) {
                         byte[] buffer = new byte[chunkSize];
@@ -60,12 +60,12 @@ public class PongIO {
                             bytesRead = in.read(buffer);
                             totalBytes += bytesRead;
                             fileOutputStream.write(buffer, 0, bytesRead);
-                            System.out.println("Received " + bytesRead + " bytes from Machine A and wrote to file");
+                            // System.out.println("Received " + bytesRead + " bytes from Machine A and wrote to file");
                         }
                         // Send a 1-byte acknowledgment to Machine A (ping-pong)
                         out.write(1);
                         out.flush();
-                        System.out.println("Acknowledgment sent to Machine A: received " + totalBytes + " bytes in total and wrote to " + filePath);
+                        // System.out.println("Acknowledgment sent to Machine A: received " + totalBytes + " bytes in total and wrote to " + filePath);
                     } catch (IOException e) {
                         System.err.println("Error writing to file: " + e.getMessage());
                         e.printStackTrace();

@@ -55,7 +55,7 @@ public class Ping {
             in.read();
             // End time
             long endTime = System.nanoTime();
-            System.out.println("Received ACK from Machine B");
+            // System.out.println("Received ACK from Machine B");
 
             // Calculate RTT and debit
             long rtt = endTime - startTime;
