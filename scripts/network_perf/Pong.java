@@ -17,7 +17,7 @@ public class Pong {
             return;
         }
 
-        System.out.println("Pong server is starting on Port " + port);
+        // System.out.println("Pong server is starting on Port " + port);
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
                 // Accept a connection from Machine A
@@ -28,7 +28,7 @@ public class Pong {
                     byte[] sizeBuffer = new byte[8];
                     in.read(sizeBuffer);
                     long messageSize = ByteBuffer.wrap(sizeBuffer).getLong();
-                    System.out.println("Expected message size: " + messageSize);
+                    // System.out.println("Expected message size: " + messageSize);
                     // consume two separators
                     in.read();
                     in.read();
@@ -40,13 +40,13 @@ public class Pong {
                         // Simulate reading message (do nothing)
                         bytesRead = in.read(buffer);
                         totalBytes += bytesRead;
-                        String receivedMessage = new String(buffer, 0, bytesRead);
-                        System.out.println("Received " + bytesRead + " bytes from Machine A : \n" + receivedMessage);
+                        // String receivedMessage = new String(buffer, 0, bytesRead);
+                        // System.out.println("Received " + bytesRead + " bytes from Machine A : \n" + receivedMessage);
                     }
                     // Send a 1-byte acknowledgment to Machine A (ping-pong)
                     out.write(1);
                     out.flush();
-                    System.out.println("Acknowledgment sent to Machine A : received " + totalBytes + " bytes in total");
+                    // System.out.println("Acknowledgment sent to Machine A : received " + totalBytes + " bytes in total");
                 } catch (IOException e) {
                     System.err.println("Error while handling client connection: " + e.getMessage());
                     e.printStackTrace();
