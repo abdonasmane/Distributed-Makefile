@@ -8,10 +8,8 @@ public class PingIO {
             System.out.println("Usage: java Ping <PATH_TO_FILE> <CHUNK_SIZE> <SERVER_IP> <SERVER_PORT>");
             return;
         }
-
         String filePath = args[0];
         String machineB = args[2];
-
         int port;
         int chunkSize;
         try {
@@ -19,6 +17,10 @@ public class PingIO {
             port =  Integer.parseInt(args[3]);
             if (chunkSize <= 0) {
                 System.out.println("ERROR: CHUNK_SIZE must be greater than 0.");
+                return;
+            }
+            if (port < 1 || port > 65535) {
+                System.out.println("ERROR: SERVER_PORT must be between 1 and 65535.");
                 return;
             }
         } catch (NumberFormatException e) {
@@ -34,8 +36,6 @@ public class PingIO {
             // Get the file size in bytes
             fileSize = file.length();
             fileName = file.getName();
-            // Print the file size
-            // System.out.println("File size: " + fileSize + " bytes");
         } else {
             System.out.println("ERROR: File does not exist or is not a valid file.");
             return;
@@ -68,7 +68,7 @@ public class PingIO {
             message[9 + fileNameBytes.length] = separator;
             
             int offset = 10 + fileNameBytes.length;
-
+            
             bufferedInputStream.read(message, offset, message.length - offset);
             int bytesRead = chunkSize < offset + fileSize ? chunkSize : offset + (int)fileSize;
             do {
@@ -77,14 +77,10 @@ public class PingIO {
             } while ((bytesRead = bufferedInputStream.read(message)) != -1);
             // Wait for the 1-byte acknowledgment from Machine B
             in.read();
-            // System.out.println("All chunks sent and ACKs received");
-
             // End time
             long endTime = System.nanoTime();
-
             // Calculate total RTT
             long rtt = endTime - startTime;
-
             // RTT
             System.out.println("Round Trip Time (RTT): " + (rtt/1e9) + " seconds");
         } catch (UnknownHostException u) {

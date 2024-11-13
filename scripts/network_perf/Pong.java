@@ -4,20 +4,29 @@ import java.nio.ByteBuffer;
 
 public class Pong {
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Usage: java Pong <SERVER_PORT>");
+        if (args.length != 2) {
+            System.out.println("Usage: java Pong <CHUNK_SIZE> <SERVER_PORT>");
             return;
         }
 
+        int chunkSize;
         int port;
         try {
-            port =  Integer.parseInt(args[0]);
+            chunkSize = Integer.parseInt(args[0]);
+            if (chunkSize <= 0) {
+                System.out.println("ERROR: CHUNK_SIZE must be greater than 0.");
+                return;
+            }
+            port =  Integer.parseInt(args[1]);
+            if (port < 1 || port > 65535) {
+                System.out.println("ERROR: SERVER_PORT must be between 1 and 65535.");
+                return;
+            }
         } catch (NumberFormatException e) {
-            System.out.println("ERROR: Invalid SERVER_PORT");
+            System.out.println("ERROR: Invalid SERVER_PORT or CHUNK_SIZE");
             return;
         }
 
-        // System.out.println("Pong server is starting on Port " + port);
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
                 // Accept a connection from Machine A
@@ -28,12 +37,11 @@ public class Pong {
                     byte[] sizeBuffer = new byte[8];
                     in.read(sizeBuffer);
                     long messageSize = ByteBuffer.wrap(sizeBuffer).getLong();
-                    // System.out.println("Expected message size: " + messageSize);
                     // consume two separators
                     in.read();
                     in.read();
                     // Read the incoming message
-                    byte[] buffer = new byte[1024];
+                    byte[] buffer = new byte[chunkSize];
                     int bytesRead;
                     int totalBytes = 0;
                     while (totalBytes < messageSize) {
@@ -46,7 +54,6 @@ public class Pong {
                     // Send a 1-byte acknowledgment to Machine A (ping-pong)
                     out.write(1);
                     out.flush();
-                    // System.out.println("Acknowledgment sent to Machine A : received " + totalBytes + " bytes in total");
                 } catch (IOException e) {
                     System.err.println("Error while handling client connection: " + e.getMessage());
                     e.printStackTrace();
