@@ -12,7 +12,6 @@ public class PongIO {
         int port;
         String filePath = args[1];
         int chunkSize;
-
         try {
             port = Integer.parseInt(args[0]);
             chunkSize = Integer.parseInt(args[2]);
@@ -20,12 +19,15 @@ public class PongIO {
                 System.out.println("ERROR: CHUNK_SIZE must be greater than 0.");
                 return;
             }
+            if (port < 1 || port > 65535) {
+                System.out.println("ERROR: SERVER_PORT must be between 1 and 65535.");
+                return;
+            }
         } catch (NumberFormatException e) {
             System.out.println("ERROR: Invalid SERVER_PORT or CHUNK_SIZE");
             return;
         }
 
-        System.out.println("Pong server is starting on Port " + port);
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
                 // Accept a connection from Machine A
@@ -37,9 +39,9 @@ public class PongIO {
                     byte[] sizeBuffer = new byte[8];
                     in.read(sizeBuffer);
                     long messageSize = ByteBuffer.wrap(sizeBuffer).getLong();
-                    // System.out.println("Expected message size: " + messageSize);
-                    // consume two separators
+                    // consume separator
                     in.read();
+                    // find file name
                     byte[] fileNameBytes = new byte[256];
                     int index = 0;
                     byte r; 
@@ -48,7 +50,6 @@ public class PongIO {
                         index++;
                     }
                     String fileName = new String(fileNameBytes, 0, index);
-                    // System.out.println("Received file name: " + fileName);
                     // Create a file at the given path
                     try (FileOutputStream fileOutputStream = new FileOutputStream(filePath+fileName)) {
                         byte[] buffer = new byte[chunkSize];
@@ -60,12 +61,10 @@ public class PongIO {
                             bytesRead = in.read(buffer);
                             totalBytes += bytesRead;
                             fileOutputStream.write(buffer, 0, bytesRead);
-                            // System.out.println("Received " + bytesRead + " bytes from Machine A and wrote to file");
                         }
                         // Send a 1-byte acknowledgment to Machine A (ping-pong)
                         out.write(1);
                         out.flush();
-                        // System.out.println("Acknowledgment sent to Machine A: received " + totalBytes + " bytes in total and wrote to " + filePath);
                     } catch (IOException e) {
                         System.err.println("Error writing to file: " + e.getMessage());
                         e.printStackTrace();

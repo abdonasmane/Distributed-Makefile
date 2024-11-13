@@ -9,19 +9,22 @@ public class Ping {
             return;
         }
 
-        // Message size in bytes (N)
-        int messageSize = Integer.parseInt(args[0]);
-        if (messageSize < 0) {
-            System.out.println("ERROR: MESSAGE-SIZE must be > 0");
-            return;
-        }
-
         String machineB = args[1];
         int port;
+        int messageSize;
         try {
+            messageSize = Integer.parseInt(args[0]);
+            if (messageSize < 0) {
+                System.out.println("ERROR: MESSAGE-SIZE must be > 0");
+                return;
+            }
             port =  Integer.parseInt(args[2]);
+            if (port < 1 || port > 65535) {
+                System.out.println("ERROR: SERVER_PORT must be between 1 and 65535.");
+                return;
+            }
         } catch (NumberFormatException e) {
-            System.out.println("ERROR: Invalid SERVER_PORT");
+            System.out.println("ERROR: Invalid SERVER_PORT or MESSAGE-SIZE -- MESSAGE_SIZE should not be greater than INT_MAX-10");
             return;
         }
 
@@ -55,7 +58,6 @@ public class Ping {
             in.read();
             // End time
             long endTime = System.nanoTime();
-            // System.out.println("Received ACK from Machine B");
 
             // Calculate RTT and debit
             long rtt = endTime - startTime;

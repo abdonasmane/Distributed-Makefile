@@ -2,3 +2,4 @@
 target/
 .vscode/
 trash/
+.DS_Store
