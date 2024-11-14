@@ -65,6 +65,9 @@ for i in $(seq 1 $num_runs); do
     # Accumulate time
     total_timeRTT=$(echo "$total_timeRTT + $elapsedRTT" | bc)
     total_timeBeta=$(echo "$total_timeBeta + $elapsedBeta" | bc)
+
+    # delete destination file
+    ssh "$SERVER_HOSTNAME" "cd ~/network_perf/destination;rm $SMALL_FILE_PATH"
 done
 
 # Step 4: Calculate and display the average time
@@ -93,6 +96,9 @@ for i in $(seq 1 $num_runs); do
     # Accumulate time
     total_timeRTTN=$(echo "$total_timeRTTN + $elapsedRTTN" | bc)
     total_timeTo_1=$(echo "$total_timeTo_1 + $elapsedTo_1" | bc)
+
+    # delete destination file
+    ssh "$SERVER_HOSTNAME" "cd ~/network_perf/destination;rm $LARGE_FILE_PATH"
 done
 
 average_timeRTTN=$(echo "scale=9; $total_timeRTTN / $num_runs" | bc | awk '{printf "%.4f\n", $0}')
