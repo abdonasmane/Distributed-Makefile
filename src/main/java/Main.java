@@ -1,4 +1,8 @@
 import java.io.IOException;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaSparkContext;
+
 import java.io.File;
 
 public class Main {
@@ -19,11 +23,16 @@ public class Main {
         parser.parseMakefile(makefilePath);
 
         // Build the task graph
-        TaskGraph taskGraph = new TaskGraph(parser.getTargets(), parser.getCommands());
+        TaskGraph taskGraph = new TaskGraph(parser.getTargets());
         // taskGraph.printGraph();
 
+        // Initialize Spark context
+        SparkConf conf = new SparkConf().setAppName("MakeExecutor").setMaster("local[*]");
+        JavaSparkContext sc = new JavaSparkContext(conf);
+        sc.setLogLevel("ERROR");
+
         // Execute the Makefile
-        MakeExecutor executor = new MakeExecutor(taskGraph, workingDirectory);
+        MakeExecutor executor = new MakeExecutor(taskGraph, parser.getCommands(), workingDirectory, sc);
         executor.execute();
     }
 }

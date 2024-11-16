@@ -1,13 +1,18 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class TaskGraph {
+public class TaskGraph implements Serializable {
     private Map<String, List<String>> graph = new HashMap<>();
     private Map<String, Integer> inDegree = new HashMap<>();
-    private Map<String, List<String>> commands;
+    private List<List<String>> topologicalOrder;
 
-    public TaskGraph(Map<String, List<String>> targets, Map<String, List<String>> commands) {
-        this.commands = commands;
+    public TaskGraph(Map<String, List<String>> targets) {
         buildGraph(targets);
+        topologicalSort();
+    }
+
+    public List<List<String>> getTopologicalOrder() {
+        return topologicalOrder;
     }
 
     // Build the dependency graph
@@ -36,7 +41,7 @@ public class TaskGraph {
     }
 
     // Topological sorting using Kahn's Algorithm
-    public List<List<String>> topologicalSort() {
+    public void topologicalSort() {
         Queue<String> queue = new LinkedList<>();
         List<List<String>> sortedOrder = new ArrayList<>();
 
@@ -68,31 +73,27 @@ public class TaskGraph {
         } while (graphSize > 0);
 
         if (graphSize != 0) {
-            return null; // Cycle detected
-        }
-
-        return sortedOrder;
-    }
-
-    // Print the execution order
-    public void printExecutionOrder() {
-        List<List<String>> executionOrder = topologicalSort();
-        if (executionOrder == null) {
-            System.out.println("Error: Cyclic dependencies detected.");
+            topologicalOrder = null; // Cycle detected
         } else {
-            System.out.println("Execution Order:");
-            for (int i = 0; i < executionOrder.size(); i++) {
-                System.out.println("Level " + i + " ##############################");
-                for (String target : executionOrder.get(i)) {
-                    System.out.println("\tTarget: " + target);
-                    System.out.println("\tCommands: " + commands.get(target));
-                    System.out.println();
-                }
-            }
+            topologicalOrder = sortedOrder;
         }
     }
 
-    public Map<String, List<String>> getCommands() {
-        return commands;
-    }    
+    // // Print the execution order
+    // public void printExecutionOrder() {
+    //     List<List<String>> executionOrder = topologicalSort();
+    //     if (executionOrder == null) {
+    //         System.out.println("Error: Cyclic dependencies detected.");
+    //     } else {
+    //         System.out.println("Execution Order:");
+    //         for (int i = 0; i < executionOrder.size(); i++) {
+    //             System.out.println("Level " + i + " ##############################");
+    //             for (String target : executionOrder.get(i)) {
+    //                 System.out.println("\tTarget: " + target);
+    //                 System.out.println("\tCommands: " + commands.get(target));
+    //                 System.out.println();
+    //             }
+    //         }
+    //     }
+    // }   
 }
