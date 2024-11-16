@@ -17,17 +17,13 @@ SERVER_HOSTNAME=$1
 PORT=$2
 MESSAGE_SIZE=$3
 
-# Step 1: Compile the server program
-echo -e "${CYAN}Compiling Pong.java...${NC}"
-javac Pong.java
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to compile Pong.java${NC}"
-    exit 1
-fi
-
-# Start the server remotely on the specified server node
+# Step 1: Start the server remotely on the specified server node
+echo -e "${CYAN}Setting the Server remote server...${NC}"
+ssh "$SERVER_HOSTNAME" "mkdir -p ~/destination"
+scp Pong.java "$SERVER_HOSTNAME":~/destination/
+ssh "$SERVER_HOSTNAME" "cd ~/destination; javac Pong.java"
 echo -e "${GREEN}Launching server on ${SERVER_HOSTNAME}:${PORT}...${NC}"
-ssh "$SERVER_HOSTNAME" "cd ~/network_perf;java Pong 1000000 $PORT &" &
+ssh "$SERVER_HOSTNAME" "cd ~/destination; java Pong 1000000 $PORT &" &
 server_pid=$!
 sleep 2  # Give the server a moment to start up
 
