@@ -60,10 +60,7 @@ for size in "${SIZES[@]}"; do
     # Exécution du script et capture de la sortie
     output=$(./network_perf_N_output.sh "$SERVER_HOSTNAME" "$PORT" "$size")
     
-    # Sauvegarde des résultats
-    avg_rtt=$(echo "$output" | grep "RTT(N)" | tail -n 1 | awk '{print $3}')
-    avg_to=$(echo "$output" | grep "1/To" | tail -n 1 | awk '{print $3}')
-    echo "$size $avg_rtt $avg_to" >> "$RESULTS_FILE"
+
 done
 
 echo "Results saved to $RESULTS_FILE"
