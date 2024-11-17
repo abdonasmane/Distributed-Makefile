@@ -11,9 +11,9 @@ public class Ping {
 
         String machineB = args[1];
         int port;
-        int messageSize;
+        long messageSize;
         try {
-            messageSize = Integer.parseInt(args[0]);
+            messageSize = Long.parseLong(args[0]);
             if (messageSize < 0) {
                 System.out.println("ERROR: MESSAGE-SIZE must be > 0");
                 return;
@@ -24,13 +24,13 @@ public class Ping {
                 return;
             }
         } catch (NumberFormatException e) {
-            System.out.println("ERROR: Invalid SERVER_PORT or MESSAGE-SIZE -- MESSAGE_SIZE should not be greater than INT_MAX-10");
+            System.out.println("ERROR: Invalid SERVER_PORT or MESSAGE-SIZE");
             return;
         }
 
         // construct message
         byte separator = '\t';
-        byte[] message = new byte[8+1+0+1+messageSize];
+        byte[] message = new byte[8+1+0+1];
         // insert messageSize in the first 8 bytes if the packet
         ByteBuffer.wrap(message).putLong(messageSize);
         // insert separator
@@ -38,11 +38,6 @@ public class Ping {
         // No file name
         // insert separator
         message[9] = separator;
-        // insert message content
-        for (int i = 10; i < messageSize + 10; i++) {
-            message[i] = 0;
-        }
-
         // Start time
         long startTime = System.nanoTime();
 
@@ -50,10 +45,38 @@ public class Ping {
             OutputStream out = socket.getOutputStream();
             InputStream in = socket.getInputStream()
         ) {
-            // Send the message to Machine B
+            // Send header to Machine B
             out.write(message);
+            // out.flush();
+
+            // Send the message to Machine B
+            // int numberOfIntMaxes = messageSize / Integer.MAX_VALUE;
+            // int rest = messageSize % Integer.MAX_VALUE;
+            // if (numberOfIntMaxes > 0) {
+            //     message = new byte[Integer.MAX_VALUE];
+            //     for (int i = 0; i < numberOfIntMaxes; i++) {
+            //         out.write(message);
+            //         out.flush();
+            //     }
+            // }
+            // if (rest > 0) {
+            //     message = new byte[rest];
+            //     out.write(message);
+            //     out.flush();
+            // }
+            long remaining = messageSize;
+            int chunkSize = (int) Math.min(remaining, 2_100_000_000);
+            byte[] messageChunk = new byte[chunkSize];
+
+            while (remaining > 0) {
+                out.write(messageChunk, 0, chunkSize);
+                remaining -= chunkSize;
+                chunkSize = (int) Math.min(remaining, 2_100_000_000);
+            }
+
+            // Flush all data
             out.flush();
-            
+
             // Wait for the 1-byte acknowledgment from Machine B
             in.read();
             // End time

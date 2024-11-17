@@ -43,7 +43,7 @@ public class Pong {
                     // Read the incoming message
                     byte[] buffer = new byte[chunkSize];
                     int bytesRead;
-                    int totalBytes = 0;
+                    long totalBytes = 0;
                     while (totalBytes < messageSize) {
                         // Simulate reading message (do nothing)
                         bytesRead = in.read(buffer);
