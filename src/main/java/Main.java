@@ -32,7 +32,8 @@ public class Main {
         sc.setLogLevel("ERROR");
 
         // Execute the Makefile
-        MakeExecutor executor = new MakeExecutor(taskGraph, parser.getCommands(), workingDirectory, sc);
+        int serversPort = 3000;
+        DistributedMakeExecutor executor = new DistributedMakeExecutor(taskGraph, parser.getCommands(), parser.getTargets(), workingDirectory, serversPort, sc);
         executor.execute();
     }
 }
