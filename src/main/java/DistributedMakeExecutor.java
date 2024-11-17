@@ -93,28 +93,30 @@ public class DistributedMakeExecutor implements Serializable {
                             throw new IOException("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
                         }
                     }
-                    return target;
+                    try {
+                        String machineIp = InetAddress.getLocalHost().getHostAddress();
+                        return target + "@" + machineIp;
+                    } catch (UnknownHostException u) {
+                        System.out.println("Network Error : " + u);
+                        return "u4E06TtW6ypOAfYb3h5x";
+                    }
                 } catch (IOException | InterruptedException e) {
                     System.out.println(e.getMessage());
                     return "u4E06TtW6ypOAfYb3h5x";
                 }
-            }).filter(target -> target != null).collect();
+            }).filter(target -> target != null).collect(); // check if the target is a file
 
             if (generatedTargets.contains("u4E06TtW6ypOAfYb3h5x")) {
                 System.out.println("\u001B[31mFatal Error: Exiting make due to task failure at level " + i + "\u001B[0m");
                 break;
             }
-            try {
-                String machineIp = InetAddress.getLocalHost().getHostAddress();
-                for (String target : generatedTargets) {
-                    localFileMap.put(target, machineIp);
+            for (String target : generatedTargets) {
+                String[] parts = target.split("@");
+                if (parts.length != 2 || !parts[0].contains(".")) {
+                    continue;
                 }
-            } catch (UnknownHostException u) {
-                System.out.println("Network Error : " + u);
-                sc.stop();
-                return;
+                localFileMap.put(parts[0], parts[1]);
             }
-
             // Combine the global and local file maps, then update the broadcast
             Map<String, String> globalFileMap = new HashMap<>(broadcastFileMap.value());
             globalFileMap.putAll(localFileMap);
