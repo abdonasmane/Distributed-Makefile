@@ -19,6 +19,8 @@ SMALL_FILE_PATH=$3
 LARGE_FILE_PATH=$4
 
 LARGE_FILE_SIZE=$(stat -c%s "$LARGE_FILE_PATH")
+LARGE_FILE_NAME=$(basename "$LARGE_FILE_PATH")
+SMALL_FILE_NAME=$(basename "$SMALL_FILE_PATH")
 
 # Step 1: Start the server remotely on the specified server node
 echo -e "${CYAN}Setting the Server remote server...${NC}"
@@ -61,7 +63,7 @@ for i in $(seq 1 $num_runs); do
     total_timeBeta=$(echo "$total_timeBeta + $elapsedBeta" | bc)
 
     # delete destination file
-    ssh "$SERVER_HOSTNAME" "cd ~/destination;rm $SMALL_FILE_PATH"
+    ssh "$SERVER_HOSTNAME" "cd ~/destination;rm $SMALL_FILE_NAME"
 done
 
 # Step 4: Calculate and display the average time
@@ -92,7 +94,7 @@ for i in $(seq 1 $num_runs); do
     total_timeTo_1=$(echo "$total_timeTo_1 + $elapsedTo_1" | bc)
 
     # delete destination file
-    ssh "$SERVER_HOSTNAME" "cd ~/destination;rm $LARGE_FILE_PATH"
+    ssh "$SERVER_HOSTNAME" "cd ~/destination;rm $LARGE_FILE_NAME"
 done
 
 average_timeRTTN=$(echo "scale=9; $total_timeRTTN / $num_runs" | bc | awk '{printf "%.4f\n", $0}')

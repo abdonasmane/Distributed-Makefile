@@ -54,7 +54,7 @@ public class PongIO {
                     try (FileOutputStream fileOutputStream = new FileOutputStream(filePath+fileName)) {
                         byte[] buffer = new byte[chunkSize];
                         int bytesRead;
-                        int totalBytes = 0;
+                        long totalBytes = 0;
                         // Read the incoming message in chunks
                         while (totalBytes < messageSize) {
                             // Write the received chunk to the file
