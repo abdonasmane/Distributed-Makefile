@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.broadcast.Broadcast;
@@ -41,6 +40,8 @@ public class DistributedMakeExecutor implements Serializable {
         Broadcast<String> broadcastWorkingDirectory = sc.broadcast(workingDirectory);
         Broadcast<Map<String, String>> broadcastFileMap = sc.broadcast(new HashMap<>());
         Broadcast<Integer> broadcastServerPort = sc.broadcast(serversPort);
+        String dummy = "localhost";
+        Broadcast<String> broadcastMasterIp = sc.master().contains(":") ? sc.broadcast(sc.master().split(":")[1].substring(2)) : sc.broadcast(dummy);
     
         if (executionOrder == null) {
             System.out.println("\u001B[31mError: Cyclic dependencies detected. Cannot execute tasks.\u001B[0m");
@@ -70,11 +71,17 @@ public class DistributedMakeExecutor implements Serializable {
                             if (!file.exists() || !file.isFile()) {
                                 String fileOwnerMachine = globalFileMap.get(dependency);
                                 if (fileOwnerMachine == null) {
+                                    if (!GetFile.retrieveFile(broadcastMasterIp.value(), broadcastServerPort.value(), dependency, broadcastWorkingDirectory.value()+File.separator+dependency)) {
+                                        System.out.println("\u001B[31mError: Cannot transfer file" + dependency + " for target '" + target + "' as its location is unknown.\u001B[0m");
+                                        return "u4E06TtW6ypOAfYb3h5x";
+                                    }
+                                    continue;
+                                }
+                                System.out.println("\t\u001B[36mGetting File: " + dependency + "\u001B[0m");
+                                if (!GetFile.retrieveFile(fileOwnerMachine, broadcastServerPort.value(), dependency, broadcastWorkingDirectory.value()+File.separator+dependency)) {
                                     System.out.println("\u001B[31mError: Cannot transfer file" + dependency + " for target '" + target + "' as its location is unknown.\u001B[0m");
                                     return "u4E06TtW6ypOAfYb3h5x";
                                 }
-                                System.out.println("\t\u001B[36mGetting File: " + dependency + "\u001B[0m");
-                                GetFile.retrieveFile(fileOwnerMachine, broadcastServerPort.value(), dependency, broadcastWorkingDirectory.value()+File.separator+dependency);
                             }
                         }
                     }
