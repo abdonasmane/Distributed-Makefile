@@ -72,14 +72,14 @@ public class DistributedMakeExecutor implements Serializable {
                                 String fileOwnerMachine = globalFileMap.get(dependency);
                                 if (fileOwnerMachine == null) {
                                     if (!GetFile.retrieveFile(broadcastMasterIp.value(), broadcastServerPort.value(), dependency, broadcastWorkingDirectory.value()+File.separator+dependency)) {
-                                        System.out.println("\u001B[31mError: Cannot transfer file" + dependency + " for target '" + target + "' as its location is unknown.\u001B[0m");
+                                        System.out.println("\u001B[31mError: Cannot transfer file " + dependency + " for target '" + target + "' as its location is unknown.\u001B[0m");
                                         return "u4E06TtW6ypOAfYb3h5x";
                                     }
                                     continue;
                                 }
                                 System.out.println("\t\u001B[36mGetting File: " + dependency + "\u001B[0m");
                                 if (!GetFile.retrieveFile(fileOwnerMachine, broadcastServerPort.value(), dependency, broadcastWorkingDirectory.value()+File.separator+dependency)) {
-                                    System.out.println("\u001B[31mError: Cannot transfer file" + dependency + " for target '" + target + "' as its location is unknown.\u001B[0m");
+                                    System.out.println("\u001B[31mError: Cannot transfer file " + dependency + " for target '" + target + "' as its location is unknown.\u001B[0m");
                                     return "u4E06TtW6ypOAfYb3h5x";
                                 }
                             }
@@ -119,7 +119,7 @@ public class DistributedMakeExecutor implements Serializable {
             }
             for (String target : generatedTargets) {
                 String[] parts = target.split("@");
-                if (parts.length != 2 || !parts[0].contains(".")) {
+                if (parts.length != 2) {
                     continue;
                 }
                 localFileMap.put(parts[0], parts[1]);
