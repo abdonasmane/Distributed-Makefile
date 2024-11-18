@@ -3,3 +3,4 @@ target/
 .vscode/
 trash/
 .DS_Store
+/scripts/network_perf/*.txt
