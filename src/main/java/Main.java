@@ -7,12 +7,13 @@ import java.io.File;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        if (args.length < 1) {
-            System.out.println("Usage: java Main <path-to-makefile>");
+        if (args.length < 2) {
+            System.out.println("Usage: java Main <path-to-makefile> <spark://spark_master_ip:port>");
             return;
         }
 
         String makefilePath = args[0];
+        String sparkUrl = args[1];
 
         // Determine the working directory from the Makefile's path
         File makefile = new File(makefilePath);
@@ -27,12 +28,12 @@ public class Main {
         // taskGraph.printGraph();
 
         // Initialize Spark context
-        SparkConf conf = new SparkConf().setAppName("MakeExecutor").setMaster("local[*]");
+        SparkConf conf = new SparkConf().setAppName("DistributedMakeExecutor").setMaster(sparkUrl);
         JavaSparkContext sc = new JavaSparkContext(conf);
         sc.setLogLevel("ERROR");
 
         // Execute the Makefile
-        int serversPort = 3000;
+        int serversPort = 8888;
         DistributedMakeExecutor executor = new DistributedMakeExecutor(taskGraph, parser.getCommands(), parser.getTargets(), workingDirectory, serversPort, sc);
         executor.execute();
     }
