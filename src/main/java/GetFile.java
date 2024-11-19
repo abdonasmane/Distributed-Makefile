@@ -1,6 +1,10 @@
 import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermissions;
 
 public class GetFile {
 
@@ -36,6 +40,8 @@ public class GetFile {
                     totalBytesRead += bytesRead;
                     fileOutputStream.write(buffer, 0, bytesRead);
                 }
+                Path path = Paths.get(destinationPath);
+                Files.setPosixFilePermissions(path, PosixFilePermissions.fromString("rwxrwxrwx"));
             }
 
             System.out.println("File '" + fileName + "' received successfully.");

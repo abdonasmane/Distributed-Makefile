@@ -38,13 +38,15 @@ public class Ping {
         // No file name
         // insert separator
         message[9] = separator;
-        // Start time
-        long startTime = System.nanoTime();
+        
 
         try (Socket socket = new Socket(machineB, port);
             OutputStream out = socket.getOutputStream();
             InputStream in = socket.getInputStream()
         ) {
+            socket.setTcpNoDelay(true);
+            // Start time
+            long startTime = System.nanoTime();
             // Send header to Machine B
             out.write(message);
             // out.flush();

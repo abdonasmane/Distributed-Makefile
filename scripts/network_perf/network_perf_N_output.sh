@@ -16,6 +16,14 @@ fi
 SERVER_HOSTNAME=$1
 PORT=$2
 MESSAGE_SIZE=$3
+# Output file for results
+RESULTS_FILE="network_performance_results_N.txt"
+chunk_size=10000000 
+
+# Initialize the results file
+if [ ! -f "$RESULTS_FILE" ]; then
+    echo "Message_Size RTT(N) 1/To" > "$RESULTS_FILE"
+fi
 
 # Step 1: Start the server remotely on the specified server node
 echo -e "${CYAN}Setting the Server remote server...${NC}"
@@ -23,7 +31,7 @@ ssh "$SERVER_HOSTNAME" "mkdir -p ~/destination"
 scp Pong.java "$SERVER_HOSTNAME":~/destination/
 ssh "$SERVER_HOSTNAME" "cd ~/destination; javac Pong.java"
 echo -e "${GREEN}Launching server on ${SERVER_HOSTNAME}:${PORT}...${NC}"
-ssh "$SERVER_HOSTNAME" "cd ~/destination; java Pong 10 $PORT &" &
+ssh "$SERVER_HOSTNAME" "cd ~/destination; java Pong $chunk_size $PORT &" &
 server_pid=$!
 sleep 2  # Give the server a moment to start up
 
@@ -46,7 +54,7 @@ for i in $(seq 1 $num_runs); do
     echo -e "${YELLOW}Running ping iteration $i...${NC}"
 
     # Capture the client output
-    client_output=$(java Ping 1 "$SERVER_HOSTNAME" "$PORT")
+    client_output=$(java Ping 100 "$SERVER_HOSTNAME" "$PORT")
     
     # Parse the time from client output, assuming it's the only output in seconds
     elapsedRTT=$(echo "$client_output" | grep -oE '[0-9]+(\.[0-9]+)?')
@@ -68,10 +76,6 @@ echo -e "${GREEN}   Beta :      $average_timeBeta seconds${NC}"
 
 total_timeRTTN=0
 total_timeTo_1=0
-
-ssh "$SERVER_HOSTNAME" "pkill -f 'java Pong 10 $PORT'" # For a bigger message we need a bigger ChunkSize
-ssh "$SERVER_HOSTNAME" "cd ~/destination; java Pong 1000000 $PORT &" &
-sleep 2  # Give the server a moment to start up
 # Calculating To
 for i in $(seq 1 $num_runs); do
     echo -e "${YELLOW}Running ping iteration $i...${NC}"
@@ -97,9 +101,12 @@ echo -e "${GREEN}   Beta :      $average_timeBeta seconds${NC}"
 echo -e "${GREEN}   RTT(N) :    $average_timeRTTN seconds${NC}"
 echo -e "${GREEN}   1/To :      $average_timeTo_1 bytes/sec${NC}"
 
+echo "$MESSAGE_SIZE $average_timeRTTN $average_timeTo_1" >> "$RESULTS_FILE"
+
+
 # Step 5: Cleanup - Stop the server on the remote machine
 echo -e "${CYAN}Stopping the server on ${SERVER_HOSTNAME}...${NC}"
-ssh "$SERVER_HOSTNAME" "pkill -f 'java Pong 1000000 $PORT'"
+ssh "$SERVER_HOSTNAME" "pkill -f 'java Pong $chunk_size $PORT'"
 
 # Step 6: Cleanup - Remove .class files
 echo -e "${CYAN}Cleaning up compiled files...${NC}"
