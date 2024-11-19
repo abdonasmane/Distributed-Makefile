@@ -31,6 +31,7 @@ public class Pong {
             while (true) {
                 // Accept a connection from Machine A
                 try (Socket socket = serverSocket.accept()) {
+                    socket.setTcpNoDelay(true);
                     InputStream in = socket.getInputStream();
                     OutputStream out = socket.getOutputStream();
                     // detect message size

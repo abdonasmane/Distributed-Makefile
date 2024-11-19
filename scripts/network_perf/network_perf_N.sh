@@ -23,7 +23,7 @@ ssh "$SERVER_HOSTNAME" "mkdir -p ~/destination"
 scp Pong.java "$SERVER_HOSTNAME":~/destination/
 ssh "$SERVER_HOSTNAME" "cd ~/destination; javac Pong.java"
 echo -e "${GREEN}Launching server on ${SERVER_HOSTNAME}:${PORT}...${NC}"
-ssh "$SERVER_HOSTNAME" "cd ~/destination; java Pong 1000000 $PORT &" &
+ssh "$SERVER_HOSTNAME" "cd ~/destination; java Pong 10 $PORT &" &
 server_pid=$!
 sleep 2  # Give the server a moment to start up
 
@@ -46,7 +46,7 @@ for i in $(seq 1 $num_runs); do
     echo -e "${YELLOW}Running ping iteration $i...${NC}"
 
     # Capture the client output
-    client_output=$(java Ping 100 "$SERVER_HOSTNAME" "$PORT")
+    client_output=$(java Ping 1 "$SERVER_HOSTNAME" "$PORT")
     
     # Parse the time from client output, assuming it's the only output in seconds
     elapsedRTT=$(echo "$client_output" | grep -oE '[0-9]+(\.[0-9]+)?')
@@ -68,6 +68,10 @@ echo -e "${GREEN}   Beta :      $average_timeBeta seconds${NC}"
 
 total_timeRTTN=0
 total_timeTo_1=0
+
+ssh "$SERVER_HOSTNAME" "pkill -f 'java Pong 10 $PORT'" # For a bigger message we need a bigger ChunkSize
+ssh "$SERVER_HOSTNAME" "cd ~/destination; java Pong 1000000 $PORT &" &
+sleep 2  # Give the server a moment to start up
 # Calculating To
 for i in $(seq 1 $num_runs); do
     echo -e "${YELLOW}Running ping iteration $i...${NC}"
