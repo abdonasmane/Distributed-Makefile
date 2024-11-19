@@ -1,0 +1,11 @@
+master_site_name=grenoble
+master_node_name=dahu-28
+master_node_ip=172.16.20.28
+master_node_port=3000
+worker_site_name=toulouse
+worker_node_name=montcalm-5
+worker_site_name=luxembourg
+worker_node_name=petitprince-9
+worker_site_name=lyon
+worker_node_name=pyxis-2
+
