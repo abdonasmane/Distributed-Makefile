@@ -49,23 +49,6 @@ public class Ping {
             long startTime = System.nanoTime();
             // Send header to Machine B
             out.write(message);
-            // out.flush();
-
-            // Send the message to Machine B
-            // int numberOfIntMaxes = messageSize / Integer.MAX_VALUE;
-            // int rest = messageSize % Integer.MAX_VALUE;
-            // if (numberOfIntMaxes > 0) {
-            //     message = new byte[Integer.MAX_VALUE];
-            //     for (int i = 0; i < numberOfIntMaxes; i++) {
-            //         out.write(message);
-            //         out.flush();
-            //     }
-            // }
-            // if (rest > 0) {
-            //     message = new byte[rest];
-            //     out.write(message);
-            //     out.flush();
-            // }
             long remaining = messageSize;
             int chunkSize = (int) Math.min(remaining, 2_100_000_000);
             byte[] messageChunk = new byte[chunkSize];

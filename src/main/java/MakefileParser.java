@@ -35,4 +35,9 @@ public class MakefileParser {
             }
         }
     }
+
+    // Check if a target exists
+    public boolean targetExists(String target) {
+        return targets.containsKey(target);
+    }
 }
