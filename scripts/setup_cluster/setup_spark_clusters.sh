@@ -39,7 +39,7 @@ ssh_exec() {
     NODE=$2
     CMD=$3
     echo "Executing on $SITE -> $NODE: $CMD"
-    ssh anasmane@access.grid5000.fr "ssh $SITE 'ssh $NODE \"$CMD\"'"
+    ssh almimoun@access.grid5000.fr "ssh $SITE 'ssh $NODE \"$CMD\"'"
 }
 
 # Multi-hop SCP execution
@@ -50,7 +50,7 @@ scp_exec() {
     echo "Copying $LOCAL_FILE to $SITE : $REMOTE_PATH"
 
     # Use SCP to copy the file directly to the target node through access.grid5000.fr
-    scp $LOCAL_FILE anasmane@access.grid5000.fr:$SITE/$REMOTE_PATH
+    scp $LOCAL_FILE almimoun@access.grid5000.fr:$SITE/$REMOTE_PATH
 }
 
 
@@ -88,8 +88,8 @@ EOF
 setup_workers() {
     local i=0
     while [ $i -lt ${#WORKERS[@]} ]; do
-        SITE=${WORKERS[$i]}
-        NODE=${WORKERS[$((i+1))]}
+        SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+        NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
         echo "Setting up Spark worker on $NODE ($SITE)..."
 
         # Step 1: Create the local worker setup script
@@ -116,7 +116,7 @@ EOF
         # Step 4: Clean up the local script
         rm -f $LOCAL_SCRIPT
 
-        i=$((i + 2)) # Increment by 2 to move to the next worker
+        i=$((i + 1))
     done
 }
 
@@ -179,10 +179,10 @@ open_spark_webui() {
 
         # Open the URL in the default browser
         # For macOS (use 'open')
-        open "$WEBUI_URL"
+        # open "$WEBUI_URL"
         
         # For Linux (use 'xdg-open')
-        # xdg-open "$WEBUI_URL"
+        xdg-open "$WEBUI_URL"
         
         echo "Opened WebUI for $NODE on $SITE: $WEBUI_URL"
     done
@@ -207,8 +207,10 @@ main() {
     common_setup "$MASTER_SITE" "$MASTER_NODE"
     local i=0
     while [ $i -lt ${#WORKERS[@]} ]; do
-        common_setup "${WORKERS[$i]}" "${WORKERS[$((i+1))]}"
-        i=$((i + 2))
+        SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+        NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+        common_setup "$SITE" "$NODE"
+        i=$((i + 1))
     done
 
     # Setup Spark master and workers
@@ -219,8 +221,10 @@ main() {
     launch_serve_file "$MASTER_SITE" "$MASTER_NODE" "$PATH_TO_TARGET"
     local i=0
     while [ $i -lt ${#WORKERS[@]} ]; do
-        launch_serve_file "${WORKERS[$i]}" "${WORKERS[$((i+1))]}" "$PATH_TO_TARGET"
-        i=$((i + 2))
+        SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+        NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+        launch_serve_file "$SITE" "$NODE" "$PATH_TO_TARGET"
+        i=$((i + 1))
     done
 
     # Launch FileLocatorServer only on the master
