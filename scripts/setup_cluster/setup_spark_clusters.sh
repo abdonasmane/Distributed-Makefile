@@ -68,6 +68,8 @@ echo "export SPARK_MASTER_HOST=$MASTER_IP" >> $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_MASTER_PORT=$MASTER_PORT" >> $SPARK_HOME/conf/spark-env.sh
 $SPARK_HOME/sbin/stop-master.sh
 $SPARK_HOME/sbin/start-master.sh
+$SPARK_HOME/sbin/stop-worker.sh
+$SPARK_HOME/sbin/start-worker.sh spark://$MASTER_IP:$MASTER_PORT
 EOF
     # Step 2: Copy the script to the remote machine
     scp_exec $LOCAL_SCRIPT "$MASTER_SITE" ""
