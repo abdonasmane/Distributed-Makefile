@@ -11,11 +11,6 @@ wget https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION
 tar -xzf spark-${SPARK_VERSION}-bin-hadoop3.tgz
 rm spark-${SPARK_VERSION}-bin-hadoop3.tgz
 
-# Set environment variables for Spark
-export SPARK_HOME=~/spark-${SPARK_VERSION}-bin-hadoop3
-export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
-echo "alias spark-shell=\"$SPARK_HOME/bin/spark-shell\"" >> ~/.bashrc
-
 source ~/.bashrc
 
 # Verify Spark installation
