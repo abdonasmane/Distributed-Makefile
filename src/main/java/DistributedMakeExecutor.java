@@ -30,6 +30,7 @@ public class DistributedMakeExecutor implements Serializable {
     }
 
     public void execute() {
+        boolean shouldExecuteLastLevel = true;
         List<List<String>> executionOrder = taskGraph.getTopologicalOrder();
         // Broadcast variables
         Broadcast<Map<String, List<String>>> broadcastCommands = sc.broadcast(commands);
@@ -126,47 +127,50 @@ public class DistributedMakeExecutor implements Serializable {
             // Check for failures
             if (taskResults.contains(false)) {
                 System.err.println("\u001B[31mFatal Error: Task failure detected at level " + (i+1) + ". Exiting...\u001B[0m");
+                shouldExecuteLastLevel = false;
                 break;
             }
         }
-        String lastLevel = executionOrder.get(executionOrder.size()-1).get(0);
-        List<String> targetCommands = commands.get(lastLevel);
-        if (targetCommands == null) {
-            System.out.println("\u001B[33mSkipping last target '" + lastLevel + "' (no commands).\u001B[0m");
-        } else {
-            // Get the initial set of files in the directory before executing commands
-            Map<String, Long> initialFiles = FileDetector.getFilesInDirectory(workingDirectory);
-
-            // Execute commands for the target
-            System.out.println("\u001B[34mExecuting last level target: " + lastLevel + "\u001B[0m");
-            try {
-                for (String command : targetCommands) {
-                    System.out.println("\t\u001B[36mRunning: " + command + "\u001B[0m");
-                    ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", command);
-                    processBuilder.directory(new File(workingDirectory));
-                    processBuilder.inheritIO();
-
-                    Process process = processBuilder.start();
-                    int exitCode = process.waitFor();
-                    if (exitCode == 0) {
-                        System.out.println("\t\u001B[32mCommand succeeded: " + command + "\u001B[0m");
-                    } else {
-                        System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
-                    }
-                }
-            } catch (Exception e) {
-                System.err.println("\u001B[31mTask failed: " + lastLevel + " || Error: " + e.getMessage() + "\u001B[0m");
-            }
-            // Get the list of files after running the commands
-            Set<String> newFiles = FileDetector.getNewOrModifiedFilesInDirectory(workingDirectory, initialFiles);
-            // Print the new files that were generated
-            if (!newFiles.isEmpty()) {
-                System.out.println("\t\t\u001B[36mNew files generated:\u001B[0m");
-                for (String newFile : newFiles) {
-                    System.out.println("\t\t\t\u001B[33m" + newFile + "\u001B[0m");
-                }
+        if (shouldExecuteLastLevel) {
+            String lastLevel = executionOrder.get(executionOrder.size()-1).get(0);
+            List<String> targetCommands = commands.get(lastLevel);
+            if (targetCommands == null) {
+                System.out.println("\u001B[33mSkipping last target '" + lastLevel + "' (no commands).\u001B[0m");
             } else {
-                System.out.println("\t\t\u001B[36mNo new files generated.\u001B[0m");
+                // Get the initial set of files in the directory before executing commands
+                Map<String, Long> initialFiles = FileDetector.getFilesInDirectory(workingDirectory);
+
+                // Execute commands for the target
+                System.out.println("\u001B[34mExecuting last level target: " + lastLevel + "\u001B[0m");
+                try {
+                    for (String command : targetCommands) {
+                        System.out.println("\t\u001B[36mRunning: " + command + "\u001B[0m");
+                        ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", command);
+                        processBuilder.directory(new File(workingDirectory));
+                        processBuilder.inheritIO();
+
+                        Process process = processBuilder.start();
+                        int exitCode = process.waitFor();
+                        if (exitCode == 0) {
+                            System.out.println("\t\u001B[32mCommand succeeded: " + command + "\u001B[0m");
+                        } else {
+                            System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
+                        }
+                    }
+                } catch (Exception e) {
+                    System.err.println("\u001B[31mTask failed: " + lastLevel + " || Error: " + e.getMessage() + "\u001B[0m");
+                }
+                // Get the list of files after running the commands
+                Set<String> newFiles = FileDetector.getNewOrModifiedFilesInDirectory(workingDirectory, initialFiles);
+                // Print the new files that were generated
+                if (!newFiles.isEmpty()) {
+                    System.out.println("\t\t\u001B[36mNew files generated:\u001B[0m");
+                    for (String newFile : newFiles) {
+                        System.out.println("\t\t\t\u001B[33m" + newFile + "\u001B[0m");
+                    }
+                } else {
+                    System.out.println("\t\t\u001B[36mNo new files generated.\u001B[0m");
+                }
             }
         }
         // Stop SparkContext

@@ -59,17 +59,33 @@ public class Main {
         // Execute the Makefile
         int serversPort = 8888;
         int fileLocatorPort = 9999;
+        String isLocalhost = sc.master().contains(":") 
+            ? sc.master().split(":")[1].substring(2)
+            : "localhost";
         long startExecutionTime = System.nanoTime();
-        SuperDistributedMakeExecutor executor = new SuperDistributedMakeExecutor(
-            taskGraph, 
-            parser.getCommands(), 
-            parser.getTargets(), 
-            workingDirectory, 
-            serversPort, 
-            fileLocatorPort, 
-            sc
-        );
-        executor.execute();
+        if (isLocalhost.equals("localhost")) {
+            DistributedMakeExecutor executor = new DistributedMakeExecutor(
+                taskGraph, 
+                parser.getCommands(), 
+                parser.getTargets(), 
+                workingDirectory, 
+                serversPort, 
+                fileLocatorPort, 
+                sc
+            );
+            executor.execute();
+        } else {
+            SuperDistributedMakeExecutor executor = new SuperDistributedMakeExecutor(
+                taskGraph, 
+                parser.getCommands(), 
+                parser.getTargets(), 
+                workingDirectory, 
+                serversPort, 
+                fileLocatorPort, 
+                sc
+            );
+            executor.execute();
+        }
         long endExecutionTime = System.nanoTime();
         long endGlobalEndTime = System.nanoTime();
         long parsingTime = endParsingTime - startParsingTime;
