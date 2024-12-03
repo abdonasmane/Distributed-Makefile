@@ -64,13 +64,10 @@ public class Main {
             : "localhost";
         long startExecutionTime = System.nanoTime();
         if (isLocalhost.equals("localhost")) {
-            DistributedMakeExecutor executor = new DistributedMakeExecutor(
+            LocalDistributedMakeExecutor executor = new LocalDistributedMakeExecutor(
                 taskGraph, 
                 parser.getCommands(), 
-                parser.getTargets(), 
                 workingDirectory, 
-                serversPort, 
-                fileLocatorPort, 
                 sc
             );
             executor.execute();

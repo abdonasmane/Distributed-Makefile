@@ -15,7 +15,7 @@ public class GetFile {
                 // socket.setSoTimeout(5000); // file might be large
                 InputStream in = socket.getInputStream();
                 OutputStream out = socket.getOutputStream();
-                System.out.println("Requesting file " + fileName + " from " + serverHost + " by " + InetAddress.getLocalHost().getHostAddress());
+                // System.out.println("Requesting file " + fileName + " from " + serverHost + " by " + InetAddress.getLocalHost().getHostAddress());
 
                 out.write((fileName + "\n").getBytes());
                 out.flush();
@@ -48,7 +48,7 @@ public class GetFile {
                     Files.setPosixFilePermissions(path, PosixFilePermissions.fromString("rwxrwxrwx"));
                 }
 
-                System.out.println("File '" + fileName + "' received successfully.");
+                // System.out.println("File '" + fileName + "' received successfully.");
                 return true;
             } catch (SocketTimeoutException e) {
                 System.err.println("Socket operation timed out while getting file : " + e.getMessage() + " || Retrying !");

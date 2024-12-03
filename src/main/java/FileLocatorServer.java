@@ -111,16 +111,16 @@ public class FileLocatorServer {
         }
 
         private void handleStoreRequest(ObjectOutputStream out, Map<String, Set<String>> receivedRequest) throws IOException {
-            System.out.println("New connection from " + clientSocket.getInetAddress() + " to STORE " + receivedRequest);
+            // System.out.println("New connection from " + clientSocket.getInetAddress() + " to STORE " + receivedRequest);
             String clientIP = clientSocket.getInetAddress().getHostAddress();
             assocTargetOwner.put(receivedRequest.keySet().iterator().next(), clientIP);
             assocTargetFiles.putAll(receivedRequest);
             if (!clientIP.equals(InetAddress.getLocalHost().getHostAddress())) {
-                System.out.println("Bringing files " + receivedRequest.get(receivedRequest.keySet().iterator().next()) + " from " + clientIP + " for target " + receivedRequest.keySet().iterator().next());
+                // System.out.println("Bringing files " + receivedRequest.get(receivedRequest.keySet().iterator().next()) + " from " + clientIP + " for target " + receivedRequest.keySet().iterator().next());
                 for (String fileName : receivedRequest.get(receivedRequest.keySet().iterator().next())) {
                     File fileToCheck = new File(initialFilesDirectory+File.separator+fileName);
                     if (fileToCheck.exists()) {
-                        System.out.println("Skipping file " + fileName + " because It exists already");
+                        // System.out.println("Skipping file " + fileName + " because It exists already");
                         continue;
                     }
                     GetFile.retrieveFile(clientIP, 8888, fileName, initialFilesDirectory+File.separator+fileName);
@@ -132,7 +132,7 @@ public class FileLocatorServer {
 
         private void handleLocateRequest(ObjectOutputStream out, Map<String, Set<String>> receivedRequest) throws IOException {
             // Read the file name
-            System.out.println("New connection from " + clientSocket.getInetAddress() + " to LOCATE " + receivedRequest);
+            // System.out.println("New connection from " + clientSocket.getInetAddress() + " to LOCATE " + receivedRequest);
             Map<String, Set<String>> assocIpFiles = new HashMap<>();
             for (String targetName: receivedRequest.get("LOCATE")) {
                 String targetOwnerIP = new String(assocTargetOwner.get(targetName));

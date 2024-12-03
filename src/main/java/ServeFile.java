@@ -75,7 +75,7 @@ public class ServeFile {
                     index++;
                 }
                 String fileName = new String(fileNameBytes, 0, index);
-                System.out.println("Serving file " + fileName + " to " + socket.getInetAddress() + " from " + InetAddress.getLocalHost().getHostAddress());
+                // System.out.println("Serving file " + fileName + " to " + socket.getInetAddress() + " from " + InetAddress.getLocalHost().getHostAddress());
 
                 // Check if the file exists in the specified directory
                 Path filePath = Paths.get(directoryPath, fileName);
@@ -98,7 +98,7 @@ public class ServeFile {
                             out.write(message, 0, bytesRead);
                             out.flush();
                         } while ((bytesRead = bufferedInputStream.read(message)) != -1);
-                        System.out.println("File '" + fileName + "' sent successfully.");
+                        // System.out.println("File '" + fileName + "' sent successfully.");
                     }
                 } else {
                     // File doesn't exist, send an error message

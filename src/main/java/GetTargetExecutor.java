@@ -29,14 +29,14 @@ public class GetTargetExecutor {
                     if (o instanceof Map) {
                         assocIpFiles = (Map<String, Set<String>>) o;
                     } else {
-                        System.out.println("Received object is not of type Map.");
+                        System.err.println("Received object is not of type Map.");
                         return null;
                     }
                 } catch (IOException | ClassNotFoundException e) {
-                    System.out.println("ERROR : Couldn't retrieve IP-FILES association");
+                    System.err.println("ERROR : Couldn't retrieve IP-FILES association");
                     return null;
                 }
-                System.out.println("Received IP-FILES : " + assocIpFiles);
+                // System.out.println("Received IP-FILES : " + assocIpFiles);
                 break;
             } catch (SocketTimeoutException e) {
                 System.err.println("Socket operation timed out while getting target Executor: " + e.getMessage() + " || retrying !");
