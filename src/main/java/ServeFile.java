@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 
 public class ServeFile {
 
-    private static final ExecutorService threadPool = Executors.newFixedThreadPool(50);
+    private static final ExecutorService threadPool = Executors.newFixedThreadPool(200);
     public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("Usage: java ServeFile <SERVER_PORT> <DIRECTORY_TO_SERVE>");

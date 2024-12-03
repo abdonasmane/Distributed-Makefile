@@ -131,10 +131,12 @@ public class SuperDistributedMakeExecutor implements Serializable {
                     for (String newFile : newFiles) {
                         File sourceFile = new File(tempDirPath + File.separator + newFile);
                         File destFile = new File(broadcastWorkingDirectory.value() + File.separator + newFile);
-                        try {
-                            Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
-                        } catch (IOException e) {
-                            System.err.println("\u001B[31mError moving file " + sourceFile + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
+                        if (!destFile.exists()) {
+                            try {
+                                Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+                            } catch (IOException e) {
+                                System.err.println("\u001B[31mError moving file " + sourceFile + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
+                            }
                         }
                     }
 
@@ -217,13 +219,6 @@ public class SuperDistributedMakeExecutor implements Serializable {
                 } else {
                     System.out.println("\t\t\u001B[36mNo new files generated.\u001B[0m");
                 }
-                // try {
-                //     ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "rm -rf temp_*");
-                //     processBuilder.directory(new File(workingDirectory));
-                //     processBuilder.start();
-                // } catch (Exception e) {
-                //     System.err.println("\u001B[31mFailed to clean Master directory : " + e.getMessage() + "\u001B[0m");
-                // }
             }
         }
         // Stop SparkContext

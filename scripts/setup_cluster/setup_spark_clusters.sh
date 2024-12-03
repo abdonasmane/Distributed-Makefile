@@ -89,6 +89,7 @@ setup_master() {
 echo "export SPARK_MASTER_HOST=$MASTER_IP" > $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_MASTER_PORT=$MASTER_PORT" >> $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_WORKER_INSTANCES=1" >> $SPARK_HOME/conf/spark-env.sh
+# echo "export SPARK_WORKER_CORES=20" >> $SPARK_HOME/conf/spark-env.sh
 $SPARK_HOME/sbin/stop-master.sh
 $SPARK_HOME/sbin/start-master.sh
 $SPARK_HOME/sbin/stop-worker.sh
@@ -111,37 +112,55 @@ EOF
 
 # Set up Spark workers
 setup_workers() {
-    local i=0
-    while [ $i -lt ${#WORKERS[@]} ]; do
-        SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
-        NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
-        echo -e "${CYAN}Setting up Spark worker on ${YELLOW}$NODE${CYAN} (${YELLOW}$SITE${CYAN})...${RESET}"
-
-        # Step 1: Create the local worker setup script
-        LOCAL_SCRIPT="/tmp/setup_spark_worker.sh"
-        cat << EOF > $LOCAL_SCRIPT
+    MODE=$1
+    LOCAL_SCRIPT="/tmp/setup_spark_worker.sh"
+    cat << EOF > $LOCAL_SCRIPT
 #!/bin/bash
 echo "export SPARK_MASTER=spark://$MASTER_IP:$MASTER_PORT" > $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_WORKER_WEBUI_PORT=8080" >> $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_WORKER_INSTANCES=1" >> $SPARK_HOME/conf/spark-env.sh
+# echo "export SPARK_WORKER_CORES=20" >> $SPARK_HOME/conf/spark-env.sh
 $SPARK_HOME/sbin/stop-worker.sh
 $SPARK_HOME/sbin/start-worker.sh spark://$MASTER_IP:$MASTER_PORT
 EOF
-        # Step 2: Copy the script to the remote worker node
-        scp_exec $LOCAL_SCRIPT "$SITE" ""
+    if [ "$MODE" == "enable" ]; then
+        local i=0
+        while [ $i -lt ${#WORKERS[@]} ]; do
+            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+            echo -e "${CYAN}Setting up Spark worker on ${YELLOW}$NODE${CYAN} (${YELLOW}$SITE${CYAN})...${RESET}"
 
-        # Step 3: Run the script remotely on the worker node
-        ssh_exec "$SITE" "$NODE" "
-            chmod +x setup_spark_worker.sh &&
-            ./setup_spark_worker.sh &&
-            rm -f setup_spark_worker.sh
-        "
+            # Step 2: Copy the script to the remote worker node
+            scp_exec $LOCAL_SCRIPT "$SITE" ""
 
-        # Step 4: Clean up the local script
-        rm -f $LOCAL_SCRIPT
+            # Step 3: Run the script remotely on the worker node
+            ssh_exec "$SITE" "$NODE" "
+                chmod +x setup_spark_worker.sh &&
+                ./setup_spark_worker.sh &&
+                rm -f setup_spark_worker.sh
+            " &
+            i=$((i + 1))
+        done     
+    else
+        local i=0
+        while [ $i -lt ${#WORKERS[@]} ]; do
+            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+            echo -e "${CYAN}Setting up Spark worker on ${YELLOW}$NODE${CYAN} (${YELLOW}$SITE${CYAN})...${RESET}"
 
-        i=$((i + 1))
-    done
+            # Step 2: Copy the script to the remote worker node
+            scp_exec $LOCAL_SCRIPT "$SITE" ""
+
+            # Step 3: Run the script remotely on the worker node
+            ssh_exec "$SITE" "$NODE" "
+                chmod +x setup_spark_worker.sh &&
+                ./setup_spark_worker.sh &&
+                rm -f setup_spark_worker.sh
+            "
+            i=$((i + 1))
+        done
+    fi
+    rm -f $LOCAL_SCRIPT
 }
 
 # Cloning repo from github
@@ -159,12 +178,14 @@ clone_repo() {
 common_setup() {
     SITE=$1
     NODE=$2
+    LOGS_PATH=$3
     echo -e "${CYAN}Installing Maven and preparing project on ${YELLOW}$NODE${CYAN} (${YELLOW}$SITE${CYAN})...${RESET}"
     ssh_exec "$SITE" "$NODE" "
         sudo-g5k apt install -y maven &&
         source ~/.bashrc &&
         cd $PROJECT_HOME &&
-        mvn clean package
+        mvn clean package &&
+        rm -f $LOGS_PATH/logs/*
     "
 }
 
@@ -178,7 +199,6 @@ launch_serve_file() {
     ssh_exec "$SITE" "$NODE" "pkill -f java\ ServeFile\ 8888"
     DIRECTORY_PATH=$(dirname "$PATH_TO_TARGET")
     ssh_exec "$SITE" "$NODE" "cd $TARGET_PATH && java ServeFile 8888 $DIRECTORY_PATH" &
-    sleep 2
 }
 
 # Launch FileLocatorServer on the master
@@ -188,7 +208,6 @@ launch_file_locator_server() {
     echo -e "${CYAN}Launching FileLocatorServer on ${YELLOW}$MASTER_NODE${CYAN} (${YELLOW}$MASTER_SITE${CYAN})...${RESET}"
     ssh_exec "$MASTER_SITE" "$MASTER_NODE" "pkill -f java\ FileLocatorServer\ 9999"
     ssh_exec "$MASTER_SITE" "$MASTER_NODE" "cd $TARGET_PATH && java FileLocatorServer 9999 $DIRECTORY_PATH" &
-    sleep 2
 }
 
 # Submit Spark application
@@ -205,6 +224,7 @@ open_spark_webui() {
     echo -e "${CYAN}Opening Spark WebUI pages...${RESET}"
     WEBUI_URL="http://$MASTER_NODE.$MASTER_SITE.http8080.proxy.grid5000.fr/"
     open "$WEBUI_URL"
+    # xdg-open "$WEBUI_URL"
     echo -e "${CYAN}Opened WebUI for ${YELLOW}$MASTER_NODE${CYAN} on ${YELLOW}$MASTER_SITE${CYAN}: $WEBUI_URL${RESET}"
 
     # Iterate through each worker node in the WORKERS array
@@ -235,43 +255,80 @@ main() {
     SPARK_HOME=$4
     EXECUTED_TARGET=$5
     USER_NAME=$6
+    FAST_MODE=$7
     TARGET_PATH=$PROJECT_HOME/target/classes
 
-    if [ $# -ne 6 ]; then
-        echo "Usage: $0 CONFIG_FILE PATH_TO_TARGET PROJECT_HOME SPARK_HOME EXECUTED_TARGET USER_NAME"
+    if [ $# -ne 7 ]; then
+        echo "Usage: $0 CONFIG_FILE PATH_TO_TARGET PROJECT_HOME SPARK_HOME EXECUTED_TARGET USER_NAME FAST_MODE=enable"
         exit 1
+    fi
+
+    if [ "$FAST_MODE" == "enable" ]; then
+        echo -e "${GREEN}Fast mode is enabled !!!${RESET}"
+    else
+        echo -e "${GREEN}Fast mode is disabled !!!${RESET}"
     fi
 
     read_config "$CONFIG_FILE"
 
     # Common setup for all nodes
-    clone_repo "$MASTER_SITE" "$MASTER_NODE"
-    common_setup "$MASTER_SITE" "$MASTER_NODE"
-    local i=0
-    while [ $i -lt ${#WORKERS[@]} ]; do
-        SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
-        NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
-        clone_repo "$SITE" "$NODE"
-        common_setup "$SITE" "$NODE"
-        i=$((i + 1))
-    done
+    if [ "$FAST_MODE" == "enable" ]; then
+        clone_repo "$MASTER_SITE" "$MASTER_NODE"
+        common_setup "$MASTER_SITE" "$MASTER_NODE" "$SPARK_HOME"
+        local i=0
+        while [ $i -lt ${#WORKERS[@]} ]; do
+            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+            clone_repo "$SITE" "$NODE" &
+            common_setup "$SITE" "$NODE" &
+            i=$((i + 1))
+        done
+        # Setup Spark master and workers
+        setup_master
+        setup_workers $FAST_MODE
+        # Launch ServeFile on all nodes
+        launch_serve_file "$MASTER_SITE" "$MASTER_NODE" "$PATH_TO_TARGET" &
+        local i=0
+        while [ $i -lt ${#WORKERS[@]} ]; do
+            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+            launch_serve_file "$SITE" "$NODE" "$PATH_TO_TARGET" &
+            i=$((i + 1))
+        done
+        sleep 1
+        launch_file_locator_server "$PATH_TO_TARGET" &
+    else
+        clone_repo "$MASTER_SITE" "$MASTER_NODE"
+        common_setup "$MASTER_SITE" "$MASTER_NODE" "$SPARK_HOME"
+        local i=0
+        while [ $i -lt ${#WORKERS[@]} ]; do
+            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+            clone_repo "$SITE" "$NODE"
+            common_setup "$SITE" "$NODE"
+            i=$((i + 1))
+        done
+        # Setup Spark master and workers
+        setup_master
+        setup_workers $FAST_MODE
+        # Launch ServeFile on all nodes
+        launch_serve_file "$MASTER_SITE" "$MASTER_NODE" "$PATH_TO_TARGET"
+        local i=0
+        while [ $i -lt ${#WORKERS[@]} ]; do
+            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+            launch_serve_file "$SITE" "$NODE" "$PATH_TO_TARGET"
+            sleep 1
+            i=$((i + 1))
+        done
+        launch_file_locator_server "$PATH_TO_TARGET"
+    fi
 
     # Setup Spark master and workers
-    setup_master
-    setup_workers
 
     # Launch ServeFile on all nodes
-    launch_serve_file "$MASTER_SITE" "$MASTER_NODE" "$PATH_TO_TARGET"
-    local i=0
-    while [ $i -lt ${#WORKERS[@]} ]; do
-        SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
-        NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
-        launch_serve_file "$SITE" "$NODE" "$PATH_TO_TARGET"
-        i=$((i + 1))
-    done
 
     # Launch FileLocatorServer only on the master
-    launch_file_locator_server "$PATH_TO_TARGET"
 
     # Submit the Spark application
     submit_spark_app "$PATH_TO_TARGET"
