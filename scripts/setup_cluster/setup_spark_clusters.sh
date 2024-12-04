@@ -184,8 +184,7 @@ common_setup() {
         sudo-g5k apt install -y maven &&
         source ~/.bashrc &&
         cd $PROJECT_HOME &&
-        mvn clean package &&
-        rm -f $LOGS_PATH/logs/*
+        mvn clean package
     "
 }
 
@@ -273,16 +272,40 @@ main() {
 
     # Common setup for all nodes
     if [ "$FAST_MODE" == "enable" ]; then
-        clone_repo "$MASTER_SITE" "$MASTER_NODE"
-        common_setup "$MASTER_SITE" "$MASTER_NODE" "$SPARK_HOME"
+        processed_sites=()
+        clone_repo "$MASTER_SITE" "$MASTER_NODE" &
+        processed_sites+=("$MASTER_SITE")
         local i=0
         while [ $i -lt ${#WORKERS[@]} ]; do
             SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
             NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
-            clone_repo "$SITE" "$NODE" &
-            common_setup "$SITE" "$NODE" &
+            if [[ ! " ${processed_sites[@]} " =~ " ${SITE} " ]]; then
+                clone_repo "$SITE" "$NODE" &
+                processed_sites+=("$SITE")
+            else
+                echo "Skipping $NODE since it has already been processed"
+            fi
+
             i=$((i + 1))
         done
+        wait
+        processed_sites=()
+        common_setup "$MASTER_SITE" "$MASTER_NODE" "$SPARK_HOME" &
+        processed_sites+=("$MASTER_SITE")
+        local i=0
+        while [ $i -lt ${#WORKERS[@]} ]; do
+            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+            if [[ ! " ${processed_sites[@]} " =~ " ${SITE} " ]]; then
+                common_setup "$SITE" "$NODE" &
+                processed_sites+=("$SITE")
+            else
+                echo "Skipping $NODE since it has already been processed"
+            fi
+
+            i=$((i + 1))
+        done
+        wait
         # Setup Spark master and workers
         setup_master
         setup_workers $FAST_MODE
@@ -295,8 +318,9 @@ main() {
             launch_serve_file "$SITE" "$NODE" "$PATH_TO_TARGET" &
             i=$((i + 1))
         done
-        sleep 1
+        sleep 2
         launch_file_locator_server "$PATH_TO_TARGET" &
+        sleep 2
     else
         clone_repo "$MASTER_SITE" "$MASTER_NODE"
         common_setup "$MASTER_SITE" "$MASTER_NODE" "$SPARK_HOME"

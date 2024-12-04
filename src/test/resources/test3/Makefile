@@ -6,4 +6,3 @@ main.o: main.c
 
 utils.o: utils.c
 	 gcc -c utils.c
-
