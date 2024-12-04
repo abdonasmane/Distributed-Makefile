@@ -1,14 +1,12 @@
 import java.io.*;
 import java.net.*;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class GetTargetExecutor {
 
-    public static Map<String, Set<String>> retrieveTargetExecutor(String serverHost, int serverPort, List<String> dependencies) {
+    public static Map<String, Set<String>> retrieveTargetExecutor(String serverHost, int serverPort, Set<String> dependencies) {
         Map<String, Set<String>> assocIpFiles;
         while (true) {
             try (Socket socket = new Socket()) {
@@ -18,8 +16,7 @@ public class GetTargetExecutor {
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
                 Map<String, Set<String>> dataMap = new HashMap<>();
-                Set<String> payload =  new HashSet<>(dependencies);
-                dataMap.put("LOCATE", payload);
+                dataMap.put("LOCATE", dependencies);
 
                 out.writeObject(dataMap);
                 out.flush();

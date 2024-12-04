@@ -72,7 +72,7 @@ public class Main {
             );
             executor.execute();
         } else {
-            SuperDistributedMakeExecutor executor = new SuperDistributedMakeExecutor(
+            DistributedMakeExecutor executor = new DistributedMakeExecutor(
                 taskGraph, 
                 parser.getCommands(), 
                 parser.getTargets(), 

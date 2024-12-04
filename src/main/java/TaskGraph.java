@@ -5,14 +5,20 @@ public class TaskGraph implements Serializable {
     private Map<String, List<String>> graph = new HashMap<>();
     private List<List<String>> topologicalOrder;
     private String rootTarget;
+    private static final Map<String, Set<String>> assocTargetAllDependencies = new HashMap<>();
 
     public TaskGraph(Map<String, List<String>> targets, String rootTarget) {
         this.rootTarget = rootTarget;
         buildGraph(targets);
+        populateAllDependencies(targets);
     }
 
     public List<List<String>> getTopologicalOrder() {
         return topologicalOrder;
+    }
+
+    public Map<String, Set<String>> getDependenciesTree() {
+        return assocTargetAllDependencies;
     }
 
     // Build the dependency graph, where dependencies point to dependents.
@@ -83,6 +89,30 @@ public class TaskGraph implements Serializable {
         }
     }
 
+    // Method to populate all dependencies
+    private void populateAllDependencies(Map<String, List<String>> targets) {
+        for (String target : graph.keySet()) {
+            Set<String> dependencies = new HashSet<>();
+            findAllDependencies(target, dependencies, new HashSet<>(), targets);
+            dependencies.remove(target);
+            assocTargetAllDependencies.put(target, dependencies);
+        }
+    }
+
+    // Recursive DFS to collect dependencies
+    private void findAllDependencies(String target, Set<String> dependencies, Set<String> visited, Map<String, List<String>> targets) {
+        if (visited.contains(target)) {
+            return;
+        }
+        visited.add(target);
+
+        List<String> directDependencies = targets.getOrDefault(target, new ArrayList<>());
+        for (String dep : directDependencies) {
+            dependencies.add(dep);
+            findAllDependencies(dep, dependencies, visited, targets);
+        }
+    }
+
     public void printGraph() {
         final String RESET = "\u001B[0m";
         final String BLUE = "\u001B[34m";
@@ -124,7 +154,6 @@ public class TaskGraph implements Serializable {
         final String RESET = "\u001B[0m";
         final String BLUE = "\u001B[34m";
         final String GREEN = "\u001B[32m";
-        final String YELLOW = "\u001B[33m";
         final String CYAN = "\u001B[36m";
         final String BOLD = "\u001B[1m";
     

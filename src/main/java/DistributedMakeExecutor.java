@@ -1,31 +1,32 @@
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.broadcast.Broadcast;
-import org.apache.commons.io.FileUtils;
 import org.apache.spark.api.java.JavaRDD;
-
 import java.io.File;
 import java.io.IOException;
 
-public class SuperDistributedMakeExecutor implements Serializable {
+public class DistributedMakeExecutor implements Serializable {
     private static final long serialVersionUID = 1L;
     private TaskGraph taskGraph;
     private Map<String, List<String>> commands;
     private Map<String, List<String>> targets;
+    private Map<String, Set<String>> dependenciesTree;
     private String workingDirectory;
     private int serversPort;
     private int fileLocatorPort;
     private JavaSparkContext sc;
 
-    public SuperDistributedMakeExecutor(TaskGraph taskGraph, Map<String, List<String>> commands, Map<String, List<String>> targets, String workingDirectory, int serversPort, int fileLocatorPort, JavaSparkContext sc) {
+    public DistributedMakeExecutor(TaskGraph taskGraph, Map<String, List<String>> commands, Map<String, List<String>> targets, String workingDirectory, int serversPort, int fileLocatorPort, JavaSparkContext sc) {
         this.taskGraph = taskGraph;
+        this.dependenciesTree = taskGraph.getDependenciesTree();
         this.commands = commands;
         this.targets = targets;
         this.workingDirectory = workingDirectory;
@@ -40,6 +41,7 @@ public class SuperDistributedMakeExecutor implements Serializable {
         // Broadcast variables
         Broadcast<Map<String, List<String>>> broadcastCommands = sc.broadcast(commands);
         Broadcast<Map<String, List<String>>> broadcastTargets = sc.broadcast(targets);
+        Broadcast<Map<String, Set<String>>> broadcastDependenciesTree = sc.broadcast(dependenciesTree);
         Broadcast<String> broadcastWorkingDirectory = sc.broadcast(workingDirectory);
         Broadcast<Integer> broadcastServerPort = sc.broadcast(serversPort);
         Broadcast<Integer> broadcastFileLocatorPort = sc.broadcast(fileLocatorPort);
@@ -78,9 +80,11 @@ public class SuperDistributedMakeExecutor implements Serializable {
 
                     // Check and retrieve dependencies
                     if (!broadcastMasterIp.value().equals("localhost")) {
-                        List<String> targetDependencies = broadcastTargets.value().get(target);
-                        if (targetDependencies != null) {
-                            Map<String, Set<String>> assocIpFiles = GetTargetExecutor.retrieveTargetExecutor(broadcastMasterIp.value(), broadcastFileLocatorPort.value(), targetDependencies);
+                        // direct dependencie
+                        // List<String> directTargetDependencies = broadcastTargets.value().get(target);
+                        Set<String> allTargetDependencies = broadcastDependenciesTree.value().getOrDefault(target, null);
+                        if (allTargetDependencies != null) {
+                            Map<String, Set<String>> assocIpFiles = GetTargetExecutor.retrieveTargetExecutor(broadcastMasterIp.value(), broadcastFileLocatorPort.value(), allTargetDependencies);
                             // initial stages
                             for (String machineIp : assocIpFiles.keySet()) {
                                 Set<String> files = assocIpFiles.get(machineIp);
