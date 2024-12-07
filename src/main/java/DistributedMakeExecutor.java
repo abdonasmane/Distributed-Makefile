@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -72,6 +73,7 @@ public class DistributedMakeExecutor implements Serializable {
 
                     // // Get the initial set of files in the directory before executing commands
                     // Map<String, Long> initialFiles = FileDetector.getFilesInDirectory(tempDirPath);
+                    Set<String> broughtFiles = new HashSet<>();
 
                     // Check and retrieve dependencies
                     if (!broadcastMasterIp.value().equals("localhost")) {
@@ -90,6 +92,7 @@ public class DistributedMakeExecutor implements Serializable {
                                             System.err.println("\u001B[31mError: Cannot transfer file " + file + " as its location is unknown.\u001B[0m");
                                             return false;
                                         }
+                                        broughtFiles.add(file);
                                     } else {
                                         File destFile = new File(tempDirPath + File.separator + file);
                                         try {
@@ -133,6 +136,18 @@ public class DistributedMakeExecutor implements Serializable {
                         if (!destFile.exists()) {
                             try {
                                 Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+                            } catch (IOException e) {
+                                System.err.println("\u001B[31mError moving file " + sourceFile + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
+                            }
+                        }
+                    }
+
+                    for (String broughtFile : broughtFiles) {
+                        File sourceFile = new File(tempDirPath + File.separator + broughtFile);
+                        File destFile = new File(broadcastWorkingDirectory.value() + File.separator + broughtFile);
+                        if (!destFile.exists()) {
+                            try {
+                                Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.ATOMIC_MOVE);
                             } catch (IOException e) {
                                 System.err.println("\u001B[31mError moving file " + sourceFile + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
                             }
