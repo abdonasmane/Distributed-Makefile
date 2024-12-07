@@ -322,17 +322,19 @@ main() {
         setup_master
         setup_workers $FAST_MODE
         # Launch ServeFile on all nodes
-        launch_serve_file "$MASTER_SITE" "$MASTER_NODE" "$PATH_TO_TARGET" &
-        local i=0
-        while [ $i -lt ${#WORKERS[@]} ]; do
-            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
-            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
-            launch_serve_file "$SITE" "$NODE" "$PATH_TO_TARGET" &
-            i=$((i + 1))
-        done
-        sleep 2
-        launch_file_locator_server "$PATH_TO_TARGET" &
-        sleep 2
+        if [ "$NFS" == "NO_NFS" ]; then
+            launch_serve_file "$MASTER_SITE" "$MASTER_NODE" "$PATH_TO_TARGET" &
+            local i=0
+            while [ $i -lt ${#WORKERS[@]} ]; do
+                SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+                NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+                launch_serve_file "$SITE" "$NODE" "$PATH_TO_TARGET" &
+                i=$((i + 1))
+            done
+            sleep 2
+            launch_file_locator_server "$PATH_TO_TARGET" &
+            sleep 2
+        fi
     else
         clone_repo "$MASTER_SITE" "$MASTER_NODE"
         common_setup "$MASTER_SITE" "$MASTER_NODE" "$SPARK_HOME"

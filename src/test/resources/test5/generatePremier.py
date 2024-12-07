@@ -7,10 +7,10 @@ def generate_makefile(interval_length, num_lists):
         for i in range(1, num_lists):
             f.write(f"list{i} ")
         f.write(f"list{num_lists}\n")
-        f.write("\tcp list1.txt list.txt ; ")
+        f.write("\tcp list1.txt list.txt\n")
         for i in range(1, num_lists):
-            f.write(f"cat list{i}.txt >> list.txt ; ")
-        f.write(f"cat list{num_lists}.txt >> list.txt ;\n")
+            f.write(f"cat list{i}.txt >> list.txt\n")
+        f.write(f"cat list{num_lists}.txt >> list.txt\n")
 
         f.write("premiera:\tpremier.c\n")
         f.write("\tgcc premier.c -o premier -lm\n")

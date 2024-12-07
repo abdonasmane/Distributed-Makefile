@@ -47,7 +47,7 @@ public class DistributedMakeExecutor implements Serializable {
         // Iterate through execution levels
         for (int i = 0; i < executionOrder.size() - 1; i++) {
             List<String> currentLevel = executionOrder.get(i);
-            JavaRDD<String> tasksRDD = sc.parallelize(currentLevel);
+            JavaRDD<String> tasksRDD = sc.parallelize(currentLevel, currentLevel.size());
 
             // Execute tasks at this level
             List<Boolean> taskResults = tasksRDD.map(target -> {
