@@ -1,9 +1,8 @@
-master_site_name=grenoble
-master_node_name=dahu-9
-master_node_ip=172.16.20.9
+master_site_name=rennes
+master_node_name=paradoxe-32
+master_node_ip=172.16.101.32
 master_node_port=3000
-worker_site_name=toulouse
-worker_node_name=montcalm-10
-worker_site_name=lyon
-worker_node_name=pyxis-4
-
+worker_site_name=grenoble
+worker_node_name=paradoxe-31
+worker_site_name=grenoble
+worker_node_name=paradoxe-30

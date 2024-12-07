@@ -131,16 +131,17 @@ EOF
             echo -e "${CYAN}Setting up Spark worker on ${YELLOW}$NODE${CYAN} (${YELLOW}$SITE${CYAN})...${RESET}"
 
             # Step 2: Copy the script to the remote worker node
-            scp_exec $LOCAL_SCRIPT "$SITE" ""
+            scp_exec $LOCAL_SCRIPT "$SITE" "setup_spark_worker_$NODE.sh"
 
             # Step 3: Run the script remotely on the worker node
             ssh_exec "$SITE" "$NODE" "
-                chmod +x setup_spark_worker.sh &&
-                ./setup_spark_worker.sh &&
-                rm -f setup_spark_worker.sh
+                chmod +x setup_spark_worker_$NODE.sh &&
+                ./setup_spark_worker_$NODE.sh &&
+                rm -f setup_spark_worker_$NODE.sh
             " &
             i=$((i + 1))
-        done     
+        done
+        wait     
     else
         local i=0
         while [ $i -lt ${#WORKERS[@]} ]; do
@@ -174,11 +175,51 @@ clone_repo() {
     "
 }
 
+# copying cloned repo to /tmp
+copy_repo_to_tmp() {
+    MODE=$1
+    if [ "$MODE" == "enable" ]; then
+        ssh_exec "$MASTER_SITE" "$MASTER_NODE" "
+            rm -rf /tmp/systemes-distribues
+            cp -r ~/systemes-distribues /tmp
+        " &
+        local i=0
+        while [ $i -lt ${#WORKERS[@]} ]; do
+            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+            echo -e "${CYAN}Copying repo to /tmp on node ${YELLOW}$NODE${CYAN} (${YELLOW}$SITE${CYAN})...${RESET}"
+
+            ssh_exec "$SITE" "$NODE" "
+                rm -rf /tmp/systemes-distribues
+                cp -r ~/systemes-distribues /tmp
+            " &
+            i=$((i + 1))
+        done
+        wait
+    else
+        ssh_exec "$MASTER_SITE" "$MASTER_NODE" "
+            rm -rf /tmp/systemes-distribues
+            cp -r ~/systemes-distribues /tmp
+        "
+        local i=0
+        while [ $i -lt ${#WORKERS[@]} ]; do
+            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+            echo -e "${CYAN}Copying repo to /tmp on node ${YELLOW}$NODE${CYAN} (${YELLOW}$SITE${CYAN})...${RESET}"
+
+            ssh_exec "$SITE" "$NODE" "
+                rm -rf /tmp/systemes-distribues
+                cp -r ~/systemes-distribues /tmp
+            "
+            i=$((i + 1))
+        done
+    fi
+}
+
 # Common setup for all nodes
 common_setup() {
     SITE=$1
     NODE=$2
-    LOGS_PATH=$3
     echo -e "${CYAN}Installing Maven and preparing project on ${YELLOW}$NODE${CYAN} (${YELLOW}$SITE${CYAN})...${RESET}"
     ssh_exec "$SITE" "$NODE" "
         sudo-g5k apt install -y maven &&
@@ -215,7 +256,7 @@ submit_spark_app() {
     NFS_MODE=$2
     echo -e "${CYAN}Submitting Spark app from ${YELLOW}$MASTER_NODE${CYAN} (${YELLOW}$MASTER_SITE${CYAN})...${RESET}"
     ssh_exec "$MASTER_SITE" "$MASTER_NODE" "
-        $SPARK_HOME/bin/spark-submit --master spark://$MASTER_IP:$MASTER_PORT --deploy-mode client --class Main $PROJECT_HOME/target/distributed-make-project-1.0.jar $PATH_TO_TARGET $EXECUTED_TARGET spark://$MASTER_IP:$MASTER_PORT $NFS_MODE
+        $SPARK_HOME/bin/spark-submit --master spark://$MASTER_IP:$MASTER_PORT --deploy-mode client --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --class Main $PROJECT_HOME/target/distributed-make-project-1.0.jar $PATH_TO_TARGET $EXECUTED_TARGET spark://$MASTER_IP:$MASTER_PORT $NFS_MODE
     "
 }
 
@@ -257,10 +298,11 @@ main() {
     USER_NAME=$6
     FAST_MODE=$7
     NFS=$8
+    TMP=$9
     TARGET_PATH=$PROJECT_HOME/target/classes
 
-    if [ $# -ne 8 ]; then
-        echo "Usage: $0 CONFIG_FILE PATH_TO_TARGET PROJECT_HOME SPARK_HOME EXECUTED_TARGET USER_NAME FAST_MODE=enable/disable NFS_MODE=NFS/NO_NFS"
+    if [ $# -ne 9 ]; then
+        echo "Usage: $0 CONFIG_FILE PATH_TO_TARGET PROJECT_HOME SPARK_HOME EXECUTED_TARGET USER_NAME FAST_MODE=enable/disable NFS_MODE=NFS/NO_NFS TMP_MODE=TMP/NO_TMP"
         exit 1
     fi
 
@@ -270,6 +312,20 @@ main() {
         echo -e "${YELLOW}NO_NFS mode enabled : nodes can be from different sites${RESET}"
     else
         echo -e "${RED}Invalid mode: NFS=$NFS${RESET}"
+        exit 1
+    fi
+
+    if [ "$TMP" == "TMP" ]; then
+        if [ "$NFS" == "NFS" ]; then
+            echo -e "${GREEN}NFS mode not compatible with TMP mode${RESET}"
+            exit 1
+        fi
+        echo -e "${GREEN}TMP mode enabled${RESET}"
+    elif [ "$TMP" == "NO_TMP" ]; then
+        echo -e "${YELLOW}NO_TMP mode enabled${RESET}"
+    else
+        echo -e "${RED}Invalid mode TMP: TMP=$TMP${RESET}"
+        exit 1
     fi
 
     if [ "$FAST_MODE" == "enable" ]; then
@@ -278,6 +334,7 @@ main() {
         echo -e "${GREEN}Fast mode is disabled !!!${RESET}"
     else
         echo -e "${RED}Invalid mode: FAST_MODE=$FAST_MODE${RESET}"
+        exit 1
     fi
 
     read_config "$CONFIG_FILE"
@@ -301,22 +358,37 @@ main() {
             i=$((i + 1))
         done
         wait
-        processed_sites=()
-        common_setup "$MASTER_SITE" "$MASTER_NODE" "$SPARK_HOME" &
-        processed_sites+=("$MASTER_SITE")
-        local i=0
-        while [ $i -lt ${#WORKERS[@]} ]; do
-            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
-            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
-            if [[ ! " ${processed_sites[@]} " =~ " ${SITE} " ]]; then
+        if [ "$TMP" == "TMP" ]; then
+            copy_repo_to_tmp "$FAST_MODE"
+        fi
+        if [ "$TMP" == "TMP" ]; then
+            common_setup "$MASTER_SITE" "$MASTER_NODE" &
+            local i=0
+            while [ $i -lt ${#WORKERS[@]} ]; do
+                SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+                NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
                 common_setup "$SITE" "$NODE" &
-                processed_sites+=("$SITE")
-            else
-                echo "Skipping $NODE since it has already been processed"
-            fi
 
-            i=$((i + 1))
-        done
+                i=$((i + 1))
+            done
+        else
+            processed_sites=()
+            common_setup "$MASTER_SITE" "$MASTER_NODE" &
+            processed_sites+=("$MASTER_SITE")
+            local i=0
+            while [ $i -lt ${#WORKERS[@]} ]; do
+                SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+                NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+                if [[ ! " ${processed_sites[@]} " =~ " ${SITE} " ]]; then
+                    common_setup "$SITE" "$NODE" &
+                    processed_sites+=("$SITE")
+                else
+                    echo "Skipping $NODE since it has already been processed"
+                fi
+
+                i=$((i + 1))
+            done
+        fi
         wait
         # Setup Spark master and workers
         setup_master
@@ -333,19 +405,41 @@ main() {
             done
             sleep 2
             launch_file_locator_server "$PATH_TO_TARGET" &
-            sleep 2
+            sleep 5
         fi
     else
         clone_repo "$MASTER_SITE" "$MASTER_NODE"
-        common_setup "$MASTER_SITE" "$MASTER_NODE" "$SPARK_HOME"
-        local i=0
-        while [ $i -lt ${#WORKERS[@]} ]; do
-            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
-            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
-            clone_repo "$SITE" "$NODE"
-            common_setup "$SITE" "$NODE"
-            i=$((i + 1))
-        done
+        if [ "$TMP" == "TMP" ]; then
+            copy_repo_to_tmp "$FAST_MODE"
+        fi
+        if [ "$TMP" == "TMP" ]; then
+            common_setup "$MASTER_SITE" "$MASTER_NODE"
+            local i=0
+            while [ $i -lt ${#WORKERS[@]} ]; do
+                SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+                NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+                common_setup "$SITE" "$NODE"
+
+                i=$((i + 1))
+            done
+        else
+            processed_sites=()
+            common_setup "$MASTER_SITE" "$MASTER_NODE"
+            processed_sites+=("$MASTER_SITE")
+            local i=0
+            while [ $i -lt ${#WORKERS[@]} ]; do
+                SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+                NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+                if [[ ! " ${processed_sites[@]} " =~ " ${SITE} " ]]; then
+                    common_setup "$SITE" "$NODE"
+                    processed_sites+=("$SITE")
+                else
+                    echo "Skipping $NODE since it has already been processed"
+                fi
+
+                i=$((i + 1))
+            done
+        fi
         # Setup Spark master and workers
         setup_master
         setup_workers $FAST_MODE
