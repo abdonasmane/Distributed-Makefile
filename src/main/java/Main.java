@@ -8,14 +8,19 @@ import java.io.File;
 public class Main {
     public static void main(String[] args) throws IOException {
         long startGlobalStartTime = System.nanoTime();
-        if (args.length < 3) {
-            System.out.println("Usage: java Main <path-to-makefile> <target> <spark://spark_master_ip:port>");
+        if (args.length < 4) {
+            System.out.println("Usage: java Main <path-to-makefile> <target> <spark://spark_master_ip:port> <nfs-mode=NFS/NO_NFS>");
             return;
         }
 
         String makefilePath = args[0];
         String target = args[1];
         String sparkUrl = args[2];
+        String nfs = args[3];
+        if (!nfs.equals("NFS") && !nfs.equals("NO_NFS")) {
+            System.out.println("Invalid mode nfs-mode = " + nfs);
+            return;
+        }
 
         // Determine the working directory from the Makefile's path
         File makefile = new File(makefilePath);
@@ -63,7 +68,7 @@ public class Main {
             ? sc.master().split(":")[1].substring(2)
             : "localhost";
         long startExecutionTime = System.nanoTime();
-        if (isLocalhost.equals("localhost")) {
+        if (isLocalhost.equals("localhost") || nfs.equals("NFS")) {
             LocalDistributedMakeExecutor executor = new LocalDistributedMakeExecutor(
                 taskGraph, 
                 parser.getCommands(), 
@@ -75,7 +80,6 @@ public class Main {
             DistributedMakeExecutor executor = new DistributedMakeExecutor(
                 taskGraph, 
                 parser.getCommands(), 
-                parser.getTargets(), 
                 workingDirectory, 
                 serversPort, 
                 fileLocatorPort, 

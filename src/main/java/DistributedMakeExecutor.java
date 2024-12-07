@@ -1,8 +1,6 @@
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,18 +15,16 @@ public class DistributedMakeExecutor implements Serializable {
     private static final long serialVersionUID = 1L;
     private TaskGraph taskGraph;
     private Map<String, List<String>> commands;
-    private Map<String, List<String>> targets;
     private Map<String, Set<String>> dependenciesTree;
     private String workingDirectory;
     private int serversPort;
     private int fileLocatorPort;
     private JavaSparkContext sc;
 
-    public DistributedMakeExecutor(TaskGraph taskGraph, Map<String, List<String>> commands, Map<String, List<String>> targets, String workingDirectory, int serversPort, int fileLocatorPort, JavaSparkContext sc) {
+    public DistributedMakeExecutor(TaskGraph taskGraph, Map<String, List<String>> commands, String workingDirectory, int serversPort, int fileLocatorPort, JavaSparkContext sc) {
         this.taskGraph = taskGraph;
         this.dependenciesTree = taskGraph.getDependenciesTree();
         this.commands = commands;
-        this.targets = targets;
         this.workingDirectory = workingDirectory;
         this.serversPort = serversPort;
         this.fileLocatorPort = fileLocatorPort;
@@ -40,7 +36,6 @@ public class DistributedMakeExecutor implements Serializable {
         List<List<String>> executionOrder = taskGraph.getTopologicalOrder();
         // Broadcast variables
         Broadcast<Map<String, List<String>>> broadcastCommands = sc.broadcast(commands);
-        Broadcast<Map<String, List<String>>> broadcastTargets = sc.broadcast(targets);
         Broadcast<Map<String, Set<String>>> broadcastDependenciesTree = sc.broadcast(dependenciesTree);
         Broadcast<String> broadcastWorkingDirectory = sc.broadcast(workingDirectory);
         Broadcast<Integer> broadcastServerPort = sc.broadcast(serversPort);

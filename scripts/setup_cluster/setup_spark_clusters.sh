@@ -212,9 +212,10 @@ launch_file_locator_server() {
 # Submit Spark application
 submit_spark_app() {
     PATH_TO_TARGET=$1
+    NFS_MODE=$2
     echo -e "${CYAN}Submitting Spark app from ${YELLOW}$MASTER_NODE${CYAN} (${YELLOW}$MASTER_SITE${CYAN})...${RESET}"
     ssh_exec "$MASTER_SITE" "$MASTER_NODE" "
-        $SPARK_HOME/bin/spark-submit --master spark://$MASTER_IP:$MASTER_PORT --deploy-mode client --class Main $PROJECT_HOME/target/distributed-make-project-1.0.jar $PATH_TO_TARGET $EXECUTED_TARGET spark://$MASTER_IP:$MASTER_PORT
+        $SPARK_HOME/bin/spark-submit --master spark://$MASTER_IP:$MASTER_PORT --deploy-mode client --class Main $PROJECT_HOME/target/distributed-make-project-1.0.jar $PATH_TO_TARGET $EXECUTED_TARGET spark://$MASTER_IP:$MASTER_PORT $NFS_MODE
     "
 }
 
@@ -255,17 +256,28 @@ main() {
     EXECUTED_TARGET=$5
     USER_NAME=$6
     FAST_MODE=$7
+    NFS=$8
     TARGET_PATH=$PROJECT_HOME/target/classes
 
-    if [ $# -ne 7 ]; then
-        echo "Usage: $0 CONFIG_FILE PATH_TO_TARGET PROJECT_HOME SPARK_HOME EXECUTED_TARGET USER_NAME FAST_MODE=enable"
+    if [ $# -ne 8 ]; then
+        echo "Usage: $0 CONFIG_FILE PATH_TO_TARGET PROJECT_HOME SPARK_HOME EXECUTED_TARGET USER_NAME FAST_MODE=enable/disable NFS_MODE=NFS/NO_NFS"
         exit 1
+    fi
+
+    if [ "$NFS" == "NFS" ]; then
+        echo -e "${GREEN}NFS mode enabled : expecting nodes from the same site${RESET}"
+    elif [ "$NFS" == "NO_NFS" ]; then
+        echo -e "${YELLOW}NO_NFS mode enabled : nodes can be from different sites${RESET}"
+    else
+        echo -e "${RED}Invalid mode: NFS=$NFS${RESET}"
     fi
 
     if [ "$FAST_MODE" == "enable" ]; then
         echo -e "${GREEN}Fast mode is enabled !!!${RESET}"
-    else
+    elif [ "$FAST_MODE" == "disable" ]; then
         echo -e "${GREEN}Fast mode is disabled !!!${RESET}"
+    else
+        echo -e "${RED}Invalid mode: FAST_MODE=$FAST_MODE${RESET}"
     fi
 
     read_config "$CONFIG_FILE"
@@ -355,7 +367,7 @@ main() {
     # Launch FileLocatorServer only on the master
 
     # Submit the Spark application
-    submit_spark_app "$PATH_TO_TARGET"
+    submit_spark_app "$PATH_TO_TARGET" "$NFS"
 
     # open WebUis
     open_spark_webui
