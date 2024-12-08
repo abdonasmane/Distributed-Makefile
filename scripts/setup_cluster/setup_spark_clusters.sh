@@ -140,7 +140,8 @@ EOF
                 rm -f setup_spark_worker.sh
             " &
             i=$((i + 1))
-        done     
+        done 
+        wait
     else
         local i=0
         while [ $i -lt ${#WORKERS[@]} ]; do

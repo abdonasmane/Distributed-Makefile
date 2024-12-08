@@ -112,6 +112,7 @@ $SPARK_HOME/sbin/stop-master.sh
 $SPARK_HOME/sbin/start-master.sh
 $SPARK_HOME/sbin/stop-worker.sh
 $SPARK_HOME/sbin/start-worker.sh spark://$MASTER_IP:$MASTER_PORT
+$SPARK_HOME/sbin/stop-worker.sh
 EOF
     # Step 2: Copy the script to the remote machine
     scp_exec $LOCAL_SCRIPT "$MASTER_SITE" ""
@@ -156,7 +157,8 @@ EOF
             rm -f setup_spark_worker.sh
         " &
         i=$((i + 1))
-    done     
+    done 
+    wait    
     rm -f $LOCAL_SCRIPT
 }
 
@@ -169,7 +171,15 @@ clone_repo() {
         rm -rf ~/systemes-distribues/
         git clone https://github.com/abdonasmane/systemes-distribues.git
     "
-}
+    ssh_exec "$SITE" "$NODE" "
+        cd ~/systemes-distribues/src/test/resources/test6/
+        ./generateUnbalancedTreeMakefile.py 50_000_000 1000
+        cd ~/systemes-distribues/src/test/resources/test7/
+        ./generateAllToAllTree.py 10_000_000 5 2000
+        cd ~/systemes-distribues/src/test/resources/test8/
+        ./generateATATvarTargetsPerLev.py 10_000_000 5 5000
+    "
+ }
 
 # copying cloned repo to /tmp
 copy_repo_to_tmp() {
@@ -374,8 +384,7 @@ main() {
             launch_file_locator_server "$MY_PATH" &
             sleep 2
         fi
-        sanitized_path=$(echo "$MY_PATH" | tr '/' '_')
-        submit_spark_app "$MY_PATH" "$NFS" > $sanitized_path.log
+        submit_spark_app "$MY_PATH" "$NFS"
     done
     open_spark_webui
 }
