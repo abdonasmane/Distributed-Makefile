@@ -89,7 +89,6 @@ setup_master() {
 echo "export SPARK_MASTER_HOST=$MASTER_IP" > $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_MASTER_PORT=$MASTER_PORT" >> $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_WORKER_INSTANCES=1" >> $SPARK_HOME/conf/spark-env.sh
-# echo "export SPARK_WORKER_CORES=20" >> $SPARK_HOME/conf/spark-env.sh
 $SPARK_HOME/sbin/stop-master.sh
 $SPARK_HOME/sbin/start-master.sh
 $SPARK_HOME/sbin/stop-worker.sh
@@ -119,7 +118,6 @@ setup_workers() {
 echo "export SPARK_MASTER=spark://$MASTER_IP:$MASTER_PORT" > $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_WORKER_WEBUI_PORT=8080" >> $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_WORKER_INSTANCES=1" >> $SPARK_HOME/conf/spark-env.sh
-# echo "export SPARK_WORKER_CORES=20" >> $SPARK_HOME/conf/spark-env.sh
 $SPARK_HOME/sbin/stop-worker.sh
 $SPARK_HOME/sbin/start-worker.sh spark://$MASTER_IP:$MASTER_PORT
 EOF
@@ -131,13 +129,13 @@ EOF
             echo -e "${CYAN}Setting up Spark worker on ${YELLOW}$NODE${CYAN} (${YELLOW}$SITE${CYAN})...${RESET}"
 
             # Step 2: Copy the script to the remote worker node
-            scp_exec $LOCAL_SCRIPT "$SITE" ""
+            scp_exec $LOCAL_SCRIPT "$SITE" "setup_spark_worker_$NODE.sh"
 
             # Step 3: Run the script remotely on the worker node
             ssh_exec "$SITE" "$NODE" "
-                chmod +x setup_spark_worker.sh &&
-                ./setup_spark_worker.sh &&
-                rm -f setup_spark_worker.sh
+                chmod +x setup_spark_worker_$NODE.sh &&
+                ./setup_spark_worker_$NODE.sh &&
+                rm -f setup_spark_worker_$NODE.sh
             " &
             i=$((i + 1))
         done 
@@ -255,7 +253,7 @@ submit_spark_app() {
     NFS_MODE=$2
     echo -e "${CYAN}Submitting Spark app from ${YELLOW}$MASTER_NODE${CYAN} (${YELLOW}$MASTER_SITE${CYAN})...${RESET}"
     ssh_exec "$MASTER_SITE" "$MASTER_NODE" "
-        $SPARK_HOME/bin/spark-submit --master spark://$MASTER_IP:$MASTER_PORT --deploy-mode client --class Main $PROJECT_HOME/target/distributed-make-project-1.0.jar $PATH_TO_TARGET $EXECUTED_TARGET spark://$MASTER_IP:$MASTER_PORT $NFS_MODE
+        $SPARK_HOME/bin/spark-submit --master spark://$MASTER_IP:$MASTER_PORT --driver-memory 5G --executor-memory 50G --deploy-mode client --class Main $PROJECT_HOME/target/distributed-make-project-1.0.jar $PATH_TO_TARGET $EXECUTED_TARGET spark://$MASTER_IP:$MASTER_PORT $NFS_MODE
     "
 }
 

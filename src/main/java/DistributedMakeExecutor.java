@@ -143,17 +143,17 @@ public class DistributedMakeExecutor implements Serializable {
                         }
                     }
 
-                    // for (String broughtFile : broughtFiles) {
-                    //     File sourceFile = new File(tempDirPath + File.separator + broughtFile);
-                    //     File destFile = new File(broadcastWorkingDirectory.value() + File.separator + broughtFile);
-                    //     if (!destFile.exists()) {
-                    //         try {
-                    //             Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.ATOMIC_MOVE);
-                    //         } catch (IOException e) {
-                    //             System.err.println("\u001B[31mError moving file " + sourceFile + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
-                    //         }
-                    //     }
-                    // }
+                    for (String broughtFile : broughtFiles) {
+                        File sourceFile = new File(tempDirPath + File.separator + broughtFile);
+                        File destFile = new File(broadcastWorkingDirectory.value() + File.separator + broughtFile);
+                        if (!destFile.exists()) {
+                            try {
+                                Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.ATOMIC_MOVE);
+                            } catch (IOException e) {
+                                System.err.println("\u001B[31mError moving file " + sourceFile + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
+                            }
+                        }
+                    }
 
                     // Print the new files that were generated
                     if (!newFiles.isEmpty()) {

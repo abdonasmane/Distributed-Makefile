@@ -48,8 +48,8 @@ public class Main {
             System.err.println("\u001B[31mError: Cyclic dependencies detected. Cannot execute tasks.\u001B[0m");
             System.exit(1);
         }
-        taskGraph.printGraph();
-        taskGraph.printExecutionOrder();
+        // taskGraph.printGraph();
+        // taskGraph.printExecutionOrder();
         long endBuildGraphTime = System.nanoTime();
 
         // Initialize Spark context
