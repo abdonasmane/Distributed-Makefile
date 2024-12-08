@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 import sys
 
-def generate_makefile(interval_length, num_lists):
+def generate_balanced_tree_makefile(interval_length, num_lists):
     with open("Makefile", "w") as f:
         f.write("all:\t")
         for i in range(1, num_lists):
             f.write(f"list{i} ")
         f.write(f"list{num_lists}\n")
         f.write("\tcp list1.txt list.txt\n")
-        # for i in range(1, num_lists):
+        # for i in range(1, num_lists + 1):
         #     f.write(f"cat list{i}.txt >> list.txt\n")
-        # f.write(f"cat list{num_lists}.txt >> list.txt\n")
 
         f.write("premiera:\tpremier.c\n")
         f.write("\tgcc premier.c -o premier -lm\n")
@@ -26,11 +25,11 @@ def generate_makefile(interval_length, num_lists):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: python generate_makefile.py <interval_length> <num_lists>")
+        print("Usage: python generateMakefile.py <interval_length> <num_lists>")
         sys.exit(1)
 
     interval_length = int(sys.argv[1])
     num_lists = int(sys.argv[2])
 
-    generate_makefile(interval_length, num_lists)
+    generate_balanced_tree_makefile(interval_length, num_lists)
     print("Makefile generated successfully!")
