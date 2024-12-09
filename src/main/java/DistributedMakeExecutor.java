@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +11,10 @@ import java.util.UUID;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.broadcast.Broadcast;
 import org.apache.spark.api.java.JavaRDD;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class DistributedMakeExecutor implements Serializable {
@@ -52,21 +57,25 @@ public class DistributedMakeExecutor implements Serializable {
 
             // Execute tasks at this level
             List<Boolean> taskResults = tasksRDD.map(target -> {
+                List<String> targetCommands = broadcastCommands.value().get(target);
+                if (targetCommands == null) {
+                    // System.out.println("\u001B[33mSkipping target '" + target + "' (no commands).\u001B[0m");
+                    return true;
+                }
+                String tempDirName = "temp_" + target + "_" + UUID.randomUUID();
+                String tempDirPath = broadcastWorkingDirectory.value() + File.separator + tempDirName;
+                File tempDir = new File(tempDirPath);
+
+                // Step 1: Create and copy files to temporary directory
+                if (!tempDir.mkdir()) {
+                    File filePath = new File(tempDir, "failed_to_create_directroy.txt");
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                        writer.write("Failed to create temporary directory: " + tempDirPath);
+                    }
+                    return false;
+                }
                 try {
                     // Retrieve commands for the target
-                    List<String> targetCommands = broadcastCommands.value().get(target);
-                    if (targetCommands == null) {
-                        // System.out.println("\u001B[33mSkipping target '" + target + "' (no commands).\u001B[0m");
-                        return true;
-                    }
-                    String tempDirName = "temp_" + target + "_" + UUID.randomUUID();
-                    String tempDirPath = broadcastWorkingDirectory.value() + File.separator + tempDirName;
-                    File tempDir = new File(tempDirPath);
-
-                    // Step 1: Create and copy files to temporary directory
-                    if (!tempDir.mkdir()) {
-                        throw new IOException("Failed to create temporary directory: " + tempDirPath);
-                    }
                     // FileUtils.copyDirectory(new File(broadcastWorkingDirectory.value()), tempDir, pathname -> {
                     //     return !pathname.getName().startsWith("temp_");
                     // });
@@ -89,6 +98,11 @@ public class DistributedMakeExecutor implements Serializable {
                                     File fileToCheck = new File(broadcastWorkingDirectory.value() + File.separator + file);
                                     if (!fileToCheck.exists()) {
                                         if (!GetFile.retrieveFile(machineIp, broadcastServerPort.value(), file, tempDirPath + File.separator + file)) {
+                                            // Create the file and write the string
+                                            File filePath = new File(tempDir, "failed_in_retrieve_file.txt");
+                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                                                writer.write("Error: Cannot transfer file " + file + " as its location is unknown.");
+                                            }
                                             System.err.println("\u001B[31mError: Cannot transfer file " + file + " as its location is unknown.\u001B[0m");
                                             return false;
                                         }
@@ -98,6 +112,10 @@ public class DistributedMakeExecutor implements Serializable {
                                         try {
                                             Files.copy(fileToCheck.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
                                         } catch (IOException e) {
+                                            File filePath = new File(tempDir, "failed_to_copy_file.txt");
+                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                                                writer.write("Error copying file " + fileToCheck + " to " + destFile + ": " + e.getMessage());
+                                            }
                                             System.err.println("\u001B[31mError copying file " + fileToCheck + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
                                             return false;
                                         }
@@ -122,6 +140,10 @@ public class DistributedMakeExecutor implements Serializable {
                         if (exitCode != 0) {
                             // System.out.println("\t\u001B[32mCommand succeeded: " + command + "\u001B[0m");
                         // } else {
+                            File filePath = new File(tempDir, "failed_to_execute_command.txt");
+                            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                                writer.write("Command failed: " + command + " || Exit code : " + exitCode);
+                            }
                             System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
                             return false;
                         }
@@ -137,6 +159,10 @@ public class DistributedMakeExecutor implements Serializable {
                             try {
                                 Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
                             } catch (IOException e) {
+                                File filePath = new File(tempDir, "failed_to_move_file.txt");
+                                try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                                    writer.write("Error moving file " + sourceFile + " to " + destFile + ": " + e.getMessage());
+                                }
                                 System.err.println("\u001B[31mError moving file " + sourceFile + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
                             }
                         }
@@ -164,6 +190,10 @@ public class DistributedMakeExecutor implements Serializable {
                         if (!broadcastMasterIp.value().equals("localhost")) {
                             // Store file ownership for the target
                             if (!StoreFileOwner.storeFileOwner(broadcastMasterIp.value(), broadcastFileLocatorPort.value(), target, newFiles)) {
+                                File filePath = new File(tempDir, "failed_to_store_file_owner.txt");
+                                try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                                    writer.write("Error: Failed to store file ownership for target " + target);
+                                }
                                 System.err.println("\u001B[31mError: Failed to store file ownership for target '" + target + "'.\u001B[0m");
                                 return false;
                             }
@@ -186,6 +216,10 @@ public class DistributedMakeExecutor implements Serializable {
                     // }));
                     return true;
                 } catch (Exception e) {
+                    File filePath = new File(tempDir, "failed_someone_throw_exception.txt");
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                        writer.write("Task failed: " + target + " || Error: " + e.getMessage());
+                    }
                     System.err.println("\u001B[31mTask failed: " + target + " || Error: " + e.getMessage() + "\u001B[0m");
                     return false;
                 }
