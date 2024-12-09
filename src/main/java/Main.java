@@ -42,10 +42,8 @@ public class Main {
         long endParsingTime = System.nanoTime();
 
         // Build the task graph
-        String isLocalhost = sc.master().contains(":") 
-            ? sc.master().split(":")[1].substring(2)
-            : "localhost";
-        boolean localMod = isLocalhost.equals("localhost") || nfs.equals("NFS");
+        boolean localModCheck = sparkUrl.startsWith("local");
+        boolean localMod = localModCheck || nfs.equals("NFS");
         long startBuildGraphTime = System.nanoTime();
         TaskGraph taskGraph = new TaskGraph(parser.getTargets(), target, localMod);
         if (taskGraph.getTopologicalOrder() == null) {
@@ -69,6 +67,9 @@ public class Main {
         int serversPort = 8888;
         int fileLocatorPort = 9999;
         long startExecutionTime = System.nanoTime();
+        String isLocalhost = sc.master().contains(":") 
+        ? sc.master().split(":")[1].substring(2)
+        : "localhost";
         if (isLocalhost.equals("localhost") || nfs.equals("NFS")) {
             LocalDistributedMakeExecutor executor = new LocalDistributedMakeExecutor(
                 taskGraph, 

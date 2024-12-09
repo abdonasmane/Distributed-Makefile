@@ -171,6 +171,11 @@ clone_repo() {
         rm -rf ~/systemes-distribues/
         git clone https://github.com/abdonasmane/systemes-distribues.git
     "
+    ssh_exec "$SITE" "$NODE" "
+        cp /home/anasmane/makefiles_tests/Makefile6 ~/systemes-distribues/src/test/resources/test6/Makefile
+        cp /home/anasmane/makefiles_tests/Makefile7 ~/systemes-distribues/src/test/resources/test7/Makefile
+        cp /home/anasmane/makefiles_tests/Makefile8 ~/systemes-distribues/src/test/resources/test8/Makefile
+    "
 }
 
 # copying cloned repo to /tmp
@@ -458,7 +463,7 @@ main() {
     submit_spark_app "$PATH_TO_TARGET" "$NFS"
 
     # open WebUis
-    open_spark_webui
+    # open_spark_webui
 
 }
 
