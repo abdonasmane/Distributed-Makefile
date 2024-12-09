@@ -63,10 +63,11 @@ read_makefiles() {
     FILE_OF_MAKEFILES=$1
     # Initialize an empty array
     MAKEFILES_PATHS=()
-
+    echo -e "${CYAN}Reading Makefiles to test...${RESET}"
     # Read the file line by line
     while IFS= read -r line; do
         MAKEFILES_PATHS+=("$line")  # Append each line to the array
+        echo -e "${GREEN}Added $line to the array of tests${RESET}"
     done < "$FILE_OF_MAKEFILES"
 
     # Iterate over the array
@@ -107,12 +108,10 @@ setup_master() {
 echo "export SPARK_MASTER_HOST=$MASTER_IP" > $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_MASTER_PORT=$MASTER_PORT" >> $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_WORKER_INSTANCES=1" >> $SPARK_HOME/conf/spark-env.sh
-# echo "export SPARK_WORKER_CORES=20" >> $SPARK_HOME/conf/spark-env.sh
 $SPARK_HOME/sbin/stop-master.sh
 $SPARK_HOME/sbin/start-master.sh
 $SPARK_HOME/sbin/stop-worker.sh
 $SPARK_HOME/sbin/start-worker.sh spark://$MASTER_IP:$MASTER_PORT
-$SPARK_HOME/sbin/stop-worker.sh
 EOF
     # Step 2: Copy the script to the remote machine
     scp_exec $LOCAL_SCRIPT "$MASTER_SITE" ""
@@ -137,7 +136,6 @@ setup_workers() {
 echo "export SPARK_MASTER=spark://$MASTER_IP:$MASTER_PORT" > $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_WORKER_WEBUI_PORT=8080" >> $SPARK_HOME/conf/spark-env.sh
 echo "export SPARK_WORKER_INSTANCES=1" >> $SPARK_HOME/conf/spark-env.sh
-# echo "export SPARK_WORKER_CORES=20" >> $SPARK_HOME/conf/spark-env.sh
 $SPARK_HOME/sbin/stop-worker.sh
 $SPARK_HOME/sbin/start-worker.sh spark://$MASTER_IP:$MASTER_PORT
 EOF
@@ -148,17 +146,17 @@ EOF
         echo -e "${CYAN}Setting up Spark worker on ${YELLOW}$NODE${CYAN} (${YELLOW}$SITE${CYAN})...${RESET}"
 
         # Step 2: Copy the script to the remote worker node
-        scp_exec $LOCAL_SCRIPT "$SITE" ""
+        scp_exec $LOCAL_SCRIPT "$SITE" "setup_spark_worker_$NODE.sh"
 
         # Step 3: Run the script remotely on the worker node
         ssh_exec "$SITE" "$NODE" "
-            chmod +x setup_spark_worker.sh &&
-            ./setup_spark_worker.sh &&
-            rm -f setup_spark_worker.sh
+            chmod +x setup_spark_worker_$NODE.sh &&
+            ./setup_spark_worker_$NODE.sh &&
+            rm -f setup_spark_worker_$NODE.sh
         " &
         i=$((i + 1))
     done 
-    wait    
+    wait
     rm -f $LOCAL_SCRIPT
 }
 
@@ -174,11 +172,15 @@ clone_repo() {
     ssh_exec "$SITE" "$NODE" "
         cd ~/systemes-distribues/src/test/resources/test6/
         ./generateUnbalancedTreeMakefile.py 50_000_000 1000
-        cd ~/systemes-distribues/src/test/resources/test7/
-        ./generateAllToAllTree.py 10_000_000 5 2000
-        cd ~/systemes-distribues/src/test/resources/test8/
-        ./generateATATvarTargetsPerLev.py 10_000_000 5 5000
     "
+    # ssh_exec "$SITE" "$NODE" "
+    #     cd ~/systemes-distribues/src/test/resources/test6/
+    #     ./generateUnbalancedTreeMakefile.py 50_000_000 1000
+    #     cd ~/systemes-distribues/src/test/resources/test7/
+    #     ./generateAllToAllTree.py 10_000_000 5 2000
+    #     cd ~/systemes-distribues/src/test/resources/test8/
+    #     ./generateATATvarTargetsPerLev.py 10_000_000 5 5000
+    # "
  }
 
 # copying cloned repo to /tmp
@@ -199,6 +201,7 @@ copy_repo_to_tmp() {
         " &
         i=$((i + 1))
     done
+    wait
 }
 
 # Common setup for all nodes
@@ -241,7 +244,7 @@ submit_spark_app() {
     NFS_MODE=$2
     echo -e "${CYAN}Submitting Spark app from ${YELLOW}$MASTER_NODE${CYAN} (${YELLOW}$MASTER_SITE${CYAN})...${RESET}"
     ssh_exec "$MASTER_SITE" "$MASTER_NODE" "
-        $SPARK_HOME/bin/spark-submit --master spark://$MASTER_IP:$MASTER_PORT --deploy-mode client --class Main $PROJECT_HOME/target/distributed-make-project-1.0.jar $PATH_TO_TARGET $EXECUTED_TARGET spark://$MASTER_IP:$MASTER_PORT $NFS_MODE
+        $SPARK_HOME/bin/spark-submit --master spark://$MASTER_IP:$MASTER_PORT --driver-memory 5G --executor-memory 250G --deploy-mode client --class Main $PROJECT_HOME/target/distributed-make-project-1.0.jar $PATH_TO_TARGET $EXECUTED_TARGET spark://$MASTER_IP:$MASTER_PORT $NFS_MODE
     "
 }
 
@@ -335,7 +338,6 @@ main() {
     wait
     if [ "$TMP" == "TMP" ]; then
         copy_repo_to_tmp
-        wait
     fi
     if [ "$TMP" == "TMP" ]; then
         common_setup "$MASTER_SITE" "$MASTER_NODE" &
@@ -369,6 +371,7 @@ main() {
     # Setup Spark master and workers
     setup_master
     setup_workers
+    echo -e "${YELLOW}Pre-processing  makefiles ....${RESET}"
     for MY_PATH in "${MAKEFILES_PATHS[@]}"; do
         echo -e "${GREEN}Processing $MY_PATH ...${RESET}"
         if [ "$NFS" == "NO_NFS" ]; then
