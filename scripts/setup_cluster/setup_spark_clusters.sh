@@ -172,7 +172,7 @@ clone_repo() {
         rm -rf ~/systemes-distribues/
         git clone https://github.com/abdonasmane/systemes-distribues.git
         cd ~/systemes-distribues/
-        git checkout 8e12bb3510b3d7afd0113d2d324974472aad3a74
+        git checkout save-me-branch
     "
 }
 
