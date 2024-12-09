@@ -259,7 +259,7 @@ submit_spark_app() {
     NFS_MODE=$2
     echo -e "${CYAN}Submitting Spark app from ${YELLOW}$MASTER_NODE${CYAN} (${YELLOW}$MASTER_SITE${CYAN})...${RESET}"
     ssh_exec "$MASTER_SITE" "$MASTER_NODE" "
-        $SPARK_HOME/bin/spark-submit --master spark://$MASTER_IP:$MASTER_PORT --driver-memory 5G --executor-memory 50G --deploy-mode client --class Main $PROJECT_HOME/target/distributed-make-project-1.0.jar $PATH_TO_TARGET $EXECUTED_TARGET spark://$MASTER_IP:$MASTER_PORT $NFS_MODE
+        $SPARK_HOME/bin/spark-submit --master spark://$MASTER_IP:$MASTER_PORT --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main $PROJECT_HOME/target/distributed-make-project-1.0.jar $PATH_TO_TARGET $EXECUTED_TARGET spark://$MASTER_IP:$MASTER_PORT $NFS_MODE
     "
 }
 
