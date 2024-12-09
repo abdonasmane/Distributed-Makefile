@@ -12,10 +12,12 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.broadcast.Broadcast;
 import org.apache.spark.api.java.JavaRDD;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class DistributedMakeExecutor implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -136,13 +138,23 @@ public class DistributedMakeExecutor implements Serializable {
                         processBuilder.directory(tempDir);
                         processBuilder.inheritIO();
                         Process process = processBuilder.start();
+                        StringBuilder errorOutput = new StringBuilder();
+                        try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+                            String line;
+                            while ((line = errorReader.readLine()) != null) {
+                                errorOutput.append(line).append(System.lineSeparator());
+                            }
+                        }
                         int exitCode = process.waitFor();
                         if (exitCode != 0) {
                             // System.out.println("\t\u001B[32mCommand succeeded: " + command + "\u001B[0m");
                         // } else {
                             File filePath = new File(tempDir, "failed_to_execute_command.txt");
                             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-                                writer.write("Command failed: " + command + " || Exit code : " + exitCode);
+                                writer.write("Command failed: " + command + " || Exit code : " + exitCode +"\n");
+                                writer.write("Error details: ");
+                                writer.write(System.lineSeparator());
+                                writer.write(errorOutput.toString());
                             }
                             System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
                             return false;
@@ -275,7 +287,7 @@ public class DistributedMakeExecutor implements Serializable {
             }
         }
         // Stop SparkContext
-        sc.stop();
+        // sc.stop();
     }
 }
 
