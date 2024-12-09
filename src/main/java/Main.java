@@ -96,7 +96,7 @@ public class Main {
         long globalExecutionTime = endGlobalEndTime - startGlobalStartTime;
 
         System.out.println("\n\u001B[32m==============================\u001B[0m");
-        System.out.println("\u001B[32m  Global Execution Time : " + (globalExecutionTime / 1e9) + " seconds  \u001B[0m");
+        System.out.println("\u001B[32m  Global Time : " + (globalExecutionTime / 1e9) + " seconds  \u001B[0m");
         System.out.println("\u001B[32m==============================\u001B[0m");
 
         System.out.println("\u001B[33m--------------------------------\u001B[0m");
