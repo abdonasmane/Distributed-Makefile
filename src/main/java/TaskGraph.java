@@ -7,10 +7,12 @@ public class TaskGraph implements Serializable {
     private String rootTarget;
     private static final Map<String, Set<String>> assocTargetAllDependencies = new HashMap<>();
 
-    public TaskGraph(Map<String, List<String>> targets, String rootTarget) {
+    public TaskGraph(Map<String, List<String>> targets, String rootTarget, boolean localMod) {
         this.rootTarget = rootTarget;
         buildGraph(targets);
-        populateAllDependencies(targets);
+        if (!localMod) {
+            populateAllDependencies(targets);
+        }
     }
 
     public List<List<String>> getTopologicalOrder() {

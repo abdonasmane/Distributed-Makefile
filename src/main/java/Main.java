@@ -42,8 +42,12 @@ public class Main {
         long endParsingTime = System.nanoTime();
 
         // Build the task graph
+        String isLocalhost = sc.master().contains(":") 
+            ? sc.master().split(":")[1].substring(2)
+            : "localhost";
+        boolean localMod = isLocalhost.equals("localhost") || nfs.equals("NFS");
         long startBuildGraphTime = System.nanoTime();
-        TaskGraph taskGraph = new TaskGraph(parser.getTargets(), target);
+        TaskGraph taskGraph = new TaskGraph(parser.getTargets(), target, localMod);
         if (taskGraph.getTopologicalOrder() == null) {
             System.err.println("\u001B[31mError: Cyclic dependencies detected. Cannot execute tasks.\u001B[0m");
             System.exit(1);
@@ -64,9 +68,6 @@ public class Main {
         // Execute the Makefile
         int serversPort = 8888;
         int fileLocatorPort = 9999;
-        String isLocalhost = sc.master().contains(":") 
-            ? sc.master().split(":")[1].substring(2)
-            : "localhost";
         long startExecutionTime = System.nanoTime();
         if (isLocalhost.equals("localhost") || nfs.equals("NFS")) {
             LocalDistributedMakeExecutor executor = new LocalDistributedMakeExecutor(
