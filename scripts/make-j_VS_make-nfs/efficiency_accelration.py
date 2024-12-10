@@ -65,26 +65,42 @@ for num_machines, par_time in zip(machine_counts, parallel_times):
     accelerations.append(acceleration)
     efficiencies.append(efficiency)
 
+perfect_seq_times = [time * num_machine for time, num_machine in zip(parallel_times, machine_counts)]
+perfect_accelerations = []
+perfect_efficiencies = []
+
+for num_machines, par_time, perfetc_seq_time in zip(machine_counts, parallel_times, perfect_seq_times):
+    acceleration = perfetc_seq_time / par_time if par_time > 0 else 0.0
+    efficiency = perfetc_seq_time / (num_machines * par_time) if par_time > 0 else 0.0
+    perfect_accelerations.append(acceleration)
+    perfect_efficiencies.append(efficiency)
+
+
 # Plot acceleration
 plt.figure(figsize=(10, 6))
-plt.plot(machine_counts, accelerations, marker="o", linestyle="-", color="b")
+plt.plot(machine_counts, accelerations, marker="o", linestyle="-", color="b", label="Measured Acceleration")
+plt.plot(machine_counts, perfect_accelerations, marker="o", linestyle="-", color="orange", label="Perfect Acceleration")
 plt.title(f"Acceleration vs Number of Machines ({test_suffix})")
 plt.xlabel("Number of Machines")
 plt.ylabel("Acceleration (Seq Time / Parallel Time)")
 plt.grid(True)
 plt.xticks(machine_counts)  # Ensure all machine counts are shown on the x-axis
+plt.legend(loc="upper left")  # Add legend to the upper-left corner
 plt.tight_layout()
 plt.savefig(graph_acc_filename)
 print(f"Acceleration graph saved as {graph_acc_filename}.")
 
 # Plot efficiency
 plt.figure(figsize=(10, 6))
-plt.plot(machine_counts, efficiencies, marker="o", linestyle="-", color="g")
+plt.plot(machine_counts, efficiencies, marker="o", linestyle="-", color="g", label="Measured Efficiency")
+plt.plot(machine_counts, perfect_efficiencies, marker="o", linestyle="-", color="orange", label="Perfect Efficiency")
 plt.title(f"Efficiency vs Number of Machines ({test_suffix})")
 plt.xlabel("Number of Machines")
 plt.ylabel("Efficiency (Seq Time / (Machines × Parallel Time))")
 plt.grid(True)
 plt.xticks(machine_counts)  # Ensure all machine counts are shown on the x-axis
+plt.legend(loc="upper left")  # Add legend to the upper-left corner
 plt.tight_layout()
 plt.savefig(graph_eff_filename)
 print(f"Efficiency graph saved as {graph_eff_filename}.")
+

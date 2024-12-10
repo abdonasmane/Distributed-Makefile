@@ -199,6 +199,7 @@ copy_repo_to_tmp() {
             " &
             i=$((i + 1))
         done
+        wait
     else
         ssh_exec "$MASTER_SITE" "$MASTER_NODE" "
             rm -rf /tmp/systemes-distribues
@@ -363,7 +364,6 @@ main() {
         wait
         if [ "$TMP" == "TMP" ]; then
             copy_repo_to_tmp "$FAST_MODE"
-            wait
         fi
         if [ "$TMP" == "TMP" ]; then
             common_setup "$MASTER_SITE" "$MASTER_NODE" &
