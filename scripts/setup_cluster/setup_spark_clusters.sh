@@ -407,9 +407,8 @@ main() {
                 launch_serve_file "$SITE" "$NODE" "$PATH_TO_TARGET" &
                 i=$((i + 1))
             done
-            sleep 2
             launch_file_locator_server "$PATH_TO_TARGET" &
-            sleep 2
+            sleep 10
         fi
     else
         clone_repo "$MASTER_SITE" "$MASTER_NODE"

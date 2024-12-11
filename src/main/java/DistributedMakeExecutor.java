@@ -110,19 +110,44 @@ public class DistributedMakeExecutor implements Serializable {
 
                     // Execute commands for the target
                     // System.out.println("\u001B[34mExecuting target: " + target + "\u001B[0m");
+                    // for (String command : targetCommands) {
+                    //     // System.out.println("\t\u001B[36mRunning: " + command + "\u001B[0m");
+                    //     ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", command);
+                    //     processBuilder.directory(tempDir);
+                    //     processBuilder.inheritIO();
+                    //     Process process = processBuilder.start();
+                    //     int exitCode = process.waitFor();
+                    //     if (exitCode != 0) {
+                    //         // System.out.println("\t\u001B[32mCommand succeeded: " + command + "\u001B[0m");
+                    //     // } else {
+                    //         System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
+                    //         return false;
+                    //     }
+                    // }
                     for (String command : targetCommands) {
-                        // System.out.println("\t\u001B[36mRunning: " + command + "\u001B[0m");
-                        ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", command);
-                        processBuilder.directory(tempDir);
-                        processBuilder.inheritIO();
-                        Process process = processBuilder.start();
-                        int exitCode = process.waitFor();
-                        if (exitCode != 0) {
-                            // System.out.println("\t\u001B[32mCommand succeeded: " + command + "\u001B[0m");
-                        // } else {
-                            System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
-                            return false;
+                        int num_of_tries = 2;
+                        while (true) {
+                            // System.out.println("\t\u001B[36mRunning: " + command + "\u001B[0m");
+                            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", command);
+                            processBuilder.directory(tempDir);
+                            processBuilder.inheritIO();
+                            Process process = processBuilder.start();
+                            int exitCode = process.waitFor();
+                            if (exitCode == 0) {
+                                break;
+                                // System.out.println("\t\u001B[32mCommand succeeded: " + command + "\u001B[0m");
+                            // } else {
+                                // System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
+                                // return false;
+                            } else {
+                                num_of_tries--;
+                                if (num_of_tries < 0) {
+                                    System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
+                                    return false;
+                                }
+                            }
                         }
+        
                     }
                     // Get the list of files after running the commands
                     Set<String> newFiles = FileDetector.getNewOrModifiedFilesInDirectory(tempDirPath, initialFiles);
