@@ -125,7 +125,7 @@ public class DistributedMakeExecutor implements Serializable {
                     //     }
                     // }
                     for (String command : targetCommands) {
-                        int num_of_tries = 2;
+                        int num_of_tries = 3;
                         while (true) {
                             // System.out.println("\t\u001B[36mRunning: " + command + "\u001B[0m");
                             ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", command);

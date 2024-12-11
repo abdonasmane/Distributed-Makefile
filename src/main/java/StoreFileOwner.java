@@ -11,7 +11,7 @@ public class StoreFileOwner {
         while (number_of_tries > 0) {
             try (Socket socket = new Socket()) {
                 socket.connect(new InetSocketAddress(serverHost, serverPort), 500);
-                socket.setSoTimeout(1000);
+                // socket.setSoTimeout(1000);
                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 

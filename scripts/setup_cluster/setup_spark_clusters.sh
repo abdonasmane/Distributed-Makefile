@@ -172,10 +172,17 @@ clone_repo() {
         git clone https://github.com/abdonasmane/systemes-distribues.git
     "
     ssh_exec "$SITE" "$NODE" "
-        cp /home/anasmane/makefiles_tests/Makefile6 ~/systemes-distribues/src/test/resources/test6/Makefile
-        cp /home/anasmane/makefiles_tests/Makefile7 ~/systemes-distribues/src/test/resources/test7/Makefile
-        cp /home/anasmane/makefiles_tests/Makefile8 ~/systemes-distribues/src/test/resources/test8/Makefile
-        cp /home/anasmane/makefiles_tests/Makefile9 ~/systemes-distribues/src/test/resources/test9/Makefile
+        cd ~/systemes-distribues/src/test/resources/compressed_alea_tests/
+        tar -xf Makefile6.tar.gz
+        tar -xf Makefile7.tar.gz
+        tar -xf Makefile8.tar.gz
+        tar -xf Makefile9.tar.gz
+        mv Makefile6 ../test6/Makefile
+        mv Makefile7 ../test7/Makefile
+        mv Makefile8 ../test8/Makefile
+        mv Makefile9 ../test9/Makefile
+        cd ..
+        rm -rf compressed_alea_tests  
     "
 }
 
@@ -463,7 +470,7 @@ main() {
     submit_spark_app "$PATH_TO_TARGET" "$NFS"
 
     # open WebUis
-    # open_spark_webui
+    open_spark_webui
 
 }
 
