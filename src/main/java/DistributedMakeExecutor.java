@@ -73,35 +73,33 @@ public class DistributedMakeExecutor implements Serializable {
 
                     // // Get the initial set of files in the directory before executing commands
                     // Map<String, Long> initialFiles = FileDetector.getFilesInDirectory(tempDirPath);
-                    // Set<String> broughtFiles = new HashSet<>();
+                    Set<String> broughtFiles = new HashSet<>();
 
                     // Check and retrieve dependencies
-                    if (!broadcastMasterIp.value().equals("localhost")) {
-                        // direct dependencie
-                        // List<String> directTargetDependencies = broadcastTargets.value().get(target);
-                        Set<String> allTargetDependencies = broadcastDependenciesTree.value().getOrDefault(target, null);
-                        if (allTargetDependencies != null) {
-                            Map<String, Set<String>> assocIpFiles = GetTargetExecutor.retrieveTargetExecutor(broadcastMasterIp.value(), broadcastFileLocatorPort.value(), allTargetDependencies);
-                            // initial stages
-                            for (String machineIp : assocIpFiles.keySet()) {
-                                Set<String> files = assocIpFiles.get(machineIp);
-                                for (String file : files) {
-                                    // File fileToCheck = new File(broadcastWorkingDirectory.value() + File.separator + file);
-                                    // if (!fileToCheck.exists()) {
-                                        if (!GetFile.retrieveFile(machineIp, broadcastServerPort.value(), file, tempDirPath + File.separator + file)) {
-                                            System.err.println("\u001B[31mError: Cannot transfer file " + file + " as its location is unknown.\u001B[0m");
-                                            return false;
-                                        }
-                                        // broughtFiles.add(file);
-                                    // } else {
-                                    //     File destFile = new File(tempDirPath + File.separator + file);
-                                    //     try {
-                                    //         Files.copy(fileToCheck.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
-                                    //     } catch (IOException e) {
-                                    //         System.err.println("\u001B[31mError copying file " + fileToCheck + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
-                                    //         return false;
-                                    //     }
-                                    // }
+                    // direct dependencie
+                    // List<String> directTargetDependencies = broadcastTargets.value().get(target);
+                    Set<String> allTargetDependencies = broadcastDependenciesTree.value().getOrDefault(target, null);
+                    if (allTargetDependencies != null) {
+                        Map<String, Set<String>> assocIpFiles = GetTargetExecutor.retrieveTargetExecutor(broadcastMasterIp.value(), broadcastFileLocatorPort.value(), allTargetDependencies);
+                        // initial stages
+                        for (String machineIp : assocIpFiles.keySet()) {
+                            Set<String> files = assocIpFiles.get(machineIp);
+                            for (String file : files) {
+                                File fileToCheck = new File(broadcastWorkingDirectory.value() + File.separator + file);
+                                if (!fileToCheck.exists()) {
+                                    if (!GetFile.retrieveFile(machineIp, broadcastServerPort.value(), file, tempDirPath + File.separator + file)) {
+                                        System.err.println("\u001B[31mError: Cannot transfer file " + file + " as its location is unknown.\u001B[0m");
+                                        return false;
+                                    }
+                                    broughtFiles.add(file);
+                                } else {
+                                    File destFile = new File(tempDirPath + File.separator + file);
+                                    try {
+                                        Files.copy(fileToCheck.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+                                    } catch (IOException e) {
+                                        System.err.println("\u001B[31mError copying file " + fileToCheck + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
+                                        return false;
+                                    }
                                 }
                             }
                         }
@@ -143,17 +141,17 @@ public class DistributedMakeExecutor implements Serializable {
                         }
                     }
 
-                    // for (String broughtFile : broughtFiles) {
-                    //     File sourceFile = new File(tempDirPath + File.separator + broughtFile);
-                    //     File destFile = new File(broadcastWorkingDirectory.value() + File.separator + broughtFile);
-                    //     if (!destFile.exists()) {
-                    //         try {
-                    //             Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.ATOMIC_MOVE);
-                    //         } catch (IOException e) {
-                    //             System.err.println("\u001B[31mError moving file " + sourceFile + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
-                    //         }
-                    //     }
-                    // }
+                    for (String broughtFile : broughtFiles) {
+                        File sourceFile = new File(tempDirPath + File.separator + broughtFile);
+                        File destFile = new File(broadcastWorkingDirectory.value() + File.separator + broughtFile);
+                        if (!destFile.exists()) {
+                            try {
+                                Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.ATOMIC_MOVE);
+                            } catch (IOException e) {
+                                System.err.println("\u001B[31mError moving file " + sourceFile + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
+                            }
+                        }
+                    }
 
                     // Print the new files that were generated
                     if (!newFiles.isEmpty()) {
@@ -161,13 +159,10 @@ public class DistributedMakeExecutor implements Serializable {
                         // for (String newFile : newFiles) {
                         //     System.out.println("\t\t\t\u001B[33m" + newFile + "\u001B[0m");
                         // }
-
-                        if (!broadcastMasterIp.value().equals("localhost")) {
-                            // Store file ownership for the target
-                            if (!StoreFileOwner.storeFileOwner(broadcastMasterIp.value(), broadcastFileLocatorPort.value(), target, newFiles)) {
-                                System.err.println("\u001B[31mError: Failed to store file ownership for target '" + target + "'.\u001B[0m");
-                                return false;
-                            }
+                        // Store file ownership for the target
+                        if (!StoreFileOwner.storeFileOwner(broadcastMasterIp.value(), broadcastFileLocatorPort.value(), target, newFiles)) {
+                            System.err.println("\u001B[31mError: Failed to store file ownership for target '" + target + "'.\u001B[0m");
+                            return false;
                         }
                     }
                     // } else {
