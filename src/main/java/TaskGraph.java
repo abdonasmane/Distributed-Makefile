@@ -10,7 +10,7 @@ public class TaskGraph implements Serializable {
     public TaskGraph(Map<String, List<String>> targets, String rootTarget, boolean localMod) {
         this.rootTarget = rootTarget;
         buildGraph(targets);
-        if (!localMod) {
+        if (!localMod && topologicalOrder != null) {
             populateAllDependencies(targets);
         }
     }
@@ -93,26 +93,56 @@ public class TaskGraph implements Serializable {
 
     // Method to populate all dependencies
     private void populateAllDependencies(Map<String, List<String>> targets) {
+        Map<String, Set<String>> memo = new HashMap<>();
         for (String target : graph.keySet()) {
-            Set<String> dependencies = new HashSet<>();
-            findAllDependencies(target, dependencies, new HashSet<>(), targets);
-            dependencies.remove(target);
+            Set<String> dependencies =  findAllDependenciesIterativeWithMemo(target, targets, memo);
             assocTargetAllDependencies.put(target, dependencies);
         }
     }
 
-    // Recursive DFS to collect dependencies
-    private void findAllDependencies(String target, Set<String> dependencies, Set<String> visited, Map<String, List<String>> targets) {
-        if (visited.contains(target)) {
-            return;
+    // Iterative DFS with Memoization to collect dependencies
+    private Set<String> findAllDependenciesIterativeWithMemo(String target, Map<String, List<String>> targets, Map<String, Set<String>> memo) {
+        // If dependencies for this target are already computed, return cached result
+        if (memo.containsKey(target)) {
+            return memo.get(target);
         }
-        visited.add(target);
 
-        List<String> directDependencies = targets.getOrDefault(target, new ArrayList<>());
-        for (String dep : directDependencies) {
-            dependencies.add(dep);
-            findAllDependencies(dep, dependencies, visited, targets);
+        Set<String> dependencies = new HashSet<>();
+        Set<String> visited = new HashSet<>();
+        Stack<String> stack = new Stack<>();
+
+        stack.push(target);
+
+        while (!stack.isEmpty()) {
+            String current = stack.pop();
+
+            if (visited.contains(current)) {
+                continue;
+            }
+
+            visited.add(current);
+
+            // Fetch direct dependencies
+            List<String> directDependencies = targets.getOrDefault(current, new ArrayList<>());
+
+            for (String dep : directDependencies) {
+                dependencies.add(dep);
+
+                // Only process further if it's not already visited
+                if (!visited.contains(dep)) {
+                    stack.push(dep);
+                }
+
+                // Add memoized dependencies for this child (if available)
+                if (memo.containsKey(dep)) {
+                    dependencies.addAll(memo.get(dep));
+                }
+            }
         }
+
+        // Store computed dependencies in the cache
+        memo.put(target, dependencies);
+        return dependencies;
     }
 
     public void printGraph() {
@@ -177,4 +207,38 @@ public class TaskGraph implements Serializable {
         System.out.println(BLUE + BOLD + "=== End of Execution Order ===" + RESET);
         System.out.println("");
     }
+
+    public void printTree() {
+        final String RESET = "\u001B[0m";
+        final String BLUE = "\u001B[34m";
+        final String GREEN = "\u001B[32m";
+        final String CYAN = "\u001B[36m";
+        final String BOLD = "\u001B[1m";
+    
+        // Print the title with a separator
+        System.out.println(BLUE + BOLD + "=== Dependency Tree ===" + RESET);
+        System.out.println();
+    
+        // Iterate through each target and its dependencies
+        for (Map.Entry<String, Set<String>> entry : assocTargetAllDependencies.entrySet()) {
+            String target = entry.getKey();
+            Set<String> dependencies = entry.getValue();
+    
+            // Print the target name
+            System.out.println(GREEN + "[Target] " + RESET + BOLD + target + RESET);
+            System.out.println(GREEN + "Dependencies: " + RESET);
+    
+            // Print each dependency for the current target
+            for (String dependency : dependencies) {
+                System.out.println("\t" + CYAN + "- " + dependency + RESET);
+            }
+    
+            System.out.println("\t------------------------------------------------------");
+        }
+    
+        // End with a footer
+        System.out.println(BLUE + BOLD + "=== End of Dependency Tree ===" + RESET);
+        System.out.println("");
+    }
+    
 }

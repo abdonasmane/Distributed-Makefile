@@ -52,6 +52,7 @@ public class Main {
         }
         // taskGraph.printGraph();
         // taskGraph.printExecutionOrder();
+        // taskGraph.printTree();
         long endBuildGraphTime = System.nanoTime();
 
         // Initialize Spark context

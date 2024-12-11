@@ -26,7 +26,7 @@ def generate_all_to_all_makefile2(interval_length, num_levels, max_targets_per_l
                 else:
                     # Higher-level files depend on all previous levels
                     dependencies = " ".join([f"list{level-1}_{j}" for j in range(1, old_files[level-1] + 1)])
-                    f.write(f"list{level}_{i}:\tpremiera {dependencies}\n")
+                    f.write(f"list{level}_{i}:\t{dependencies}\n")
                     f.write(f"\t./premier {start} {end} >> list{level}_{i}.txt\n")
 
         # Clean target
