@@ -7,8 +7,9 @@ import java.util.Set;
 public class GetTargetExecutor {
 
     public static Map<String, Set<String>> retrieveTargetExecutor(String serverHost, int serverPort, Set<String> dependencies) {
-        Map<String, Set<String>> assocIpFiles;
-        while (true) {
+        Map<String, Set<String>> assocIpFiles = null;
+        int number_of_tries = 5;
+        while (number_of_tries > 0) {
             try (Socket socket = new Socket()) {
                 socket.connect(new InetSocketAddress(serverHost, serverPort), 500);
                 socket.setSoTimeout(1000);
@@ -41,6 +42,7 @@ public class GetTargetExecutor {
                 System.err.println("Error connecting to the server of GetTargetExecutor: " + e.getMessage());
                 return null;
             }
+            number_of_tries --;
         }
         return assocIpFiles;
     }

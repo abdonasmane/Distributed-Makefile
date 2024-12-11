@@ -9,7 +9,8 @@ import java.nio.file.attribute.PosixFilePermissions;
 public class GetFile {
 
     public static boolean retrieveFile(String serverHost, int serverPort, String fileName, String destinationPath) {
-        while (true) {
+        int number_of_tries = 5;
+        while (number_of_tries > 0) {
             try (Socket socket = new Socket()) {
                 socket.connect(new InetSocketAddress(serverHost, serverPort), 500);
                 // socket.setSoTimeout(5000); // file might be large
@@ -56,7 +57,9 @@ public class GetFile {
                 System.err.println("Error connecting to the server of GetFile: " + e.getMessage());
                 return false;
             }
+            number_of_tries --;
         }
+        return false;
     }
 
     public static void main(String[] args) {
