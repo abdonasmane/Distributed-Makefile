@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import sys
 import random
+random.seed(42)
+
 
 def generate_unbalanced_tree_makefile(interval_length, num_lists):
     with open("Makefile", "w") as f:

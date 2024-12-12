@@ -172,16 +172,14 @@ clone_repo() {
         git clone https://github.com/abdonasmane/systemes-distribues.git
     "
     ssh_exec "$SITE" "$NODE" "
-        cd ~/systemes-distribues/src/test/resources/compressed_alea_tests/
-        tar -xf Makefile6.tar.gz
-        tar -xf Makefile7.tar.gz
-        tar -xf Makefile8.tar.gz
-        tar -xf Makefile9.tar.gz
-        mv Makefile6 ../test6/Makefile
-        mv Makefile7 ../test7/Makefile
-        mv Makefile8 ../test8/Makefile
-        mv Makefile9 ../test9/Makefile
-        cd ..
+        cd ~/systemes-distribues/src/test/resources/test6/
+        ./generateAllToAllTree.py 50_000_000 1000
+        cd ~/systemes-distribues/src/test/resources/test7/
+        ./generateAllToAllTree.py 50_000_000 3 1000
+        cd ~/systemes-distribues/src/test/resources/test8/
+        ./generateATATvarTargetsPerLev.py 50_000_000 3 1000
+        cd ~/systemes-distribues/src/test/resources/test9/
+        ./generateHeavyTasks.py 3952
         rm -rf compressed_alea_tests  
     "
 }
