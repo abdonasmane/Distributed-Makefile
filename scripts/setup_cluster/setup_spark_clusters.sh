@@ -173,7 +173,7 @@ clone_repo() {
     "
     ssh_exec "$SITE" "$NODE" "
         cd ~/systemes-distribues/src/test/resources/test6/
-        ./generateAllToAllTree.py 50_000_000 1000
+        ./generateUnbalancedTreeMakefile.py 50_000_000 1000
         cd ~/systemes-distribues/src/test/resources/test7/
         ./generateAllToAllTree.py 50_000_000 3 1000
         cd ~/systemes-distribues/src/test/resources/test8/
@@ -299,14 +299,23 @@ open_spark_webui() {
 
 # Main script execution
 main() {
+    # here you can specify nodes
     CONFIG_FILE=$1
+    # this is the absolute target to the makefile, on the master node
     PATH_TO_TARGET=$2
+    # path to the location of the git repo, on all machines
     PROJECT_HOME=$3
+    # spark home path
     SPARK_HOME=$4
+    # the target of the make : Ex clean, all, ....
     EXECUTED_TARGET=$5
+    # username on g5k
     USER_NAME=$6
+    # should be enable or disable, if "enable" deployment will be done in parallel
     FAST_MODE=$7
+    # if NFS then nodes should be on the same g5k same, to share the same file system
     NFS=$8
+    # if TMP, then paths should be on /tmp of nodes, making TMP uncompatible with NFS
     TMP=$9
     TARGET_PATH=$PROJECT_HOME/target/classes
 
@@ -413,7 +422,7 @@ main() {
                 i=$((i + 1))
             done
             launch_file_locator_server "$PATH_TO_TARGET" &
-            sleep 10
+            sleep 6 # wait for servers to start
         fi
     else
         clone_repo "$MASTER_SITE" "$MASTER_NODE"
