@@ -94,9 +94,12 @@ public class TaskGraph implements Serializable {
     // Method to populate all dependencies
     private void populateAllDependencies(Map<String, List<String>> targets) {
         Map<String, Set<String>> memo = new HashMap<>();
-        for (String target : graph.keySet()) {
-            Set<String> dependencies =  findAllDependenciesIterativeWithMemo(target, targets, memo);
-            assocTargetAllDependencies.put(target, dependencies);
+        for (int i = 0; i < topologicalOrder.size(); i++) {
+            List<String> currentLevel = topologicalOrder.get(i);
+            for (String target : currentLevel) {
+                Set<String> dependencies =  findAllDependenciesIterativeWithMemo(target, targets, memo);
+                assocTargetAllDependencies.put(target, dependencies);
+            }
         }
     }
 

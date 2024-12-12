@@ -6,7 +6,3 @@ worker_site_name=grenoble
 worker_node_name=servan-2
 worker_site_name=grenoble
 worker_node_name=troll-1
-worker_site_name=grenoble
-worker_node_name=yeti-3
-worker_site_name=grenoble
-worker_node_name=yeti-2

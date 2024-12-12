@@ -1,0 +1,143 @@
+[0;32mNFS mode enabled : expecting nodes from the same site[0m
+[0;33mNO_TMP mode enabled[0m
+[0;36mReading configuration from [0;33moutput_logs_test6/with_4_machines/config4.txt[0m...
+[0;32mMaster site name set to: [0;33mrennes[0m
+[0;32mMaster node name set to: [0;33mparadoxe-3[0m
+[0;32mMaster node IP set to: [0;33m172.16.101.3[0m
+[0;32mMaster node port set to: [0;33m3000[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-6[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-7[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-9[0m
+[0;36mConfiguration reading complete.[0m
+[0;36mCloning repo on [0;33mparadoxe-3[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-3[0;36m: [0;35m
+        rm -rf ~/systemes-distribues/
+        git clone https://github.com/abdonasmane/systemes-distribues.git
+    [0m
+Skipping paradoxe-6 since it has already been processed
+Skipping paradoxe-7 since it has already been processed
+Skipping paradoxe-9 since it has already been processed
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-3[0;36m: [0;35m
+        cd ~/systemes-distribues/src/test/resources/test6/
+        ./generateUnbalancedTreeMakefile.py 50_000_000 1000
+        cd ~/systemes-distribues/src/test/resources/test7/
+        ./generateAllToAllTree.py 50_000_000 3 1000
+        cd ~/systemes-distribues/src/test/resources/test8/
+        ./generateATATvarTargetsPerLev.py 50_000_000 3 1000
+        cd ~/systemes-distribues/src/test/resources/test9/
+        ./generateHeavyTasks.py 3952
+        rm -rf compressed_alea_tests  
+    [0m
+Unbalanced Makefile generated successfully!
+All To All files dependencies Makefile generated successfully!
+All To All files 2 dependencies Makefile generated successfully!
+Heavy tasks Makefile generated successfully!
+[0;36mInstalling Maven and preparing project on [0;33mparadoxe-3[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-3[0;36m: [0;35m
+        sudo-g5k apt install -y maven &&
+        source ~/.bashrc &&
+        cd /home/anasmane/systemes-distribues &&
+        mvn clean package
+    [0m
+Skipping paradoxe-6 since it has already been processed
+Skipping paradoxe-7 since it has already been processed
+Skipping paradoxe-9 since it has already been processed
+Reading package lists...
+Building dependency tree...
+Reading state information...
+maven is already the newest version (3.6.3-5).
+0 upgraded, 0 newly installed, 0 to remove and 4 not upgraded.
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36mcom.example:distributed-make-project[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding Distributed make Project 1.0[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:2.5:clean[m [1m(default-clean)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;33mWARNING[m] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:compile[m [1m(default-compile)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;33mWARNING[m] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[[1;34mINFO[m] Compiling 11 source files to /home/anasmane/systemes-distribues/target/classes
+[[1;33mWARNING[m] /home/anasmane/systemes-distribues/src/main/java/GetTargetExecutor.java: Some input files use unchecked or unsafe operations.
+[[1;33mWARNING[m] /home/anasmane/systemes-distribues/src/main/java/GetTargetExecutor.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;33mWARNING[m] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[[1;34mINFO[m] Copying 43 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:testCompile[m [1m(default-testCompile)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.12.4:test[m [1m(default-test)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:2.4:jar[m [1m(default-jar)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] Building jar: /home/anasmane/systemes-distribues/target/distributed-make-project-1.0.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  5.197 s
+[[1;34mINFO[m] Finished at: 2024-12-12T16:49:09+01:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[0;36mSetting up Spark master on [0;33mparadoxe-3[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_master.sh[0;36m to [0;33mrennes[0;36m : [0;33m[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-3[0;36m: [0;35m
+        chmod +x setup_spark_master.sh &&
+        ./setup_spark_master.sh &&
+        rm -f setup_spark_master.sh
+    [0m
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.master.Master-1-paradoxe-3.rennes.grid5000.fr.out
+stopping org.apache.spark.deploy.worker.Worker
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-3.rennes.grid5000.fr.out
+[0;36mSetting up Spark worker on [0;33mparadoxe-6[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-6.sh[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-6[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-6.sh &&
+            ./setup_spark_worker_paradoxe-6.sh &&
+            rm -f setup_spark_worker_paradoxe-6.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-7[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-7.sh[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-7[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-7.sh &&
+            ./setup_spark_worker_paradoxe-7.sh &&
+            rm -f setup_spark_worker_paradoxe-7.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-9[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-9.sh[0m
+stopping org.apache.spark.deploy.worker.Worker
+rsync from spark://172.16.101.3:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-6.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-9[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-9.sh &&
+            ./setup_spark_worker_paradoxe-9.sh &&
+            rm -f setup_spark_worker_paradoxe-9.sh
+        [0m
+stopping org.apache.spark.deploy.worker.Worker
+rsync from spark://172.16.101.3:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-7.rennes.grid5000.fr.out
+no org.apache.spark.deploy.worker.Worker to stop
+rsync from spark://172.16.101.3:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-9.rennes.grid5000.fr.out
+[0;36mSubmitting Spark app from [0;33mparadoxe-3[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-3[0;36m: [0;35m
+        /home/anasmane/spark-3.5.3-bin-hadoop3/bin/spark-submit --master spark://172.16.101.3:3000 --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main /home/anasmane/systemes-distribues/target/distributed-make-project-1.0.jar /home/anasmane/systemes-distribues/src/test/resources/test6/Makefile all spark://172.16.101.3:3000 NFS
+    [0m
+
+[32m==============================[0m
+[32m  Global Time : 59.877927732 seconds  [0m
+[32m==============================[0m
+[33m--------------------------------[0m
+	[33mParsing Time           : 0.01005882 seconds[0m
+	[33mGraph Build Time       : 0.003444965 seconds[0m
+	[33mSpark Configuration Time: 1.194280823 seconds[0m
+	[33mExecution Time         : 58.669566551 seconds[0m
+[33m--------------------------------[0m
