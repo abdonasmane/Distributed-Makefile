@@ -2,25 +2,37 @@
 import os
 import ast
 import numpy as np
+import random
 import matplotlib.pyplot as plt
 import sys
 from scipy import stats
 
+random.seed(42)
+# test9 matrix, all tasks are sleep5
+SLEEP_MATRIX_1 = [[5 for _ in range(3952)]]
+# test8 matrix
+SLEEP_MATRIX_2 = [[random.randint(1, 10) for _  in range(random.randint(2, 1500))] for _ in range(5)]
+
+
 def parse_args():
     """Parse and validate command-line arguments."""
-    if len(sys.argv) != 2:
-        print("Usage: python3 plot_execution_time.py <test_directory_suffix>")
+    if len(sys.argv) != 3:
+        print("Usage: python3 plot_execution_time.py <test_directory_suffix> <sleep_test 0/1/2>\n"+
+              "0 if not running sleep test\n" +
+              "1 if running test9\n" +
+              "2 if running test8\n")
         sys.exit(1)
     
     test_suffix = sys.argv[1]
     output_dir = f"output_logs_{test_suffix}"
+    sleep_test = int(sys.argv[2])
     
     # Validate output directory exists
     if not os.path.exists(output_dir):
         print(f"Error: Directory {output_dir} does not exist.")
         sys.exit(1)
     
-    return test_suffix, output_dir
+    return test_suffix, output_dir, sleep_test
 
 def load_sequential_times(output_dir):
     """Load sequential times from multiple files."""
@@ -78,7 +90,17 @@ def collect_execution_times(output_dir):
     
     return machine_times
 
-def plot_performance_with_confidence(test_suffix, output_dir):
+def theoric_make_nfs(number_of_cores, number_of_machines, sleep_matrix):
+    s = 0
+    for times in sleep_matrix:
+        t_largest = max(times)
+        sum_per_line = sum(times)
+        s += (sum_per_line)/(number_of_cores*number_of_machines) + t_largest
+    s += random.gauss(1.18, 0.1) # spark context
+    s += random.gauss(4.0, 0.2) # spark messages
+    return s
+
+def plot_performance_with_confidence(test_suffix, output_dir, sleep_test):
     """Plot performance graph with confidence intervals."""
     # Load sequential times
     seq_times = load_sequential_times(output_dir)
@@ -88,6 +110,13 @@ def plot_performance_with_confidence(test_suffix, output_dir):
     
     # Prepare data for plotting
     machine_counts = sorted(machine_times.keys())
+    theoric_times = []
+    if sleep_test:
+        number_of_cores_per_machine = 104
+        if sleep_test == 1:
+            theoric_times = [theoric_make_nfs(number_of_cores_per_machine, x, SLEEP_MATRIX_1) for x in machine_counts]
+        # elif sleep_test == 2:
+        #     theoric_times = [theoric_make_nfs(number_of_cores_per_machine, x, SLEEP_MATRIX_2) for x in machine_counts]
     execution_times = []
     execution_errors = []
     seq_times_normalized = []
@@ -136,6 +165,9 @@ def plot_performance_with_confidence(test_suffix, output_dir):
                  capsize=5, 
                  label='Sequential Time (Normalized)')
     
+    if sleep_test:
+        plt.plot(machine_counts, theoric_times, 'o-', color='red', label='Theoric Model')
+    
     plt.title(f"Global Execution Time vs Number of Machines ({test_suffix})")
     plt.xlabel("Number of Machines")
     plt.ylabel("Global Execution Time (seconds)")
@@ -151,8 +183,8 @@ def plot_performance_with_confidence(test_suffix, output_dir):
 
 def main():
     """Main function to orchestrate the performance plotting."""
-    test_suffix, output_dir = parse_args()
-    plot_performance_with_confidence(test_suffix, output_dir)
+    test_suffix, output_dir, p_sleep_test = parse_args()
+    plot_performance_with_confidence(test_suffix, output_dir, p_sleep_test)
 
 if __name__ == "__main__":
     main()

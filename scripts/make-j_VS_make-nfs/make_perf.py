@@ -13,20 +13,10 @@ spark_conf_time_pattern = r"Spark Configuration Time\s*:\s*([\d\.]+)"
 execution_time_pattern = r"Execution Time\s*:\s*([\d\.]+)"
 
 # Parameters
-machines = [("paradoxe-3","rennes"),
-            ("paradoxe-6","rennes"),
-            ("paradoxe-7","rennes"),
-            ("paradoxe-9","rennes"),
-            ("paradoxe-18","rennes"),
-            ("paradoxe-19","rennes"),
-            ("paradoxe-20","rennes"),
-            ("paradoxe-22","rennes"),
-            ("paradoxe-24","rennes"),
-            ("paradoxe-25","rennes"),
-            ("paradoxe-26","rennes"),
-            ("paradoxe-27","rennes"),
-            ("paradoxe-28","rennes"),
-            ("paradoxe-29","rennes")
+machines = [("paradoxe-1","rennes"),
+            ("paradoxe-10","rennes"),
+            ("paradoxe-11","rennes"),
+            ("paradoxe-20","rennes")
             ]
 script_name = "./setup_spark_clusters.sh"
 clean_script = "./clean_after_iteration.sh"
