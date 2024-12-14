@@ -40,7 +40,7 @@ def launch_tests(username, master_ip, test_directory_suffix, base_path, spark_pa
 
     output_dir = f"output_logs_{test_directory_suffix}"
     os.makedirs(output_dir, exist_ok=True)
-    for i in range(1, len(machines)+1):
+    for i in range(4, len(machines)+1):
         dir_name = f"with_{i}_machines"
         store_file_in = f"{output_dir}/{dir_name}"
         os.makedirs(store_file_in, exist_ok=True)
@@ -105,6 +105,7 @@ def launch_tests(username, master_ip, test_directory_suffix, base_path, spark_pa
             try:
                 print(Fore.YELLOW + f"Executing :\n{command} for the {k}th time with {i} machines")
                 result = subprocess.run(command, capture_output=True, text=True, check=True)
+                # result = subprocess.run(command, text=True, check=True)
                 print(Fore.YELLOW + f"Opening the logs file for the {k}th time with {i} machines")
                 log_filename = f"{store_file_in}/log_iteration_{i}_{k}.txt"
                 with open(log_filename, "w") as log_file:

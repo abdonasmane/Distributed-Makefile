@@ -229,7 +229,7 @@ launch_file_locator_server() {
     PATH_TO_TARGET=$1
     DIRECTORY_PATH=$(dirname "$PATH_TO_TARGET")
     echo -e "${CYAN}Launching FileLocatorServer on ${YELLOW}$MASTER_NODE${CYAN} (${YELLOW}$MASTER_SITE${CYAN})...${RESET}"
-    ssh_exec "$MASTER_SITE" "$MASTER_NODE" "cd $TARGET_PATH && java FileLocatorServer 9999 $DIRECTORY_PATH" &
+    ssh_exec "$MASTER_SITE" "$MASTER_NODE" "cd $TARGET_PATH && java  FileLocatorServer 9999 $DIRECTORY_PATH" &
 }
 
 # Submit Spark application
