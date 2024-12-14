@@ -12,6 +12,8 @@ random.seed(42)
 SLEEP_MATRIX_1 = [[5 for _ in range(3952)]]
 # test8 matrix
 SLEEP_MATRIX_2 = [[random.randint(1, 10) for _  in range(random.randint(2, 1500))] for _ in range(5)]
+# File containing the model coefficients
+SPARK_LOSS_MODEL_COEFFICIENTS_FILE = "../spark_losses_estimation/model_coefficients.txt"
 
 
 def parse_args():
@@ -90,6 +92,25 @@ def collect_execution_times(output_dir):
     
     return machine_times
 
+def load_model_coefficients(file_path):
+    """
+    Load the model coefficients and intercept from the file.
+    """
+    with open(file_path, 'r') as f:
+        lines = f.readlines()
+        coefficients = eval(lines[0].split(":")[1].strip())  # Extract coefficients
+        intercept = float(lines[1].split(":")[1].strip())   # Extract intercept
+    return coefficients, intercept
+
+def predict_graph_time(model_file, levels, targets):
+    """
+    Predict graph build time for the given number of levels and targets.
+    """
+    coefficients, intercept = load_model_coefficients(model_file)
+    # Prediction formula: y = coefficients[0]*levels + coefficients[1]*targets + intercept
+    prediction = np.dot([levels, targets], coefficients) + intercept
+    return prediction
+
 def theoric_make_nfs(number_of_cores, number_of_machines, sleep_matrix):
     s = 0
     for times in sleep_matrix:
@@ -97,7 +118,7 @@ def theoric_make_nfs(number_of_cores, number_of_machines, sleep_matrix):
         sum_per_line = sum(times)
         s += (sum_per_line)/(number_of_cores*number_of_machines) + t_largest
     s += random.gauss(1.18, 0.1) # spark context
-    s += random.gauss(4.0, 0.2) # spark messages
+    # s += random.gauss(4.0, 0.2) # spark messages
     return s
 
 def plot_performance_with_confidence(test_suffix, output_dir, sleep_test):
@@ -115,6 +136,8 @@ def plot_performance_with_confidence(test_suffix, output_dir, sleep_test):
         number_of_cores_per_machine = 104
         if sleep_test == 1:
             theoric_times = [theoric_make_nfs(number_of_cores_per_machine, x, SLEEP_MATRIX_1) for x in machine_counts]
+            spark_loss_time = predict_graph_time(SPARK_LOSS_MODEL_COEFFICIENTS_FILE, len((SLEEP_MATRIX_1)), max([len(line) for line in SLEEP_MATRIX_1]))
+            theoric_times = [x + spark_loss_time for x in theoric_times]
         # elif sleep_test == 2:
         #     theoric_times = [theoric_make_nfs(number_of_cores_per_machine, x, SLEEP_MATRIX_2) for x in machine_counts]
     execution_times = []

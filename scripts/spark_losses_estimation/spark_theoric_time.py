@@ -21,7 +21,7 @@ RUN_SPARK_PROGRAM = [
     "distributed-make-project-1.0.jar",
     "Makefile",
     "all",
-    "spark://172.16.101.1:3000",
+    "spark://172.16.101.10:3000",
     "NO_NFS"
 ]
 
