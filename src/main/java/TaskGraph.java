@@ -1,11 +1,12 @@
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TaskGraph implements Serializable {
     private Map<String, List<String>> graph = new HashMap<>();
     private List<List<String>> topologicalOrder;
     private String rootTarget;
-    private static final Map<String, Set<String>> assocTargetAllDependencies = new HashMap<>();
+    private static final ConcurrentHashMap<String, Set<String>> assocTargetAllDependencies = new ConcurrentHashMap<>();
 
     public TaskGraph(Map<String, List<String>> targets, String rootTarget, boolean localMod) {
         this.rootTarget = rootTarget;
@@ -20,7 +21,7 @@ public class TaskGraph implements Serializable {
     }
 
     public Map<String, Set<String>> getDependenciesTree() {
-        return assocTargetAllDependencies;
+        return new HashMap<>(assocTargetAllDependencies);
     }
 
     // Build the dependency graph, where dependencies point to dependents.
@@ -93,59 +94,21 @@ public class TaskGraph implements Serializable {
 
     // Method to populate all dependencies
     private void populateAllDependencies(Map<String, List<String>> targets) {
-        Map<String, Set<String>> memo = new HashMap<>();
-        for (int i = 0; i < topologicalOrder.size(); i++) {
+        for (String targetsWithNoDeps : topologicalOrder.get(0)) {
+            assocTargetAllDependencies.put(targetsWithNoDeps, new HashSet<>());
+        }
+        for (int i = 1; i < topologicalOrder.size(); i++) {
             List<String> currentLevel = topologicalOrder.get(i);
-            for (String target : currentLevel) {
-                Set<String> dependencies =  findAllDependenciesIterativeWithMemo(target, targets, memo);
-                assocTargetAllDependencies.put(target, dependencies);
-            }
-        }
-    }
-
-    // Iterative DFS with Memoization to collect dependencies
-    private Set<String> findAllDependenciesIterativeWithMemo(String target, Map<String, List<String>> targets, Map<String, Set<String>> memo) {
-        // If dependencies for this target are already computed, return cached result
-        if (memo.containsKey(target)) {
-            return memo.get(target);
-        }
-
-        Set<String> dependencies = new HashSet<>();
-        Set<String> visited = new HashSet<>();
-        Stack<String> stack = new Stack<>();
-
-        stack.push(target);
-
-        while (!stack.isEmpty()) {
-            String current = stack.pop();
-
-            if (visited.contains(current)) {
-                continue;
-            }
-
-            visited.add(current);
-
-            // Fetch direct dependencies
-            List<String> directDependencies = targets.getOrDefault(current, new ArrayList<>());
-
-            for (String dep : directDependencies) {
-                dependencies.add(dep);
-
-                // Only process further if it's not already visited
-                if (!visited.contains(dep)) {
-                    stack.push(dep);
+            currentLevel.parallelStream().forEach(target -> {
+                List<String> directDeps = targets.getOrDefault(target, new ArrayList<>());
+                Set<String> allDependencies = new HashSet<>();
+                for (String directDep : directDeps) {
+                    allDependencies.add(directDep);
+                    allDependencies.addAll(assocTargetAllDependencies.get(directDep));
                 }
-
-                // Add memoized dependencies for this child (if available)
-                if (memo.containsKey(dep)) {
-                    dependencies.addAll(memo.get(dep));
-                }
-            }
+                assocTargetAllDependencies.put(target, allDependencies);
+            });
         }
-
-        // Store computed dependencies in the cache
-        memo.put(target, dependencies);
-        return dependencies;
     }
 
     public void printGraph() {
