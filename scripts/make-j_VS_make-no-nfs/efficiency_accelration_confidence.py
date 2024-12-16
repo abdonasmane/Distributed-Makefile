@@ -112,7 +112,7 @@ def calculate_metrics(seq_times, machine_times):
         # Calculate mean and confidence intervals
         def calculate_ci(data):
             mean = np.mean(data)
-            ci = stats.t.interval(confidence=0.95, df=len(data)-1, 
+            ci = stats.t.interval(alpha=0.95, df=len(data)-1, 
                                   loc=mean, 
                                   scale=stats.sem(data))
             return mean, mean - ci[0]
@@ -153,7 +153,11 @@ def plot_performance_metrics(test_suffix, output_dir, machine_counts, metrics, p
     
     plt.title(f"{plot_type.capitalize()} vs Number of Machines ({test_suffix})")
     plt.xlabel("Number of Machines")
-    plt.ylabel(f"{plot_type.capitalize()} (Seq Time / (Machines × Parallel Time))")
+    if plot_type == "acceleration":
+        label = f"{plot_type.capitalize()} (Seq Time / Parallel Time)"
+    else:
+        label = f"{plot_type.capitalize()} (Seq Time / (Machines × Parallel Time))"
+    plt.ylabel(label)
     plt.grid(True)
     plt.xticks(machine_counts)
     plt.legend(loc="upper left")

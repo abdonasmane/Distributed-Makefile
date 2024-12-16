@@ -11,9 +11,10 @@ wget https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION
 tar -xzf spark-${SPARK_VERSION}-bin-hadoop3.tgz
 rm spark-${SPARK_VERSION}-bin-hadoop3.tgz
 
+# install compatible java version
+curl -s "https://get.sdkman.io" | bash
 source ~/.bashrc
-
-# Verify Spark installation
-${SPARK_HOME}/bin/spark-shell --version
+sdk install java 8.0.332-zulu
+sdk default java 8.0.332-zulu
 
 echo "Installation complete!"
