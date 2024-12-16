@@ -156,13 +156,13 @@ def plot_performance_with_confidence(test_suffix, output_dir, sleep_test):
         
         # Mean and 95% confidence interval for execution times
         mean_time = np.mean(valid_times)
-        time_ci = stats.t.interval(confidence=0.95, df=len(valid_times)-1, 
+        time_ci = stats.t.interval(alpha=0.95, df=len(valid_times)-1, 
                                    loc=np.mean(valid_times), 
                                    scale=stats.sem(valid_times))
         
         # Normalized sequential time
         mean_seq_time = np.mean(seq_times) / machines
-        seq_time_ci = stats.t.interval(confidence=0.95, df=len(seq_times)-1, 
+        seq_time_ci = stats.t.interval(alpha=0.95, df=len(seq_times)-1, 
                                        loc=mean_seq_time, 
                                        scale=stats.sem(seq_times))
         
