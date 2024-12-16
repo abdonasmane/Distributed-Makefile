@@ -78,6 +78,16 @@ scp_exec() {
     scp $LOCAL_FILE $USER_NAME@access.grid5000.fr:$SITE/$REMOTE_PATH
 }
 
+# Multi-hop SCP directory execution
+scp_dir_exec() {
+    LOCAL_DIR=$1
+    SITE=$2
+    REMOTE_PATH=$3
+    echo -e "${CYAN}Copying ${YELLOW}$LOCAL_DIR${CYAN} to ${YELLOW}$SITE${CYAN} : ${YELLOW}$REMOTE_PATH${RESET}"
+
+    scp -r $LOCAL_DIR $USER_NAME@access.grid5000.fr:$SITE/$REMOTE_PATH
+}
+
 # Set up the Spark master
 setup_master() {
     echo -e "${CYAN}Setting up Spark master on ${YELLOW}$MASTER_NODE${CYAN} (${YELLOW}$MASTER_SITE${CYAN})...${RESET}"
@@ -184,6 +194,30 @@ copy_repo_to_tmp() {
     wait
 }
 
+# sending local makefile to nodes
+send_local_test() {
+    if [ -d "$LOCAL_MAKE_DIRECTORY" ]; then
+        processed_sites=()
+        scp_dir_exec $LOCAL_MAKE_DIRECTORY "$MASTER_SITE" "systemes-distribues/src/test/resources/" &
+        processed_sites+=("$MASTER_SITE")
+        local i=0
+        while [ $i -lt ${#WORKERS[@]} ]; do
+            SITE=$(echo ${WORKERS[$i]} | cut -d ':' -f 1)
+            NODE=$(echo ${WORKERS[$i]} | cut -d ':' -f 2)
+            if [[ ! " ${processed_sites[@]} " =~ " ${SITE} " ]]; then
+                scp_dir_exec $LOCAL_MAKE_DIRECTORY "$SITE" "systemes-distribues/src/test/resources/" &
+                processed_sites+=("$SITE")
+            fi
+            i=$((i + 1))
+        done 
+        wait
+    else
+        echo -e "${RED}$LOCAL_MAKE_DIRECTORY is not a valid directory.${RESET}"
+        exit 1
+    fi
+    wait
+}
+
 # Common setup for all nodes
 common_setup() {
     SITE=$1
@@ -274,10 +308,13 @@ main() {
     NFS=$7
     # if TMP, then paths should be on /tmp of nodes, making TMP uncompatible with NFS
     TMP=$8
+    # if not NONE, this var should be the path to your testX on you machine.
+    # if NONE, then one of our tests will be executed (vars above should be set well)
+    LOCAL_MAKE_DIRECTORY=$9
     TARGET_PATH=$PROJECT_HOME/target/classes
 
-    if [ $# -ne 8 ]; then
-        echo "Usage: $0 CONFIG_FILE PATH_TO_TARGET PROJECT_HOME SPARK_HOME EXECUTED_TARGET USER_NAME NFS_MODE=NFS/NO_NFS TMP_MODE=TMP/NO_TMP"
+    if [ $# -ne 9 ]; then
+        echo "Usage: $0 CONFIG_FILE PATH_TO_TARGET PROJECT_HOME SPARK_HOME EXECUTED_TARGET USER_NAME NFS_MODE=NFS/NO_NFS TMP_MODE=TMP/NO_TMP LOCAL_MAKE_DIRECTORY"
         exit 1
     fi
 
@@ -323,6 +360,11 @@ main() {
         i=$((i + 1))
     done
     wait
+
+    if [ "$LOCAL_MAKE_DIRECTORY" != "NONE" ]; then
+        send_local_test
+    fi
+
     if [ "$TMP" == "TMP" ]; then
         copy_repo_to_tmp
     fi

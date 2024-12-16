@@ -2,37 +2,37 @@
 [0;33mNO_TMP mode enabled[0m
 [0;36mReading configuration from [0;33moutput_logs_test7/with_6_machines/config6.txt[0m...
 [0;32mMaster site name set to: [0;33mrennes[0m
-[0;32mMaster node name set to: [0;33mparadoxe-3[0m
-[0;32mMaster node IP set to: [0;33m172.16.101.3[0m
+[0;32mMaster node name set to: [0;33mparadoxe-1[0m
+[0;32mMaster node IP set to: [0;33m172.16.101.1[0m
 [0;32mMaster node port set to: [0;33m3000[0m
 [0;32mWorker site name set to: [0;33mrennes[0m
-[0;32mAdded worker: [0;33mrennes:paradoxe-6[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-11[0m
 [0;32mWorker site name set to: [0;33mrennes[0m
-[0;32mAdded worker: [0;33mrennes:paradoxe-7[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-12[0m
 [0;32mWorker site name set to: [0;33mrennes[0m
-[0;32mAdded worker: [0;33mrennes:paradoxe-9[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-13[0m
 [0;32mWorker site name set to: [0;33mrennes[0m
-[0;32mAdded worker: [0;33mrennes:paradoxe-18[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-16[0m
 [0;32mWorker site name set to: [0;33mrennes[0m
-[0;32mAdded worker: [0;33mrennes:paradoxe-19[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-17[0m
 [0;36mConfiguration reading complete.[0m
-[0;36mCloning repo on [0;33mparadoxe-3[0;36m ([0;33mrennes[0;36m)...[0m
-[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-3[0;36m: [0;35m
+[0;36mCloning repo on [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35m
         rm -rf ~/systemes-distribues/
         git clone https://github.com/abdonasmane/systemes-distribues.git
     [0m
-Skipping paradoxe-6 since it has already been processed
-Skipping paradoxe-7 since it has already been processed
-Skipping paradoxe-9 since it has already been processed
-Skipping paradoxe-18 since it has already been processed
-Skipping paradoxe-19 since it has already been processed
-[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-3[0;36m: [0;35m
+Skipping paradoxe-11 since it has already been processed
+Skipping paradoxe-12 since it has already been processed
+Skipping paradoxe-13 since it has already been processed
+Skipping paradoxe-16 since it has already been processed
+Skipping paradoxe-17 since it has already been processed
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35m
         cd ~/systemes-distribues/src/test/resources/test6/
         ./generateUnbalancedTreeMakefile.py 50_000_000 1000
         cd ~/systemes-distribues/src/test/resources/test7/
-        ./generateAllToAllTree.py 50_000_000 3 1000
+        ./generateAllToAllTree.py 50_000_000 3 500
         cd ~/systemes-distribues/src/test/resources/test8/
-        ./generateATATvarTargetsPerLev.py 50_000_000 3 1000
+        ./generate_sleep_alea_makefile2.py 4 2000
         cd ~/systemes-distribues/src/test/resources/test9/
         ./generateHeavyTasks.py 3952
         rm -rf compressed_alea_tests  
@@ -41,23 +41,23 @@ Unbalanced Makefile generated successfully!
 All To All files dependencies Makefile generated successfully!
 All To All files 2 dependencies Makefile generated successfully!
 Heavy tasks Makefile generated successfully!
-[0;36mInstalling Maven and preparing project on [0;33mparadoxe-3[0;36m ([0;33mrennes[0;36m)...[0m
-[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-3[0;36m: [0;35m
+[0;36mInstalling Maven and preparing project on [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35m
         sudo-g5k apt install -y maven &&
         source ~/.bashrc &&
         cd /home/anasmane/systemes-distribues &&
         mvn clean package
     [0m
-Skipping paradoxe-6 since it has already been processed
-Skipping paradoxe-7 since it has already been processed
-Skipping paradoxe-9 since it has already been processed
-Skipping paradoxe-18 since it has already been processed
-Skipping paradoxe-19 since it has already been processed
+Skipping paradoxe-11 since it has already been processed
+Skipping paradoxe-12 since it has already been processed
+Skipping paradoxe-13 since it has already been processed
+Skipping paradoxe-16 since it has already been processed
+Skipping paradoxe-17 since it has already been processed
 Reading package lists...
 Building dependency tree...
 Reading state information...
 maven is already the newest version (3.6.3-5).
-0 upgraded, 0 newly installed, 0 to remove and 4 not upgraded.
+0 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
 [[1;34mINFO[m] Scanning for projects...
 [[1;34mINFO[m] 
 [[1;34mINFO[m] [1m----------------< [0;36mcom.example:distributed-make-project[0;1m >----------------[m
@@ -91,81 +91,229 @@ maven is already the newest version (3.6.3-5).
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
 [[1;34mINFO[m] [1;32mBUILD SUCCESS[m
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
-[[1;34mINFO[m] Total time:  4.580 s
-[[1;34mINFO[m] Finished at: 2024-12-12T19:44:36+01:00
+[[1;34mINFO[m] Total time:  5.870 s
+[[1;34mINFO[m] Finished at: 2024-12-16T23:41:04+01:00
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
-[0;36mSetting up Spark master on [0;33mparadoxe-3[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mSetting up Spark master on [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
 [0;36mCopying [0;33m/tmp/setup_spark_master.sh[0;36m to [0;33mrennes[0;36m : [0;33m[0m
-[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-3[0;36m: [0;35m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35m
         chmod +x setup_spark_master.sh &&
         ./setup_spark_master.sh &&
         rm -f setup_spark_master.sh
     [0m
 stopping org.apache.spark.deploy.master.Master
-starting org.apache.spark.deploy.master.Master, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.master.Master-1-paradoxe-3.rennes.grid5000.fr.out
+starting org.apache.spark.deploy.master.Master, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.master.Master-1-paradoxe-1.rennes.grid5000.fr.out
 stopping org.apache.spark.deploy.worker.Worker
-starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-3.rennes.grid5000.fr.out
-[0;36mSetting up Spark worker on [0;33mparadoxe-6[0;36m ([0;33mrennes[0;36m)...[0m
-[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-6.sh[0m
-[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-6[0;36m: [0;35m
-            chmod +x setup_spark_worker_paradoxe-6.sh &&
-            ./setup_spark_worker_paradoxe-6.sh &&
-            rm -f setup_spark_worker_paradoxe-6.sh
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-1.rennes.grid5000.fr.out
+[0;36mSetting up Spark worker on [0;33mparadoxe-11[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-11.sh[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-11[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-11.sh &&
+            ./setup_spark_worker_paradoxe-11.sh &&
+            rm -f setup_spark_worker_paradoxe-11.sh
         [0m
-[0;36mSetting up Spark worker on [0;33mparadoxe-7[0;36m ([0;33mrennes[0;36m)...[0m
-[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-7.sh[0m
-[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-7[0;36m: [0;35m
-            chmod +x setup_spark_worker_paradoxe-7.sh &&
-            ./setup_spark_worker_paradoxe-7.sh &&
-            rm -f setup_spark_worker_paradoxe-7.sh
+[0;36mSetting up Spark worker on [0;33mparadoxe-12[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-12.sh[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-12[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-12.sh &&
+            ./setup_spark_worker_paradoxe-12.sh &&
+            rm -f setup_spark_worker_paradoxe-12.sh
         [0m
-[0;36mSetting up Spark worker on [0;33mparadoxe-9[0;36m ([0;33mrennes[0;36m)...[0m
-[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-9.sh[0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-13[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-13.sh[0m
 stopping org.apache.spark.deploy.worker.Worker
-rsync from spark://172.16.101.3:3000
-starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-6.rennes.grid5000.fr.out
-[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-9[0;36m: [0;35m
-            chmod +x setup_spark_worker_paradoxe-9.sh &&
-            ./setup_spark_worker_paradoxe-9.sh &&
-            rm -f setup_spark_worker_paradoxe-9.sh
+rsync from spark://172.16.101.1:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-11.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-13[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-13.sh &&
+            ./setup_spark_worker_paradoxe-13.sh &&
+            rm -f setup_spark_worker_paradoxe-13.sh
         [0m
-[0;36mSetting up Spark worker on [0;33mparadoxe-18[0;36m ([0;33mrennes[0;36m)...[0m
-[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-18.sh[0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-16[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-16.sh[0m
 stopping org.apache.spark.deploy.worker.Worker
-rsync from spark://172.16.101.3:3000
-starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-7.rennes.grid5000.fr.out
-[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-18[0;36m: [0;35m
-            chmod +x setup_spark_worker_paradoxe-18.sh &&
-            ./setup_spark_worker_paradoxe-18.sh &&
-            rm -f setup_spark_worker_paradoxe-18.sh
+rsync from spark://172.16.101.1:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-12.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-16[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-16.sh &&
+            ./setup_spark_worker_paradoxe-16.sh &&
+            rm -f setup_spark_worker_paradoxe-16.sh
         [0m
-[0;36mSetting up Spark worker on [0;33mparadoxe-19[0;36m ([0;33mrennes[0;36m)...[0m
-[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-19.sh[0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-17[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-17.sh[0m
 stopping org.apache.spark.deploy.worker.Worker
-rsync from spark://172.16.101.3:3000
-starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-9.rennes.grid5000.fr.out
-[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-19[0;36m: [0;35m
-            chmod +x setup_spark_worker_paradoxe-19.sh &&
-            ./setup_spark_worker_paradoxe-19.sh &&
-            rm -f setup_spark_worker_paradoxe-19.sh
+rsync from spark://172.16.101.1:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-13.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-17[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-17.sh &&
+            ./setup_spark_worker_paradoxe-17.sh &&
+            rm -f setup_spark_worker_paradoxe-17.sh
         [0m
 stopping org.apache.spark.deploy.worker.Worker
-rsync from spark://172.16.101.3:3000
-starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-18.rennes.grid5000.fr.out
+rsync from spark://172.16.101.1:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-16.rennes.grid5000.fr.out
 no org.apache.spark.deploy.worker.Worker to stop
-rsync from spark://172.16.101.3:3000
-starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-19.rennes.grid5000.fr.out
-[0;36mSubmitting Spark app from [0;33mparadoxe-3[0;36m ([0;33mrennes[0;36m)...[0m
-[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-3[0;36m: [0;35m
-        /home/anasmane/spark-3.5.3-bin-hadoop3/bin/spark-submit --master spark://172.16.101.3:3000 --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main /home/anasmane/systemes-distribues/target/distributed-make-project-1.0.jar /home/anasmane/systemes-distribues/src/test/resources/test7/Makefile all spark://172.16.101.3:3000 NFS
+rsync from spark://172.16.101.1:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-17.rennes.grid5000.fr.out
+[0;36mSubmitting Spark app from [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35m
+        /home/anasmane/spark-3.5.3-bin-hadoop3/bin/spark-submit --master spark://172.16.101.1:3000 --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main /home/anasmane/systemes-distribues/target/distributed-make-project-1.0.jar /home/anasmane/systemes-distribues/src/test/resources/test7/Makefile all spark://172.16.101.1:3000 NFS
     [0m
 
 [32m==============================[0m
-[32m  Global Time : 128.487435424 seconds  [0m
+[32m  Global Time : 89.147314901 seconds  [0m
 [32m==============================[0m
 [33m--------------------------------[0m
-	[33mParsing Time           : 0.028909496 seconds[0m
-	[33mGraph Build Time       : 0.035649877 seconds[0m
-	[33mSpark Configuration Time: 1.29126929 seconds[0m
-	[33mExecution Time         : 127.131309643 seconds[0m
+	[33mParsing Time           : 0.013913498 seconds[0m
+	[33mGraph Build Time       : 0.008084624 seconds[0m
+	[33mSpark Configuration Time: 1.223910772 seconds[0m
+	[33mExecution Time         : 87.900867567 seconds[0m
 [33m--------------------------------[0m
+Cloning into 'systemes-distribues'...
+Updating files:  31% (350/1125)
+Updating files:  32% (360/1125)
+Updating files:  33% (372/1125)
+Updating files:  34% (383/1125)
+Updating files:  35% (394/1125)
+Updating files:  36% (405/1125)
+Updating files:  37% (417/1125)
+Updating files:  38% (428/1125)
+Updating files:  39% (439/1125)
+Updating files:  40% (450/1125)
+Updating files:  41% (462/1125)
+Updating files:  42% (473/1125)
+Updating files:  43% (484/1125)
+Updating files:  44% (495/1125)
+Updating files:  45% (507/1125)
+Updating files:  46% (518/1125)
+Updating files:  47% (529/1125)
+Updating files:  48% (540/1125)
+Updating files:  49% (552/1125)
+Updating files:  50% (563/1125)
+Updating files:  51% (574/1125)
+Updating files:  52% (585/1125)
+Updating files:  53% (597/1125)
+Updating files:  54% (608/1125)
+Updating files:  55% (619/1125)
+Updating files:  56% (630/1125)
+Updating files:  57% (642/1125)
+Updating files:  58% (653/1125)
+Updating files:  59% (664/1125)
+Updating files:  60% (675/1125)
+Updating files:  61% (687/1125)
+Updating files:  62% (698/1125)
+Updating files:  63% (709/1125)
+Updating files:  64% (720/1125)
+Updating files:  64% (722/1125)
+Updating files:  65% (732/1125)
+Updating files:  66% (743/1125)
+Updating files:  67% (754/1125)
+Updating files:  68% (765/1125)
+Updating files:  69% (777/1125)
+Updating files:  70% (788/1125)
+Updating files:  71% (799/1125)
+Updating files:  72% (810/1125)
+Updating files:  73% (822/1125)
+Updating files:  74% (833/1125)
+Updating files:  75% (844/1125)
+Updating files:  76% (855/1125)
+Updating files:  77% (867/1125)
+Updating files:  78% (878/1125)
+Updating files:  79% (889/1125)
+Updating files:  80% (900/1125)
+Updating files:  81% (912/1125)
+Updating files:  82% (923/1125)
+Updating files:  83% (934/1125)
+Updating files:  84% (945/1125)
+Updating files:  85% (957/1125)
+Updating files:  86% (968/1125)
+Updating files:  87% (979/1125)
+Updating files:  88% (990/1125)
+Updating files:  89% (1002/1125)
+Updating files:  90% (1013/1125)
+Updating files:  91% (1024/1125)
+Updating files:  92% (1035/1125)
+Updating files:  93% (1047/1125)
+Updating files:  94% (1058/1125)
+Updating files:  95% (1069/1125)
+Updating files:  96% (1080/1125)
+Updating files:  97% (1092/1125)
+Updating files:  98% (1103/1125)
+Updating files:  99% (1114/1125)
+Updating files: 100% (1125/1125)
+Updating files: 100% (1125/1125), done.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+ssh: Could not resolve hostname spark: Name or service not known
+rsync: connection unexpectedly closed (0 bytes received so far) [Receiver]
+rsync error: unexplained error (code 255) at io.c(228) [Receiver=3.2.3]
+ssh: Could not resolve hostname spark: Name or service not known
+rsync: connection unexpectedly closed (0 bytes received so far) [Receiver]
+rsync error: unexplained error (code 255) at io.c(228) [Receiver=3.2.3]
+ssh: Could not resolve hostname spark: Name or service not known
+rsync: connection unexpectedly closed (0 bytes received so far) [Receiver]
+rsync error: unexplained error (code 255) at io.c(228) [Receiver=3.2.3]
+ssh: Could not resolve hostname spark: Name or service not known
+rsync: connection unexpectedly closed (0 bytes received so far) [Receiver]
+rsync error: unexplained error (code 255) at io.c(228) [Receiver=3.2.3]
+ssh: Could not resolve hostname spark: Name or service not known
+rsync: connection unexpectedly closed (0 bytes received so far) [Receiver]
+rsync error: unexplained error (code 255) at io.c(228) [Receiver=3.2.3]
+24/12/16 23:41:24 INFO SparkContext: Running Spark version 3.5.3
+24/12/16 23:41:24 INFO SparkContext: OS info Linux, 5.10.0-33-amd64, amd64
+24/12/16 23:41:24 INFO SparkContext: Java version 1.8.0_332
+24/12/16 23:41:24 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/12/16 23:41:24 INFO ResourceUtils: ==============================================================
+24/12/16 23:41:24 INFO ResourceUtils: No custom resources configured for spark.driver.
+24/12/16 23:41:24 INFO ResourceUtils: ==============================================================
+24/12/16 23:41:24 INFO SparkContext: Submitted application: DistributedMakeExecutor
+24/12/16 23:41:24 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memory -> name: memory, amount: 51200, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+24/12/16 23:41:24 INFO ResourceProfile: Limiting resource is cpu
+24/12/16 23:41:24 INFO ResourceProfileManager: Added ResourceProfile id: 0
+24/12/16 23:41:24 INFO SecurityManager: Changing view acls to: anasmane
+24/12/16 23:41:24 INFO SecurityManager: Changing modify acls to: anasmane
+24/12/16 23:41:24 INFO SecurityManager: Changing view acls groups to: 
+24/12/16 23:41:24 INFO SecurityManager: Changing modify acls groups to: 
+24/12/16 23:41:24 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: anasmane; groups with view permissions: EMPTY; users with modify permissions: anasmane; groups with modify permissions: EMPTY
+24/12/16 23:41:25 INFO Utils: Successfully started service 'sparkDriver' on port 37663.
+24/12/16 23:41:25 INFO SparkEnv: Registering MapOutputTracker
+24/12/16 23:41:25 INFO SparkEnv: Registering BlockManagerMaster
+24/12/16 23:41:25 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+24/12/16 23:41:25 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+24/12/16 23:41:25 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+24/12/16 23:41:25 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-a5e755cf-9c4a-4f6d-b403-6cda3970c92e
+24/12/16 23:41:25 INFO MemoryStore: MemoryStore started with capacity 26.5 GiB
+24/12/16 23:41:25 INFO SparkEnv: Registering OutputCommitCoordinator
+24/12/16 23:41:25 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+24/12/16 23:41:25 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+24/12/16 23:41:25 INFO SparkContext: Added JAR file:/home/anasmane/systemes-distribues/target/distributed-make-project-1.0.jar at spark://paradoxe-1.rennes.grid5000.fr:37663/jars/distributed-make-project-1.0.jar with timestamp 1734388884785
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://172.16.101.1:3000...
+24/12/16 23:41:25 INFO TransportClientFactory: Successfully created connection to /172.16.101.1:3000 after 23 ms (0 ms spent in bootstraps)
+24/12/16 23:41:25 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20241216234125-0000
+24/12/16 23:41:25 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 36879.
+24/12/16 23:41:25 INFO NettyBlockTransferService: Server created on paradoxe-1.rennes.grid5000.fr:36879
+24/12/16 23:41:25 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+24/12/16 23:41:25 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, paradoxe-1.rennes.grid5000.fr, 36879, None)
+24/12/16 23:41:25 INFO BlockManagerMasterEndpoint: Registering block manager paradoxe-1.rennes.grid5000.fr:36879 with 26.5 GiB RAM, BlockManagerId(driver, paradoxe-1.rennes.grid5000.fr, 36879, None)
+24/12/16 23:41:25 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, paradoxe-1.rennes.grid5000.fr, 36879, None)
+24/12/16 23:41:25 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, paradoxe-1.rennes.grid5000.fr, 36879, None)
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216234125-0000/0 on worker-20241216234116-172.16.101.11-40143 (172.16.101.11:40143) with 104 core(s)
+24/12/16 23:41:25 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216234125-0000/0 on hostPort 172.16.101.11:40143 with 104 core(s), 50.0 GiB RAM
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216234125-0000/1 on worker-20241216234118-172.16.101.12-33817 (172.16.101.12:33817) with 104 core(s)
+24/12/16 23:41:25 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216234125-0000/1 on hostPort 172.16.101.12:33817 with 104 core(s), 50.0 GiB RAM
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216234125-0000/2 on worker-20241216234118-172.16.101.13-45357 (172.16.101.13:45357) with 104 core(s)
+24/12/16 23:41:25 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216234125-0000/2 on hostPort 172.16.101.13:45357 with 104 core(s), 50.0 GiB RAM
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216234125-0000/3 on worker-20241216234119-172.16.101.16-45385 (172.16.101.16:45385) with 104 core(s)
+24/12/16 23:41:25 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216234125-0000/3 on hostPort 172.16.101.16:45385 with 104 core(s), 50.0 GiB RAM
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216234125-0000/4 on worker-20241216234111-172.16.101.1-37025 (172.16.101.1:37025) with 104 core(s)
+24/12/16 23:41:25 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216234125-0000/4 on hostPort 172.16.101.1:37025 with 104 core(s), 50.0 GiB RAM
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216234125-0000/5 on worker-20241216234121-172.16.101.17-34251 (172.16.101.17:34251) with 104 core(s)
+24/12/16 23:41:25 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216234125-0000/5 on hostPort 172.16.101.17:34251 with 104 core(s), 50.0 GiB RAM
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216234125-0000/3 is now RUNNING
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216234125-0000/4 is now RUNNING
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216234125-0000/1 is now RUNNING
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216234125-0000/2 is now RUNNING
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216234125-0000/0 is now RUNNING
+24/12/16 23:41:25 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216234125-0000/5 is now RUNNING
+24/12/16 23:41:25 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0

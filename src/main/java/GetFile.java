@@ -13,7 +13,6 @@ public class GetFile {
         while (number_of_tries > 0) {
             try (Socket socket = new Socket()) {
                 socket.connect(new InetSocketAddress(serverHost, serverPort), 500);
-                // socket.setSoTimeout(5000); // file might be large
                 InputStream in = socket.getInputStream();
                 OutputStream out = socket.getOutputStream();
                 // System.out.println("Requesting file " + fileName + " from " + serverHost + " by " + InetAddress.getLocalHost().getHostAddress());
@@ -34,7 +33,7 @@ public class GetFile {
                 in.read(); 
 
                 // Prepare to receive the file
-                byte[] buffer = new byte[100000];  // You can adjust chunk size if needed
+                byte[] buffer = new byte[100000];
                 try (FileOutputStream fileOutputStream = new FileOutputStream(destinationPath)) {
                     int bytesRead;
                     long totalBytesRead = 0;
@@ -60,23 +59,5 @@ public class GetFile {
             number_of_tries --;
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-        // For demonstration purposes, the main method will call the retrieveFile method
-        if (args.length != 3) {
-            System.out.println("Usage: java GetFile <SERVER_HOST> <SERVER_PORT> <FILE_NAME>");
-            return;
-        }
-
-        String serverHost = args[0];
-        int serverPort = Integer.parseInt(args[1]);
-        String fileName = args[2];
-        
-        // Destination where the file will be saved
-        String destinationPath = "received_" + fileName;
-
-        // Call the method to retrieve the file
-        retrieveFile(serverHost, serverPort, fileName, destinationPath);
     }
 }

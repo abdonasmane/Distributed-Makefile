@@ -63,21 +63,13 @@ public class DistributedMakeExecutor implements Serializable {
                     String tempDirPath = broadcastWorkingDirectory.value() + File.separator + tempDirName;
                     File tempDir = new File(tempDirPath);
 
-                    // Step 1: Create and copy files to temporary directory
                     if (!tempDir.mkdir()) {
                         throw new IOException("Failed to create temporary directory: " + tempDirPath);
                     }
-                    // FileUtils.copyDirectory(new File(broadcastWorkingDirectory.value()), tempDir, pathname -> {
-                    //     return !pathname.getName().startsWith("temp_");
-                    // });
 
-                    // // Get the initial set of files in the directory before executing commands
-                    // Map<String, Long> initialFiles = FileDetector.getFilesInDirectory(tempDirPath);
                     Set<String> broughtFiles = new HashSet<>();
 
                     // Check and retrieve dependencies
-                    // direct dependencie
-                    // List<String> directTargetDependencies = broadcastTargets.value().get(target);
                     Set<String> allTargetDependencies = broadcastDependenciesTree.value().getOrDefault(target, null);
                     if (allTargetDependencies != null) {
                         Map<String, Set<String>> assocIpFiles = GetTargetExecutor.retrieveTargetExecutor(broadcastMasterIp.value(), broadcastFileLocatorPort.value(), allTargetDependencies);
@@ -112,22 +104,6 @@ public class DistributedMakeExecutor implements Serializable {
                     // Get the initial set of files in the directory before executing commands
                     Map<String, Long> initialFiles = FileDetector.getFilesInDirectory(tempDirPath);
 
-                    // Execute commands for the target
-                    // System.out.println("\u001B[34mExecuting target: " + target + "\u001B[0m");
-                    // for (String command : targetCommands) {
-                    //     // System.out.println("\t\u001B[36mRunning: " + command + "\u001B[0m");
-                    //     ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", command);
-                    //     processBuilder.directory(tempDir);
-                    //     processBuilder.inheritIO();
-                    //     Process process = processBuilder.start();
-                    //     int exitCode = process.waitFor();
-                    //     if (exitCode != 0) {
-                    //         // System.out.println("\t\u001B[32mCommand succeeded: " + command + "\u001B[0m");
-                    //     // } else {
-                    //         System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
-                    //         return false;
-                    //     }
-                    // }
                     for (String command : targetCommands) {
                         int num_of_tries = 3;
                         while (true) {
@@ -139,10 +115,6 @@ public class DistributedMakeExecutor implements Serializable {
                             int exitCode = process.waitFor();
                             if (exitCode == 0) {
                                 break;
-                                // System.out.println("\t\u001B[32mCommand succeeded: " + command + "\u001B[0m");
-                            // } else {
-                                // System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
-                                // return false;
                             } else {
                                 num_of_tries--;
                                 if (num_of_tries < 0) {
@@ -185,31 +157,18 @@ public class DistributedMakeExecutor implements Serializable {
 
                     // Print the new files that were generated
                     if (!newFiles.isEmpty()) {
-                        // System.out.println("\t\t\u001B[36mNew files generated:\u001B[0m");
-                        // for (String newFile : newFiles) {
-                        //     System.out.println("\t\t\t\u001B[33m" + newFile + "\u001B[0m");
-                        // }
                         // Store file ownership for the target
                         if (!StoreFileOwner.storeFileOwner(broadcastMasterIp.value(), broadcastFileLocatorPort.value(), target, newFiles)) {
                             System.err.println("\u001B[31mError: Failed to store file ownership for target '" + target + "'.\u001B[0m");
                             return false;
                         }
                     }
-                    // } else {
-                    //     System.out.println("\t\t\u001B[36mNo new files generated.\u001B[0m");
-                    // }
-                    // FileUtils.deleteDirectory(tempDir);
+                    
+                    // delete temp directory
                     ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "rm -rf " + tempDirName);
                     processBuilder.directory(new File(broadcastWorkingDirectory.value()));
                     processBuilder.inheritIO();
                     processBuilder.start();
-                    // Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                    //     try {
-                    //         FileUtils.deleteDirectory(tempDir);
-                    //     } catch (IOException e) {
-                    //         e.printStackTrace();
-                    //     }
-                    // }));
                     return true;
                 } catch (Exception e) {
                     System.err.println("\u001B[31mTask failed: " + target + " || Error: " + e.getMessage() + "\u001B[0m");
@@ -230,9 +189,6 @@ public class DistributedMakeExecutor implements Serializable {
             if (targetCommands == null) {
                 System.out.println("\u001B[33mSkipping last target '" + lastLevel + "' (no commands).\u001B[0m");
             } else {
-                // Get the initial set of files in the directory before executing commands
-                // Map<String, Long> initialFiles = FileDetector.getFilesInDirectory(workingDirectory);
-
                 // Execute commands for the target
                 // System.out.println("\u001B[34mExecuting last level target: " + lastLevel + "\u001B[0m");
                 try {
@@ -245,25 +201,12 @@ public class DistributedMakeExecutor implements Serializable {
                         Process process = processBuilder.start();
                         int exitCode = process.waitFor();
                         if (exitCode != 0) {
-                        //     System.out.println("\t\u001B[32mCommand succeeded: " + command + "\u001B[0m");
-                        // } else {
                             System.err.println("\t\u001B[31mCommand failed: " + command + " || Exit code : " + exitCode + "\u001B[0m");
                         }
                     }
                 } catch (Exception e) {
                     System.err.println("\u001B[31mTask failed: " + lastLevel + " || Error: " + e.getMessage() + "\u001B[0m");
                 }
-                // Get the list of files after running the commands
-                // Set<String> newFiles = FileDetector.getNewOrModifiedFilesInDirectory(workingDirectory, initialFiles);
-                // Print the new files that were generated
-                // if (!newFiles.isEmpty()) {
-                //     System.out.println("\t\t\u001B[36mNew files generated:\u001B[0m");
-                //     for (String newFile : newFiles) {
-                //         System.out.println("\t\t\t\u001B[33m" + newFile + "\u001B[0m");
-                //     }
-                // } else {
-                //     System.out.println("\t\t\u001B[36mNo new files generated.\u001B[0m");
-                // }
             }
         }
         // Stop SparkContext

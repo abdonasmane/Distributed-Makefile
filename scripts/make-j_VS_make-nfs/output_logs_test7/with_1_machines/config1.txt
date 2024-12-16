@@ -1,4 +1,4 @@
 master_site_name=rennes
-master_node_name=paradoxe-3
-master_node_ip=172.16.101.3
+master_node_name=paradoxe-1
+master_node_ip=172.16.101.1
 master_node_port=3000

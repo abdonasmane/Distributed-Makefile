@@ -1,8 +1,5 @@
-master_site_name=grenoble
-master_node_name=servan-1
-master_node_ip=172.16.23.1
+master_site_name=lille
+master_node_name=chiclet-4
+master_node_ip=172.16.39.4
 master_node_port=3000
-worker_site_name=grenoble
-worker_node_name=servan-2
-worker_site_name=grenoble
-worker_node_name=troll-1
+
