@@ -135,6 +135,9 @@ public class FileLocatorServer {
             // System.out.println("New connection from " + clientSocket.getInetAddress() + " to LOCATE " + receivedRequest);
             Map<String, Set<String>> assocIpFiles = new HashMap<>();
             for (String targetName: receivedRequest.get("LOCATE")) {
+                if (!assocTargetOwner.containsKey(targetName)) {
+                    continue;
+                }
                 String targetOwnerIP = new String(assocTargetOwner.get(targetName));
                 if (assocIpFiles.containsKey(targetOwnerIP)) {
                     assocIpFiles.get(targetOwnerIP).addAll(new HashSet<>(assocTargetFiles.get(targetName)));
@@ -143,7 +146,7 @@ public class FileLocatorServer {
                 }
             }
             assocIpFiles.merge(
-                clientSocket.getInetAddress().getHostAddress(),
+                InetAddress.getLocalHost().getHostAddress(),
                 new HashSet<>(assocTargetFiles.get(commonInitialTarget)),
                 (oldSet, newSet) -> {
                     oldSet.addAll(newSet);

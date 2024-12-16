@@ -1,0 +1,43 @@
+[0;32mNFS mode enabled : expecting nodes from the same site[0m
+[0;36mReading configuration from [0;33moutput_logs_test8/with_12_machines/config12.txt[0m...
+[0;32mMaster site name set to: [0;33mrennes[0m
+[0;32mMaster node name set to: [0;33mparadoxe-5[0m
+[0;32mMaster node IP set to: [0;33m172.16.101.5[0m
+[0;32mMaster node port set to: [0;33m3000[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-6[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-7[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-9[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-22[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-24[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-25[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-26[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-27[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-28[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-29[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-30[0m
+[0;36mConfiguration reading complete.[0m
+[0;36mSubmitting Spark app from [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        /home/anasmane/spark-3.5.3-bin-hadoop3/bin/spark-submit --master spark://172.16.101.5:3000 --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main /home/anasmane/systemes-distribues/target/distributed-make-project-1.0.jar /home/anasmane/systemes-distribues/src/test/resources/test8/Makefile all spark://172.16.101.5:3000 NFS
+    [0m
+
+[32m==============================[0m
+[32m  Global Time : 46.794318058 seconds  [0m
+[32m==============================[0m
+[33m--------------------------------[0m
+	[33mParsing Time           : 0.229872124 seconds[0m
+	[33mGraph Build Time       : 0.340393715 seconds[0m
+	[33mSpark Configuration Time: 1.277023393 seconds[0m
+	[33mExecution Time         : 44.946366331 seconds[0m
+[33m--------------------------------[0m

@@ -151,12 +151,24 @@ public class DistributedMakeExecutor implements Serializable {
                     }
                     // Get the list of files after running the commands
                     Set<String> newFiles = FileDetector.getNewOrModifiedFilesInDirectory(tempDirPath, initialFiles);
-                    newFiles.addAll(broughtFiles);
                     
                     // Move new files to the original directory
                     for (String newFile : newFiles) {
                         File sourceFile = new File(tempDirPath + File.separator + newFile);
                         File destFile = new File(broadcastWorkingDirectory.value() + File.separator + newFile);
+                        if (!destFile.exists()) {
+                            try {
+                                Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+                            } catch (IOException e) {
+                                System.err.println("\u001B[31mError moving file " + sourceFile + " to " + destFile + ": " + e.getMessage() + "\u001B[0m");
+                                return false;
+                            }
+                        }
+                    }
+
+                    for (String broughtFile : broughtFiles) {
+                        File sourceFile = new File(tempDirPath + File.separator + broughtFile);
+                        File destFile = new File(broadcastWorkingDirectory.value() + File.separator + broughtFile);
                         if (!destFile.exists()) {
                             try {
                                 Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);

@@ -82,22 +82,22 @@ def launch_tests(username, test_directory_suffix, base_path, spark_path, nfs_mod
                 config_file.write(f"worker_node_name={machines[j][0]}\n")
         
         for k in range(1, number_of_samples+1):
-            if k > 1:
-                clean_command = [
-                    clean_script,
-                    username,
-                    f"{store_file_in}/{config_filename}",
-                    f"{base_path}/src/test/resources/{test_directory_suffix}/Makefile",
-                    nfs_mode,
-                    tmp_mode
-                ]
-                try:
-                    print(Fore.YELLOW + f"Executing :\n{clean_command} for the {k}th time with {i} machines")
-                    result = subprocess.run(clean_command, capture_output=True, text=True, check=True)
-                    print(Fore.GREEN + f"Cleaned Successfully in iteration {i}_{k}")
-                except subprocess.CalledProcessError as e:
-                    print(Fore.RED + f"Clean Failed in iteration {i}_{k}")
-                    print(Fore.RED + " Error : " + e.stderr)
+            # if k > 1:
+            #     clean_command = [
+            #         clean_script,
+            #         username,
+            #         f"{store_file_in}/{config_filename}",
+            #         f"{base_path}/src/test/resources/{test_directory_suffix}/Makefile",
+            #         nfs_mode,
+            #         tmp_mode
+            #     ]
+            #     try:
+            #         print(Fore.YELLOW + f"Executing :\n{clean_command} for the {k}th time with {i} machines")
+            #         result = subprocess.run(clean_command, capture_output=True, text=True, check=True)
+            #         print(Fore.GREEN + f"Cleaned Successfully in iteration {i}_{k}")
+            #     except subprocess.CalledProcessError as e:
+            #         print(Fore.RED + f"Clean Failed in iteration {i}_{k}")
+            #         print(Fore.RED + " Error : " + e.stderr)
             # Command to execute
             command = []
             if k == 1:
@@ -132,6 +132,7 @@ def launch_tests(username, test_directory_suffix, base_path, spark_path, nfs_mod
                 log_filename = f"{store_file_in}/log_iteration_{i}_{k}.txt"
                 with open(log_filename, "w") as log_file:
                     log_file.write(result.stdout)
+                    log_file.write(result.stderr)
                 print(Fore.GREEN + f"Iteration {i}_{k}: Command executed successfully. Output saved in {log_filename}.")
                 with open(log_filename, "r") as log_file:
                     log_data = log_file.read()
@@ -164,8 +165,8 @@ def launch_tests(username, test_directory_suffix, base_path, spark_path, nfs_mod
                 print(Fore.RED + f"Iteration {i}_{k}: Command failed. Error saved in {error_filename}.")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 8:
-        print("Usage: python3 make_perf.py <username> <master_ip> <test_directory_suffix: eg. test5> "+
+    if len(sys.argv) != 7:
+        print("Usage: python3 make_perf.py <username> <test_directory_suffix: eg. test5> "+
               "<base_path> <nfs_mode: NFS/NO_NFS> <tmp_mode: TMP/NO_TMP> "+
               "<number_of_samples_per_test>")
         sys.exit(1)

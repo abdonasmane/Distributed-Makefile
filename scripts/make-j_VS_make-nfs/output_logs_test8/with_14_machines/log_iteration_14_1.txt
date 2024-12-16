@@ -1,0 +1,285 @@
+[0;32mNFS mode enabled : expecting nodes from the same site[0m
+[0;33mNO_TMP mode enabled[0m
+[0;36mReading configuration from [0;33moutput_logs_test8/with_14_machines/config14.txt[0m...
+[0;32mMaster site name set to: [0;33mrennes[0m
+[0;32mMaster node name set to: [0;33mparadoxe-5[0m
+[0;32mMaster node IP set to: [0;33m172.16.101.5[0m
+[0;32mMaster node port set to: [0;33m3000[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-6[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-7[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-9[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-22[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-24[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-25[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-26[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-27[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-28[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-29[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-30[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-31[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-32[0m
+[0;36mConfiguration reading complete.[0m
+[0;36mCloning repo on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        rm -rf ~/systemes-distribues/
+        git clone https://github.com/abdonasmane/systemes-distribues.git
+    [0m
+Skipping paradoxe-6 since it has already been processed
+Skipping paradoxe-7 since it has already been processed
+Skipping paradoxe-9 since it has already been processed
+Skipping paradoxe-22 since it has already been processed
+Skipping paradoxe-24 since it has already been processed
+Skipping paradoxe-25 since it has already been processed
+Skipping paradoxe-26 since it has already been processed
+Skipping paradoxe-27 since it has already been processed
+Skipping paradoxe-28 since it has already been processed
+Skipping paradoxe-29 since it has already been processed
+Skipping paradoxe-30 since it has already been processed
+Skipping paradoxe-31 since it has already been processed
+Skipping paradoxe-32 since it has already been processed
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        cd ~/systemes-distribues/src/test/resources/test6/
+        ./generateUnbalancedTreeMakefile.py 50_000_000 1000
+        cd ~/systemes-distribues/src/test/resources/test7/
+        ./generateAllToAllTree.py 50_000_000 3 1000
+        cd ~/systemes-distribues/src/test/resources/test8/
+        ./generate_sleep_alea_makefile2.py 4 2000
+        cd ~/systemes-distribues/src/test/resources/test9/
+        ./generateHeavyTasks.py 3952
+        rm -rf compressed_alea_tests  
+    [0m
+Unbalanced Makefile generated successfully!
+All To All files dependencies Makefile generated successfully!
+All To All files 2 dependencies Makefile generated successfully!
+The matrix of times for this test :
+ [[2, 1, 5, 4, 4, 3, 2, 9, 2, 10, 7, 1, 1, 2, 4, 4, 9, 10, 1, 9, 4, 9, 7, 4, 8, 10, 5, 1, 3, 7, 6, 5, 3, 4, 6, 2, 2, 7, 2, 6, 6, 10, 5, 1, 8, 9, 2, 7, 2, 9, 5, 10, 6, 10, 4, 2, 1, 4, 5, 2, 4, 2, 7, 5, 8, 6, 3, 6, 6, 4, 5, 2, 10, 3, 9, 4, 3, 8, 7, 5, 9, 4, 6, 1, 4, 1, 6, 7, 5, 2, 4, 10, 6, 4, 8, 7, 8, 3, 5, 3, 4, 9, 9, 5, 10, 7, 10, 7, 6, 4, 3, 9, 8, 2, 1, 2, 3, 3, 7, 10, 2, 7, 7, 10, 8, 9, 5, 9, 1, 2, 9, 5, 6, 2, 5, 7, 3, 8, 1, 5, 9, 3, 9, 2, 5, 9, 10, 4, 3, 6, 3, 9, 9, 1, 10, 6, 8, 1, 2, 6, 5, 4, 1, 4, 10, 2, 2, 8, 2, 9, 3, 3, 8, 9, 3, 5, 9, 10, 7, 4, 9, 4, 5, 7, 6, 8, 9, 8, 2, 4, 4, 2, 6, 1, 10, 9, 4, 10, 4, 1, 2, 1, 4, 2, 1, 6, 2, 9, 4, 5, 8, 4, 9, 3, 10, 10, 8, 4, 8, 7, 4, 2, 2, 7, 6, 7, 7, 8, 1, 2, 1, 7, 6, 2, 4, 4, 4, 9, 8, 3, 7, 3, 5, 8, 4, 2, 8, 9, 2, 1, 9, 1, 2, 4, 3, 7, 8, 8, 4, 7, 1, 3, 7, 1, 7, 5, 8, 5, 7, 9, 8, 3, 4, 5, 4, 1, 10, 9, 1, 6, 1, 1, 10, 8, 9, 9, 3, 1, 9, 2, 3, 2, 10, 2, 4, 7, 2, 10, 4, 10, 10, 1, 10, 2, 7, 10, 10, 9, 6, 5, 4, 6, 4, 5, 7, 3, 5, 8, 6, 2, 1, 8, 10, 10, 2, 2, 9, 4, 9, 5, 3, 6, 2, 4, 6, 5, 3, 8, 9, 5, 10, 9, 1, 9, 5, 2, 3, 5, 2, 2, 9, 3, 5, 5, 10, 4, 6, 4, 5, 9, 8, 5, 1, 2, 7, 5, 1, 1, 6, 3, 5, 3, 8, 9, 7, 9, 1, 2, 2, 3, 9, 1, 6, 10, 9, 3, 7, 3, 1, 5, 6, 1, 6, 4, 4, 2, 6, 9, 7, 10, 3, 4, 3, 3, 7, 1, 3, 6, 7, 4, 5, 3, 2, 7, 1, 8, 4, 4, 8, 6, 5, 4, 4, 1, 4, 7, 6, 5, 2, 5, 6, 9, 7, 9, 6, 1, 2, 5, 3, 10, 5, 1, 2, 10, 7, 6, 6, 7, 10, 9, 2, 7, 10, 4, 5, 1, 7, 1, 9, 9, 4, 6, 7, 2, 6, 10, 6, 2, 5, 9, 5, 7, 6, 7, 5, 9, 3, 4, 7, 7, 3, 10, 10, 5, 7, 9, 1, 5, 5, 4, 7, 10, 10, 6, 8, 8, 8, 4, 9, 8, 3, 2, 5, 9, 10, 6, 2, 4, 5, 4, 4, 3, 1, 1, 4, 8, 10, 2, 8, 7, 10, 4, 7, 8, 7, 4, 3, 1, 2, 7, 4, 3, 9, 8, 1, 9, 4, 2, 8, 3, 8, 9, 9, 10, 6, 8, 10, 9, 7, 9, 8, 3, 8, 8, 5, 4, 5, 9, 8, 4, 5, 8, 2, 5, 4, 5, 6, 6, 9, 2, 3, 3, 4, 7, 3, 4, 2, 7, 7, 6, 9, 8, 7, 1, 4, 7, 7, 10, 1, 10, 7, 8, 1, 6, 5, 7, 7, 9, 9, 10, 4, 8, 4, 5, 7, 8, 1, 7, 6, 7, 3, 8, 3, 10, 9, 1, 7, 10, 10, 1, 2, 7, 3, 8, 3, 1, 5, 7, 6, 4, 8, 6, 6, 7, 5, 7, 5, 2, 8, 1, 9, 1, 6, 4, 2, 1, 1, 4, 4, 1, 10, 3, 4, 3, 8, 2, 10, 4, 8, 5, 6, 3, 10, 10, 2, 3, 5, 2, 10, 1, 5, 10, 7, 7, 4, 2, 10, 4, 2, 5, 10, 2, 10, 1, 6, 9, 7, 6, 2, 9, 6, 1, 7, 8, 2, 7, 6, 8, 3, 7, 3, 9, 5, 10, 9, 8, 8, 7, 10, 5, 6, 4, 2, 5, 8, 4, 8, 10, 10, 7, 6, 1, 8, 6, 3, 8, 4, 6, 5, 6, 5, 10, 5, 9, 1, 9, 4, 2, 4, 7, 8, 9, 4, 8, 8, 8, 1, 2, 5, 4, 7, 4, 5, 10, 6, 8, 9, 9, 6, 7, 9, 6, 6, 8, 5, 5, 5, 4, 2, 4, 6, 2, 9, 3, 4, 4, 8, 5, 10, 9, 10, 5, 2, 4, 5, 4, 6, 3, 5, 1, 9, 3, 5, 1, 1, 9, 5, 3, 8, 2, 1, 10, 5, 8, 8, 8, 6, 3, 1, 5, 8, 2, 2, 7, 8, 2, 10, 1, 3, 3, 10, 5, 2, 4, 2, 9, 7, 10, 10, 10, 4, 9, 7, 8, 8, 5, 10, 7, 5, 10, 10, 1, 10, 2, 4, 4, 5, 2, 3, 4, 3, 9, 2, 3, 1, 7, 8, 10, 8, 5, 1, 4, 5, 5, 8, 2, 4, 5, 10, 4, 7, 2, 9, 4, 3, 5, 3, 2, 1, 3, 5, 10, 10, 5, 8, 2, 8, 5, 7, 5, 9, 9, 8, 8, 2, 10, 1, 7, 6, 10, 5, 1, 2, 4, 10, 10, 1, 5, 10, 1, 3, 8, 9, 8, 5, 3, 10, 7, 8, 2, 8, 6, 7, 6, 6, 2, 3, 6, 7, 8, 5, 7, 9, 1, 8, 2, 6, 5, 6, 2, 7, 9, 1, 9, 8, 7, 1, 4, 9, 6, 10, 8, 8, 1, 4, 5, 9, 3, 5, 8, 8, 2, 1, 10, 4, 3, 5, 9, 1, 9, 7, 2, 4, 2, 8, 2, 3, 8, 5, 9, 5, 7, 8, 8, 4, 8, 9, 3, 7, 4, 10, 9, 3, 2, 5, 7, 6, 9, 5, 1, 5, 5, 10, 10, 8, 3, 8, 9, 8, 6, 6, 9, 9, 7, 8, 6, 4, 4, 10, 7, 4, 7, 1, 6, 8, 7, 7, 3, 8, 1, 3, 9, 10, 6, 2, 8, 2, 9, 8, 1, 3, 7, 3, 2, 8, 5, 6, 10, 7, 2, 6, 9, 7, 6, 8, 9, 1, 10, 2, 4, 5, 4, 2, 7, 2, 2, 8, 3, 5, 1, 1, 6, 1, 5, 6, 6, 7, 3, 4, 9, 7, 10, 3, 3, 3, 2, 10, 7, 10, 4, 8, 10, 3, 4, 8, 5, 8, 5, 1, 8, 5, 9, 3, 2, 8, 6, 10, 5, 7, 5, 8, 5, 4, 7, 8, 2, 4, 7, 10, 6, 10, 5, 5, 1, 7, 5, 1, 10, 1, 10, 8, 5, 4, 10, 6, 4, 4, 10, 5, 3, 2, 1, 5, 8, 1, 10, 6, 3, 2, 5, 6, 7, 3, 4, 3, 9, 6, 9, 9, 5, 3, 5, 8, 5, 6, 2, 8, 2, 3, 4, 7, 9, 6, 2, 7, 1, 5, 9, 2, 8, 6, 5, 10, 7, 6, 2, 4, 8, 1, 10, 9, 6, 10, 4, 2, 8, 5, 7, 2, 3, 1, 1, 5, 8, 2, 2, 4, 9, 3, 7, 8, 6, 9, 7, 10, 3, 7, 2, 8, 10, 7, 5, 1, 6, 4, 8, 8, 4, 6, 2, 6, 9, 6, 1, 7, 5, 4, 2, 8, 2, 4, 10, 1, 1, 6, 4, 3, 10, 4, 2, 9, 4, 10, 4, 4, 6, 3, 10, 1, 5, 3, 3, 9, 5, 3, 2, 1, 3, 1, 6, 4, 10, 6, 1, 3, 5, 1, 3, 7, 9, 2, 2, 8, 8, 6, 9, 10, 2, 8, 9, 4, 10, 1, 9, 5, 8, 1, 1, 8, 7, 7, 2, 8, 8, 2, 2, 6, 10, 3, 2, 3], [10, 10, 9, 6, 7, 10, 9, 5, 8, 9, 10, 7, 2, 2, 9, 4, 7, 8, 4, 7, 6, 8, 7, 7, 2, 6, 7, 6, 5, 6, 3, 8, 2, 2, 2, 2, 7, 2, 6, 3, 9, 1, 10, 9, 9, 6, 2, 7, 6, 7, 1, 5, 10, 5, 6, 2, 10, 9, 4, 3, 8, 4, 2, 6, 9, 6, 2, 5, 10, 4, 7, 9, 10, 10, 9, 1, 10, 5, 1, 3, 5, 5, 6, 6, 1, 3, 3, 10, 7, 2, 3, 1, 2, 9, 4, 7, 7, 8, 6, 3, 6, 5, 6, 10, 10, 2, 1, 3, 3, 10, 1, 2, 5, 8, 7, 8, 10, 8, 7, 5, 4, 9, 2, 6, 7, 2, 5, 10, 8, 9, 5, 1, 4, 7, 10, 1, 1, 4, 5, 4, 3, 5, 5, 6, 2, 1, 8, 7, 3, 3, 7, 9, 4, 9, 9, 6, 2, 7, 1, 7, 1, 8, 2, 6, 10, 7, 10, 7, 7, 5, 2, 7, 1, 6, 3, 10, 8, 6, 2, 7, 2, 4, 7, 10, 7, 9, 2, 7, 5, 6, 4, 6, 3, 2, 9, 2, 9, 9, 4, 6, 6, 3, 4, 2, 3, 5, 4, 3, 10, 3, 2, 3, 8, 8, 10, 10, 8, 10, 10, 6, 6, 3, 8, 2, 8, 8, 5, 5, 10, 1, 6, 9, 2, 5, 8, 8, 1, 1, 6, 5, 2, 2, 10, 10, 9, 7, 8, 10, 9, 1, 8, 10, 4, 6, 10, 8, 9, 3, 1, 8, 2, 6, 2, 9, 3, 1, 4, 8, 8, 9, 9, 10, 3, 6, 6, 5, 7, 7, 6, 10, 1, 6, 2, 6, 2, 9, 7, 5, 5, 10, 3, 6, 2, 10, 3, 6, 5, 7, 3, 10, 2, 5, 9, 7, 6, 3, 9, 2, 7, 9, 6, 1, 6, 5, 3, 4, 6, 8, 4, 4, 3, 3, 2, 5, 2, 9, 9, 9, 1, 6, 10, 3, 10, 7, 3, 3, 3, 10, 3, 8, 1, 7, 6, 4, 8, 10, 5, 8, 4, 9, 4, 5, 8, 4, 6, 10, 8, 8, 5, 7, 9, 9, 7, 3, 4, 10, 3, 5, 1, 8, 6, 9, 2, 9, 2, 5, 2, 3, 5, 8, 9, 3, 7, 2, 4, 8, 6, 1, 7, 1, 7, 9, 6, 4, 7, 2, 6, 4, 1, 6, 2, 6, 3, 3, 1, 5, 8, 3, 8, 8, 10, 1, 2, 1, 5, 4, 3, 9, 10, 9, 7, 2, 5, 4, 5, 2, 1, 4, 7, 10, 8, 2, 2, 8, 10, 9, 1, 9, 10, 4, 3, 5, 7, 1, 10, 6, 4, 10, 7, 3, 2, 9, 6, 2, 9, 9, 9, 9, 9, 1, 7, 8, 1, 7, 6, 5, 1, 6, 2, 6, 4, 2, 10, 6, 3, 1, 6, 9, 6, 3, 8, 8, 3, 3, 2, 8, 1, 5, 4, 1, 4, 1, 6, 5, 9, 7, 9, 8, 5, 1, 4, 5, 6, 1, 6, 5, 2, 6, 7, 7, 8, 7, 6, 3, 8, 8, 6, 9, 5, 2, 7, 2, 7, 10, 3, 9, 5, 6, 2, 2, 6, 5, 5, 8, 10, 7, 3, 8, 6, 8, 1, 6, 10, 7, 5, 1, 2, 7, 6, 9, 3, 1, 3, 10, 8, 1, 3, 2, 4, 6, 6, 7, 10, 1, 10], [8, 6, 6, 8, 2, 10, 3, 9, 6, 7, 6, 5, 4, 2, 1, 3, 8, 9, 7, 9, 2, 5, 5, 8, 4, 10, 5, 8, 4, 2, 3, 2, 8, 3, 8, 2, 6, 6, 2, 9, 9, 5, 5, 3, 3, 6, 9, 4, 2, 4, 3, 4, 8, 1, 6, 9, 10, 6, 8, 9, 3, 10, 2, 2, 5, 7, 8, 9, 7, 7, 10, 2, 3, 6, 2, 8, 8, 9, 6, 3, 9, 10, 3, 3, 7, 9, 1, 2, 9, 3, 5, 3, 3, 6, 4, 6, 9, 5, 2, 5, 4, 9, 5, 3, 5, 10, 9, 2, 9, 3, 10, 10, 3, 3, 10, 10, 6, 10, 1, 1, 2, 1, 10, 5, 4, 10, 7, 10, 1, 8, 9, 5, 5, 8, 4, 7, 5, 8, 2, 1, 3, 8, 7, 8, 8, 4, 6, 10, 3, 6, 6, 6, 7, 3, 6, 9, 9, 2, 6, 4, 8, 2, 5, 8, 4, 3, 2, 1, 5, 7, 10, 7, 4, 3, 6, 10, 6, 4, 3, 8, 9, 8, 8, 5, 8, 1, 2, 7, 9, 8, 4, 4, 10, 6, 1, 1, 5, 8, 10, 8, 5, 9, 1, 2, 7, 3, 5, 6, 7, 6, 1, 7, 1, 10, 9, 4, 6, 9, 5, 2, 7, 9, 8, 9, 5, 10, 10, 2, 3, 2, 7, 6, 6, 9, 6, 3, 4, 10, 9, 7, 9, 1, 1, 1, 3, 6, 8, 9, 8, 3, 10, 9, 3, 6, 10, 6, 3, 7, 10, 5, 10, 6, 9, 9, 9, 8, 10, 5, 8, 1, 6, 6, 2, 7, 10, 5, 1, 10, 8, 5, 10, 10, 4, 1, 10, 8, 3, 9, 10, 7, 3, 4, 1, 10, 2, 4, 1, 8, 6, 7, 3, 7, 4, 7, 9, 10, 8, 1, 3, 9, 4, 9, 6, 8, 9, 7], [3, 8, 9, 6, 9, 6, 5, 10, 8, 4, 4, 5, 9, 5, 4, 5, 5, 4, 8, 6, 8, 6, 9, 5, 5, 2, 10, 9, 7, 7, 6, 3, 5, 1, 5, 2, 6, 8, 5, 8, 4, 4, 9, 5, 9, 5, 3, 2, 10, 10, 4, 4, 1, 9, 4, 4, 1, 2, 7, 6, 8, 2, 3, 1, 9, 3, 7, 8, 8, 4, 5, 6, 5, 1, 2, 10, 4, 9, 1, 3, 7, 3, 1, 7, 8, 3, 5, 1, 1, 5, 10, 10, 2, 6, 5, 8, 9, 9, 8, 3, 9, 8, 5, 4, 2, 6, 3, 8, 5, 3, 1, 6, 5, 10, 4, 3, 10, 7, 7, 9, 6, 2, 7, 2, 3, 3, 8, 6, 4, 1, 5, 7, 4, 8, 5, 6, 5, 10, 10, 1, 5, 6, 4, 1, 2, 8, 5, 3, 7, 9, 5, 2, 5, 6, 10, 4, 4, 3, 8, 3, 8, 10, 6, 7, 9, 8, 9, 4, 4, 10, 2, 9, 8, 9, 6, 2, 10, 2, 1, 9, 9, 4, 10, 9, 3, 3, 6, 9, 8, 2, 4, 10, 8, 2, 9, 8, 1, 8, 3, 9, 7, 8, 10, 1, 9, 8, 5, 1, 7, 5, 1, 4, 10, 2, 1, 7, 6, 2, 9, 1, 2, 8, 1, 5, 7, 3, 3, 7, 6, 7, 8, 7, 7, 2, 9, 3, 6, 2, 3, 9, 7, 9, 3, 4, 1, 1, 5, 8, 9, 7, 9, 7, 4, 4, 8, 6, 3, 5, 4, 2, 1, 7, 10, 1, 4, 4, 2, 2, 10, 1, 8, 10, 1, 4, 1, 7, 8, 4, 9, 4, 1, 3, 9, 5, 4, 10, 6, 10, 10, 6, 4, 5, 3, 9, 4, 7, 5, 5, 1, 9, 10, 3, 7, 9, 8, 1, 6, 7, 9, 6, 7, 7, 3, 5, 7, 3, 9, 8, 4, 4, 5, 3, 8, 1, 9, 7, 7, 9, 9, 3, 7, 4, 5, 4, 6, 2, 8, 6, 2, 9, 4, 1, 5, 7, 10, 10, 1, 2, 4, 10, 9, 4, 8, 4, 6, 5, 1, 4, 4, 2, 8, 4, 10, 4, 7, 4, 9, 6, 5, 7, 8, 9, 6, 5, 5, 6, 9, 8, 8, 2, 8, 6, 4, 6, 6, 7, 1, 10, 4, 3, 1, 5, 9, 10, 10, 7, 5, 3, 4, 6, 4, 7, 10, 4, 8, 9, 6, 5, 8, 8, 8, 3, 6, 3, 3, 9, 8, 3, 9, 1, 9, 1, 2, 1, 1, 7, 3, 4, 2, 3, 1, 4, 9, 8, 6, 1, 10, 10, 8, 8, 1, 1, 9, 9, 7, 1, 1, 9, 5, 9, 5, 1, 9, 7, 3, 2, 2, 9, 3, 4, 4, 10, 9, 5, 6, 5, 7, 2, 6, 7, 8, 10, 4, 4, 5, 2, 1, 2, 7, 7, 7, 9, 8, 1, 1, 3, 2, 8, 7, 6, 10, 2, 9, 1, 4, 4, 10, 8, 5, 1, 2, 5, 9, 10, 1, 3, 6, 1, 4, 10, 3, 7, 2, 5, 3, 10, 4, 10, 7, 9, 6, 7, 3, 2, 9, 6, 1, 2, 7, 4, 2, 6, 10, 10, 10, 7, 6, 1, 5, 8, 8, 4, 6, 9, 7, 7, 3, 10, 7, 2, 10, 5, 4, 2, 2, 5, 3, 7, 3, 7, 6, 6, 2, 2, 1, 5, 8, 6, 5, 2, 3, 2, 3, 7, 8, 9, 9, 9, 7, 2, 1, 2, 6, 9, 2, 10, 10, 6, 7, 1, 5, 7, 7, 2, 9, 4, 10, 9, 3, 7, 3, 3, 5, 5, 5, 8, 3, 2, 3, 7, 5, 7, 5, 8, 2, 6, 5, 4, 8, 10, 10, 4, 8, 2, 3, 5, 1, 7, 6, 10, 7, 6, 8, 6, 7, 10, 3, 5, 6, 10, 4, 8, 6, 3]]
+Heavy tasks Makefile generated successfully!
+[0;36mInstalling Maven and preparing project on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        sudo-g5k apt install -y maven &&
+        source ~/.bashrc &&
+        cd /home/anasmane/systemes-distribues &&
+        mvn clean package
+    [0m
+Skipping paradoxe-6 since it has already been processed
+Skipping paradoxe-7 since it has already been processed
+Skipping paradoxe-9 since it has already been processed
+Skipping paradoxe-22 since it has already been processed
+Skipping paradoxe-24 since it has already been processed
+Skipping paradoxe-25 since it has already been processed
+Skipping paradoxe-26 since it has already been processed
+Skipping paradoxe-27 since it has already been processed
+Skipping paradoxe-28 since it has already been processed
+Skipping paradoxe-29 since it has already been processed
+Skipping paradoxe-30 since it has already been processed
+Skipping paradoxe-31 since it has already been processed
+Skipping paradoxe-32 since it has already been processed
+Reading package lists...
+Building dependency tree...
+Reading state information...
+maven is already the newest version (3.6.3-5).
+0 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36mcom.example:distributed-make-project[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding Distributed make Project 1.0[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:2.5:clean[m [1m(default-clean)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;33mWARNING[m] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:compile[m [1m(default-compile)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;33mWARNING[m] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[[1;34mINFO[m] Compiling 11 source files to /home/anasmane/systemes-distribues/target/classes
+[[1;33mWARNING[m] /home/anasmane/systemes-distribues/src/main/java/GetTargetExecutor.java: Some input files use unchecked or unsafe operations.
+[[1;33mWARNING[m] /home/anasmane/systemes-distribues/src/main/java/GetTargetExecutor.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;33mWARNING[m] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[[1;34mINFO[m] Copying 43 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:testCompile[m [1m(default-testCompile)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.12.4:test[m [1m(default-test)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:2.4:jar[m [1m(default-jar)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] Building jar: /home/anasmane/systemes-distribues/target/distributed-make-project-1.0.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  6.165 s
+[[1;34mINFO[m] Finished at: 2024-12-16T11:10:49+01:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[0;36mSetting up Spark master on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_master.sh[0;36m to [0;33mrennes[0;36m : [0;33m[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        chmod +x setup_spark_master.sh &&
+        ./setup_spark_master.sh &&
+        rm -f setup_spark_master.sh
+    [0m
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.master.Master-1-paradoxe-5.rennes.grid5000.fr.out
+stopping org.apache.spark.deploy.worker.Worker
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-5.rennes.grid5000.fr.out
+[0;36mSetting up Spark worker on [0;33mparadoxe-6[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-6.sh[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-6[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-6.sh &&
+            ./setup_spark_worker_paradoxe-6.sh &&
+            rm -f setup_spark_worker_paradoxe-6.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-7[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-7.sh[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-7[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-7.sh &&
+            ./setup_spark_worker_paradoxe-7.sh &&
+            rm -f setup_spark_worker_paradoxe-7.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-9[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-9.sh[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-9[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-9.sh &&
+            ./setup_spark_worker_paradoxe-9.sh &&
+            rm -f setup_spark_worker_paradoxe-9.sh
+        [0m
+stopping org.apache.spark.deploy.worker.Worker
+[0;36mSetting up Spark worker on [0;33mparadoxe-22[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-22.sh[0m
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-6.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-22[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-22.sh &&
+            ./setup_spark_worker_paradoxe-22.sh &&
+            rm -f setup_spark_worker_paradoxe-22.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-24[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-24.sh[0m
+stopping org.apache.spark.deploy.worker.Worker
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-7.rennes.grid5000.fr.out
+stopping org.apache.spark.deploy.worker.Worker
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-24[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-24.sh &&
+            ./setup_spark_worker_paradoxe-24.sh &&
+            rm -f setup_spark_worker_paradoxe-24.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-25[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-25.sh[0m
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-9.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-25[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-25.sh &&
+            ./setup_spark_worker_paradoxe-25.sh &&
+            rm -f setup_spark_worker_paradoxe-25.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-26[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-26.sh[0m
+stopping org.apache.spark.deploy.worker.Worker
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-22.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-26[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-26.sh &&
+            ./setup_spark_worker_paradoxe-26.sh &&
+            rm -f setup_spark_worker_paradoxe-26.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-27[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-27.sh[0m
+stopping org.apache.spark.deploy.worker.Worker
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-24.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-27[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-27.sh &&
+            ./setup_spark_worker_paradoxe-27.sh &&
+            rm -f setup_spark_worker_paradoxe-27.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-28[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-28.sh[0m
+stopping org.apache.spark.deploy.worker.Worker
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-25.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-28[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-28.sh &&
+            ./setup_spark_worker_paradoxe-28.sh &&
+            rm -f setup_spark_worker_paradoxe-28.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-29[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-29.sh[0m
+stopping org.apache.spark.deploy.worker.Worker
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-26.rennes.grid5000.fr.out
+stopping org.apache.spark.deploy.worker.Worker
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-29[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-29.sh &&
+            ./setup_spark_worker_paradoxe-29.sh &&
+            rm -f setup_spark_worker_paradoxe-29.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-30[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-30.sh[0m
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-27.rennes.grid5000.fr.out
+stopping org.apache.spark.deploy.worker.Worker
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-30[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-30.sh &&
+            ./setup_spark_worker_paradoxe-30.sh &&
+            rm -f setup_spark_worker_paradoxe-30.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-31[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-31.sh[0m
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-28.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-31[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-31.sh &&
+            ./setup_spark_worker_paradoxe-31.sh &&
+            rm -f setup_spark_worker_paradoxe-31.sh
+        [0m
+[0;36mSetting up Spark worker on [0;33mparadoxe-32[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_worker.sh[0;36m to [0;33mrennes[0;36m : [0;33msetup_spark_worker_paradoxe-32.sh[0m
+stopping org.apache.spark.deploy.worker.Worker
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-29.rennes.grid5000.fr.out
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-32[0;36m: [0;35m
+            chmod +x setup_spark_worker_paradoxe-32.sh &&
+            ./setup_spark_worker_paradoxe-32.sh &&
+            rm -f setup_spark_worker_paradoxe-32.sh
+        [0m
+stopping org.apache.spark.deploy.worker.Worker
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-30.rennes.grid5000.fr.out
+stopping org.apache.spark.deploy.worker.Worker
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-31.rennes.grid5000.fr.out
+no org.apache.spark.deploy.worker.Worker to stop
+rsync from spark://172.16.101.5:3000
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-32.rennes.grid5000.fr.out
+[0;36mSubmitting Spark app from [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        /home/anasmane/spark-3.5.3-bin-hadoop3/bin/spark-submit --master spark://172.16.101.5:3000 --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main /home/anasmane/systemes-distribues/target/distributed-make-project-1.0.jar /home/anasmane/systemes-distribues/src/test/resources/test8/Makefile all spark://172.16.101.5:3000 NFS
+    [0m
+
+[32m==============================[0m
+[32m  Global Time : 47.158134032 seconds  [0m
+[32m==============================[0m
+[33m--------------------------------[0m
+	[33mParsing Time           : 0.243092709 seconds[0m
+	[33mGraph Build Time       : 0.346459888 seconds[0m
+	[33mSpark Configuration Time: 1.266676622 seconds[0m
+	[33mExecution Time         : 45.301405539 seconds[0m
+[33m--------------------------------[0m

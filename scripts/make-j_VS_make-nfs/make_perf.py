@@ -131,6 +131,7 @@ def launch_tests(username, test_directory_suffix, base_path, spark_path, nfs_mod
                 log_filename = f"{store_file_in}/log_iteration_{i}_{k}.txt"
                 with open(log_filename, "w") as log_file:
                     log_file.write(result.stdout)
+                    log_file.write(result.stderr)
                 print(Fore.GREEN + f"Iteration {i}_{k}: Command executed successfully. Output saved in {log_filename}.")
                 with open(log_filename, "r") as log_file:
                     log_data = log_file.read()

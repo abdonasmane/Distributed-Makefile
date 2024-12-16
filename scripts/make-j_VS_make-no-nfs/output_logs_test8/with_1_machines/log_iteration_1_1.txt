@@ -1,0 +1,174 @@
+[0;33mNO_NFS mode enabled : nodes can be from different sites[0m
+[0;32mTMP mode enabled[0m
+[0;36mReading configuration from [0;33moutput_logs_test8/with_1_machines/config1.txt[0m...
+[0;32mMaster site name set to: [0;33mrennes[0m
+[0;32mMaster node name set to: [0;33mparadoxe-5[0m
+[0;32mMaster node IP set to: [0;33m172.16.101.5[0m
+[0;32mMaster node port set to: [0;33m3000[0m
+[0;36mConfiguration reading complete.[0m
+[0;36mCloning repo on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        rm -rf ~/systemes-distribues/
+        git clone https://github.com/abdonasmane/systemes-distribues.git
+    [0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        cd ~/systemes-distribues/src/test/resources/test6/
+        ./generateUnbalancedTreeMakefile.py 50_000_000 1000
+        cd ~/systemes-distribues/src/test/resources/test7/
+        ./generateAllToAllTree.py 50_000_000 3 1000
+        cd ~/systemes-distribues/src/test/resources/test8/
+        ./generate_sleep_alea_makefile2.py 4 2000
+        cd ~/systemes-distribues/src/test/resources/test9/
+        ./generateHeavyTasks.py 3952
+        rm -rf compressed_alea_tests  
+    [0m
+Unbalanced Makefile generated successfully!
+All To All files dependencies Makefile generated successfully!
+All To All files 2 dependencies Makefile generated successfully!
+The matrix of times for this test :
+ [[2, 1, 5, 4, 4, 3, 2, 9, 2, 10, 7, 1, 1, 2, 4, 4, 9, 10, 1, 9, 4, 9, 7, 4, 8, 10, 5, 1, 3, 7, 6, 5, 3, 4, 6, 2, 2, 7, 2, 6, 6, 10, 5, 1, 8, 9, 2, 7, 2, 9, 5, 10, 6, 10, 4, 2, 1, 4, 5, 2, 4, 2, 7, 5, 8, 6, 3, 6, 6, 4, 5, 2, 10, 3, 9, 4, 3, 8, 7, 5, 9, 4, 6, 1, 4, 1, 6, 7, 5, 2, 4, 10, 6, 4, 8, 7, 8, 3, 5, 3, 4, 9, 9, 5, 10, 7, 10, 7, 6, 4, 3, 9, 8, 2, 1, 2, 3, 3, 7, 10, 2, 7, 7, 10, 8, 9, 5, 9, 1, 2, 9, 5, 6, 2, 5, 7, 3, 8, 1, 5, 9, 3, 9, 2, 5, 9, 10, 4, 3, 6, 3, 9, 9, 1, 10, 6, 8, 1, 2, 6, 5, 4, 1, 4, 10, 2, 2, 8, 2, 9, 3, 3, 8, 9, 3, 5, 9, 10, 7, 4, 9, 4, 5, 7, 6, 8, 9, 8, 2, 4, 4, 2, 6, 1, 10, 9, 4, 10, 4, 1, 2, 1, 4, 2, 1, 6, 2, 9, 4, 5, 8, 4, 9, 3, 10, 10, 8, 4, 8, 7, 4, 2, 2, 7, 6, 7, 7, 8, 1, 2, 1, 7, 6, 2, 4, 4, 4, 9, 8, 3, 7, 3, 5, 8, 4, 2, 8, 9, 2, 1, 9, 1, 2, 4, 3, 7, 8, 8, 4, 7, 1, 3, 7, 1, 7, 5, 8, 5, 7, 9, 8, 3, 4, 5, 4, 1, 10, 9, 1, 6, 1, 1, 10, 8, 9, 9, 3, 1, 9, 2, 3, 2, 10, 2, 4, 7, 2, 10, 4, 10, 10, 1, 10, 2, 7, 10, 10, 9, 6, 5, 4, 6, 4, 5, 7, 3, 5, 8, 6, 2, 1, 8, 10, 10, 2, 2, 9, 4, 9, 5, 3, 6, 2, 4, 6, 5, 3, 8, 9, 5, 10, 9, 1, 9, 5, 2, 3, 5, 2, 2, 9, 3, 5, 5, 10, 4, 6, 4, 5, 9, 8, 5, 1, 2, 7, 5, 1, 1, 6, 3, 5, 3, 8, 9, 7, 9, 1, 2, 2, 3, 9, 1, 6, 10, 9, 3, 7, 3, 1, 5, 6, 1, 6, 4, 4, 2, 6, 9, 7, 10, 3, 4, 3, 3, 7, 1, 3, 6, 7, 4, 5, 3, 2, 7, 1, 8, 4, 4, 8, 6, 5, 4, 4, 1, 4, 7, 6, 5, 2, 5, 6, 9, 7, 9, 6, 1, 2, 5, 3, 10, 5, 1, 2, 10, 7, 6, 6, 7, 10, 9, 2, 7, 10, 4, 5, 1, 7, 1, 9, 9, 4, 6, 7, 2, 6, 10, 6, 2, 5, 9, 5, 7, 6, 7, 5, 9, 3, 4, 7, 7, 3, 10, 10, 5, 7, 9, 1, 5, 5, 4, 7, 10, 10, 6, 8, 8, 8, 4, 9, 8, 3, 2, 5, 9, 10, 6, 2, 4, 5, 4, 4, 3, 1, 1, 4, 8, 10, 2, 8, 7, 10, 4, 7, 8, 7, 4, 3, 1, 2, 7, 4, 3, 9, 8, 1, 9, 4, 2, 8, 3, 8, 9, 9, 10, 6, 8, 10, 9, 7, 9, 8, 3, 8, 8, 5, 4, 5, 9, 8, 4, 5, 8, 2, 5, 4, 5, 6, 6, 9, 2, 3, 3, 4, 7, 3, 4, 2, 7, 7, 6, 9, 8, 7, 1, 4, 7, 7, 10, 1, 10, 7, 8, 1, 6, 5, 7, 7, 9, 9, 10, 4, 8, 4, 5, 7, 8, 1, 7, 6, 7, 3, 8, 3, 10, 9, 1, 7, 10, 10, 1, 2, 7, 3, 8, 3, 1, 5, 7, 6, 4, 8, 6, 6, 7, 5, 7, 5, 2, 8, 1, 9, 1, 6, 4, 2, 1, 1, 4, 4, 1, 10, 3, 4, 3, 8, 2, 10, 4, 8, 5, 6, 3, 10, 10, 2, 3, 5, 2, 10, 1, 5, 10, 7, 7, 4, 2, 10, 4, 2, 5, 10, 2, 10, 1, 6, 9, 7, 6, 2, 9, 6, 1, 7, 8, 2, 7, 6, 8, 3, 7, 3, 9, 5, 10, 9, 8, 8, 7, 10, 5, 6, 4, 2, 5, 8, 4, 8, 10, 10, 7, 6, 1, 8, 6, 3, 8, 4, 6, 5, 6, 5, 10, 5, 9, 1, 9, 4, 2, 4, 7, 8, 9, 4, 8, 8, 8, 1, 2, 5, 4, 7, 4, 5, 10, 6, 8, 9, 9, 6, 7, 9, 6, 6, 8, 5, 5, 5, 4, 2, 4, 6, 2, 9, 3, 4, 4, 8, 5, 10, 9, 10, 5, 2, 4, 5, 4, 6, 3, 5, 1, 9, 3, 5, 1, 1, 9, 5, 3, 8, 2, 1, 10, 5, 8, 8, 8, 6, 3, 1, 5, 8, 2, 2, 7, 8, 2, 10, 1, 3, 3, 10, 5, 2, 4, 2, 9, 7, 10, 10, 10, 4, 9, 7, 8, 8, 5, 10, 7, 5, 10, 10, 1, 10, 2, 4, 4, 5, 2, 3, 4, 3, 9, 2, 3, 1, 7, 8, 10, 8, 5, 1, 4, 5, 5, 8, 2, 4, 5, 10, 4, 7, 2, 9, 4, 3, 5, 3, 2, 1, 3, 5, 10, 10, 5, 8, 2, 8, 5, 7, 5, 9, 9, 8, 8, 2, 10, 1, 7, 6, 10, 5, 1, 2, 4, 10, 10, 1, 5, 10, 1, 3, 8, 9, 8, 5, 3, 10, 7, 8, 2, 8, 6, 7, 6, 6, 2, 3, 6, 7, 8, 5, 7, 9, 1, 8, 2, 6, 5, 6, 2, 7, 9, 1, 9, 8, 7, 1, 4, 9, 6, 10, 8, 8, 1, 4, 5, 9, 3, 5, 8, 8, 2, 1, 10, 4, 3, 5, 9, 1, 9, 7, 2, 4, 2, 8, 2, 3, 8, 5, 9, 5, 7, 8, 8, 4, 8, 9, 3, 7, 4, 10, 9, 3, 2, 5, 7, 6, 9, 5, 1, 5, 5, 10, 10, 8, 3, 8, 9, 8, 6, 6, 9, 9, 7, 8, 6, 4, 4, 10, 7, 4, 7, 1, 6, 8, 7, 7, 3, 8, 1, 3, 9, 10, 6, 2, 8, 2, 9, 8, 1, 3, 7, 3, 2, 8, 5, 6, 10, 7, 2, 6, 9, 7, 6, 8, 9, 1, 10, 2, 4, 5, 4, 2, 7, 2, 2, 8, 3, 5, 1, 1, 6, 1, 5, 6, 6, 7, 3, 4, 9, 7, 10, 3, 3, 3, 2, 10, 7, 10, 4, 8, 10, 3, 4, 8, 5, 8, 5, 1, 8, 5, 9, 3, 2, 8, 6, 10, 5, 7, 5, 8, 5, 4, 7, 8, 2, 4, 7, 10, 6, 10, 5, 5, 1, 7, 5, 1, 10, 1, 10, 8, 5, 4, 10, 6, 4, 4, 10, 5, 3, 2, 1, 5, 8, 1, 10, 6, 3, 2, 5, 6, 7, 3, 4, 3, 9, 6, 9, 9, 5, 3, 5, 8, 5, 6, 2, 8, 2, 3, 4, 7, 9, 6, 2, 7, 1, 5, 9, 2, 8, 6, 5, 10, 7, 6, 2, 4, 8, 1, 10, 9, 6, 10, 4, 2, 8, 5, 7, 2, 3, 1, 1, 5, 8, 2, 2, 4, 9, 3, 7, 8, 6, 9, 7, 10, 3, 7, 2, 8, 10, 7, 5, 1, 6, 4, 8, 8, 4, 6, 2, 6, 9, 6, 1, 7, 5, 4, 2, 8, 2, 4, 10, 1, 1, 6, 4, 3, 10, 4, 2, 9, 4, 10, 4, 4, 6, 3, 10, 1, 5, 3, 3, 9, 5, 3, 2, 1, 3, 1, 6, 4, 10, 6, 1, 3, 5, 1, 3, 7, 9, 2, 2, 8, 8, 6, 9, 10, 2, 8, 9, 4, 10, 1, 9, 5, 8, 1, 1, 8, 7, 7, 2, 8, 8, 2, 2, 6, 10, 3, 2, 3], [10, 10, 9, 6, 7, 10, 9, 5, 8, 9, 10, 7, 2, 2, 9, 4, 7, 8, 4, 7, 6, 8, 7, 7, 2, 6, 7, 6, 5, 6, 3, 8, 2, 2, 2, 2, 7, 2, 6, 3, 9, 1, 10, 9, 9, 6, 2, 7, 6, 7, 1, 5, 10, 5, 6, 2, 10, 9, 4, 3, 8, 4, 2, 6, 9, 6, 2, 5, 10, 4, 7, 9, 10, 10, 9, 1, 10, 5, 1, 3, 5, 5, 6, 6, 1, 3, 3, 10, 7, 2, 3, 1, 2, 9, 4, 7, 7, 8, 6, 3, 6, 5, 6, 10, 10, 2, 1, 3, 3, 10, 1, 2, 5, 8, 7, 8, 10, 8, 7, 5, 4, 9, 2, 6, 7, 2, 5, 10, 8, 9, 5, 1, 4, 7, 10, 1, 1, 4, 5, 4, 3, 5, 5, 6, 2, 1, 8, 7, 3, 3, 7, 9, 4, 9, 9, 6, 2, 7, 1, 7, 1, 8, 2, 6, 10, 7, 10, 7, 7, 5, 2, 7, 1, 6, 3, 10, 8, 6, 2, 7, 2, 4, 7, 10, 7, 9, 2, 7, 5, 6, 4, 6, 3, 2, 9, 2, 9, 9, 4, 6, 6, 3, 4, 2, 3, 5, 4, 3, 10, 3, 2, 3, 8, 8, 10, 10, 8, 10, 10, 6, 6, 3, 8, 2, 8, 8, 5, 5, 10, 1, 6, 9, 2, 5, 8, 8, 1, 1, 6, 5, 2, 2, 10, 10, 9, 7, 8, 10, 9, 1, 8, 10, 4, 6, 10, 8, 9, 3, 1, 8, 2, 6, 2, 9, 3, 1, 4, 8, 8, 9, 9, 10, 3, 6, 6, 5, 7, 7, 6, 10, 1, 6, 2, 6, 2, 9, 7, 5, 5, 10, 3, 6, 2, 10, 3, 6, 5, 7, 3, 10, 2, 5, 9, 7, 6, 3, 9, 2, 7, 9, 6, 1, 6, 5, 3, 4, 6, 8, 4, 4, 3, 3, 2, 5, 2, 9, 9, 9, 1, 6, 10, 3, 10, 7, 3, 3, 3, 10, 3, 8, 1, 7, 6, 4, 8, 10, 5, 8, 4, 9, 4, 5, 8, 4, 6, 10, 8, 8, 5, 7, 9, 9, 7, 3, 4, 10, 3, 5, 1, 8, 6, 9, 2, 9, 2, 5, 2, 3, 5, 8, 9, 3, 7, 2, 4, 8, 6, 1, 7, 1, 7, 9, 6, 4, 7, 2, 6, 4, 1, 6, 2, 6, 3, 3, 1, 5, 8, 3, 8, 8, 10, 1, 2, 1, 5, 4, 3, 9, 10, 9, 7, 2, 5, 4, 5, 2, 1, 4, 7, 10, 8, 2, 2, 8, 10, 9, 1, 9, 10, 4, 3, 5, 7, 1, 10, 6, 4, 10, 7, 3, 2, 9, 6, 2, 9, 9, 9, 9, 9, 1, 7, 8, 1, 7, 6, 5, 1, 6, 2, 6, 4, 2, 10, 6, 3, 1, 6, 9, 6, 3, 8, 8, 3, 3, 2, 8, 1, 5, 4, 1, 4, 1, 6, 5, 9, 7, 9, 8, 5, 1, 4, 5, 6, 1, 6, 5, 2, 6, 7, 7, 8, 7, 6, 3, 8, 8, 6, 9, 5, 2, 7, 2, 7, 10, 3, 9, 5, 6, 2, 2, 6, 5, 5, 8, 10, 7, 3, 8, 6, 8, 1, 6, 10, 7, 5, 1, 2, 7, 6, 9, 3, 1, 3, 10, 8, 1, 3, 2, 4, 6, 6, 7, 10, 1, 10], [8, 6, 6, 8, 2, 10, 3, 9, 6, 7, 6, 5, 4, 2, 1, 3, 8, 9, 7, 9, 2, 5, 5, 8, 4, 10, 5, 8, 4, 2, 3, 2, 8, 3, 8, 2, 6, 6, 2, 9, 9, 5, 5, 3, 3, 6, 9, 4, 2, 4, 3, 4, 8, 1, 6, 9, 10, 6, 8, 9, 3, 10, 2, 2, 5, 7, 8, 9, 7, 7, 10, 2, 3, 6, 2, 8, 8, 9, 6, 3, 9, 10, 3, 3, 7, 9, 1, 2, 9, 3, 5, 3, 3, 6, 4, 6, 9, 5, 2, 5, 4, 9, 5, 3, 5, 10, 9, 2, 9, 3, 10, 10, 3, 3, 10, 10, 6, 10, 1, 1, 2, 1, 10, 5, 4, 10, 7, 10, 1, 8, 9, 5, 5, 8, 4, 7, 5, 8, 2, 1, 3, 8, 7, 8, 8, 4, 6, 10, 3, 6, 6, 6, 7, 3, 6, 9, 9, 2, 6, 4, 8, 2, 5, 8, 4, 3, 2, 1, 5, 7, 10, 7, 4, 3, 6, 10, 6, 4, 3, 8, 9, 8, 8, 5, 8, 1, 2, 7, 9, 8, 4, 4, 10, 6, 1, 1, 5, 8, 10, 8, 5, 9, 1, 2, 7, 3, 5, 6, 7, 6, 1, 7, 1, 10, 9, 4, 6, 9, 5, 2, 7, 9, 8, 9, 5, 10, 10, 2, 3, 2, 7, 6, 6, 9, 6, 3, 4, 10, 9, 7, 9, 1, 1, 1, 3, 6, 8, 9, 8, 3, 10, 9, 3, 6, 10, 6, 3, 7, 10, 5, 10, 6, 9, 9, 9, 8, 10, 5, 8, 1, 6, 6, 2, 7, 10, 5, 1, 10, 8, 5, 10, 10, 4, 1, 10, 8, 3, 9, 10, 7, 3, 4, 1, 10, 2, 4, 1, 8, 6, 7, 3, 7, 4, 7, 9, 10, 8, 1, 3, 9, 4, 9, 6, 8, 9, 7], [3, 8, 9, 6, 9, 6, 5, 10, 8, 4, 4, 5, 9, 5, 4, 5, 5, 4, 8, 6, 8, 6, 9, 5, 5, 2, 10, 9, 7, 7, 6, 3, 5, 1, 5, 2, 6, 8, 5, 8, 4, 4, 9, 5, 9, 5, 3, 2, 10, 10, 4, 4, 1, 9, 4, 4, 1, 2, 7, 6, 8, 2, 3, 1, 9, 3, 7, 8, 8, 4, 5, 6, 5, 1, 2, 10, 4, 9, 1, 3, 7, 3, 1, 7, 8, 3, 5, 1, 1, 5, 10, 10, 2, 6, 5, 8, 9, 9, 8, 3, 9, 8, 5, 4, 2, 6, 3, 8, 5, 3, 1, 6, 5, 10, 4, 3, 10, 7, 7, 9, 6, 2, 7, 2, 3, 3, 8, 6, 4, 1, 5, 7, 4, 8, 5, 6, 5, 10, 10, 1, 5, 6, 4, 1, 2, 8, 5, 3, 7, 9, 5, 2, 5, 6, 10, 4, 4, 3, 8, 3, 8, 10, 6, 7, 9, 8, 9, 4, 4, 10, 2, 9, 8, 9, 6, 2, 10, 2, 1, 9, 9, 4, 10, 9, 3, 3, 6, 9, 8, 2, 4, 10, 8, 2, 9, 8, 1, 8, 3, 9, 7, 8, 10, 1, 9, 8, 5, 1, 7, 5, 1, 4, 10, 2, 1, 7, 6, 2, 9, 1, 2, 8, 1, 5, 7, 3, 3, 7, 6, 7, 8, 7, 7, 2, 9, 3, 6, 2, 3, 9, 7, 9, 3, 4, 1, 1, 5, 8, 9, 7, 9, 7, 4, 4, 8, 6, 3, 5, 4, 2, 1, 7, 10, 1, 4, 4, 2, 2, 10, 1, 8, 10, 1, 4, 1, 7, 8, 4, 9, 4, 1, 3, 9, 5, 4, 10, 6, 10, 10, 6, 4, 5, 3, 9, 4, 7, 5, 5, 1, 9, 10, 3, 7, 9, 8, 1, 6, 7, 9, 6, 7, 7, 3, 5, 7, 3, 9, 8, 4, 4, 5, 3, 8, 1, 9, 7, 7, 9, 9, 3, 7, 4, 5, 4, 6, 2, 8, 6, 2, 9, 4, 1, 5, 7, 10, 10, 1, 2, 4, 10, 9, 4, 8, 4, 6, 5, 1, 4, 4, 2, 8, 4, 10, 4, 7, 4, 9, 6, 5, 7, 8, 9, 6, 5, 5, 6, 9, 8, 8, 2, 8, 6, 4, 6, 6, 7, 1, 10, 4, 3, 1, 5, 9, 10, 10, 7, 5, 3, 4, 6, 4, 7, 10, 4, 8, 9, 6, 5, 8, 8, 8, 3, 6, 3, 3, 9, 8, 3, 9, 1, 9, 1, 2, 1, 1, 7, 3, 4, 2, 3, 1, 4, 9, 8, 6, 1, 10, 10, 8, 8, 1, 1, 9, 9, 7, 1, 1, 9, 5, 9, 5, 1, 9, 7, 3, 2, 2, 9, 3, 4, 4, 10, 9, 5, 6, 5, 7, 2, 6, 7, 8, 10, 4, 4, 5, 2, 1, 2, 7, 7, 7, 9, 8, 1, 1, 3, 2, 8, 7, 6, 10, 2, 9, 1, 4, 4, 10, 8, 5, 1, 2, 5, 9, 10, 1, 3, 6, 1, 4, 10, 3, 7, 2, 5, 3, 10, 4, 10, 7, 9, 6, 7, 3, 2, 9, 6, 1, 2, 7, 4, 2, 6, 10, 10, 10, 7, 6, 1, 5, 8, 8, 4, 6, 9, 7, 7, 3, 10, 7, 2, 10, 5, 4, 2, 2, 5, 3, 7, 3, 7, 6, 6, 2, 2, 1, 5, 8, 6, 5, 2, 3, 2, 3, 7, 8, 9, 9, 9, 7, 2, 1, 2, 6, 9, 2, 10, 10, 6, 7, 1, 5, 7, 7, 2, 9, 4, 10, 9, 3, 7, 3, 3, 5, 5, 5, 8, 3, 2, 3, 7, 5, 7, 5, 8, 2, 6, 5, 4, 8, 10, 10, 4, 8, 2, 3, 5, 1, 7, 6, 10, 7, 6, 8, 6, 7, 10, 3, 5, 6, 10, 4, 8, 6, 3]]
+Heavy tasks Makefile generated successfully!
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        rm -rf /tmp/systemes-distribues
+        cp -r ~/systemes-distribues /tmp
+    [0m
+[0;36mInstalling Maven and preparing project on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        sudo-g5k apt install -y maven &&
+        source ~/.bashrc &&
+        cd /tmp/systemes-distribues &&
+        mvn clean package
+    [0m
+Reading package lists...
+Building dependency tree...
+Reading state information...
+maven is already the newest version (3.6.3-5).
+0 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36mcom.example:distributed-make-project[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding Distributed make Project 1.0[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:2.5:clean[m [1m(default-clean)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;33mWARNING[m] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:compile[m [1m(default-compile)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;33mWARNING[m] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[[1;34mINFO[m] Compiling 11 source files to /tmp/systemes-distribues/target/classes
+[[1;33mWARNING[m] /tmp/systemes-distribues/src/main/java/FileLocatorServer.java: Some input files use unchecked or unsafe operations.
+[[1;33mWARNING[m] /tmp/systemes-distribues/src/main/java/FileLocatorServer.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;33mWARNING[m] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[[1;34mINFO[m] Copying 43 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:testCompile[m [1m(default-testCompile)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.12.4:test[m [1m(default-test)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:2.4:jar[m [1m(default-jar)[m @ [36mdistributed-make-project[0;1m ---[m
+[[1;34mINFO[m] Building jar: /tmp/systemes-distribues/target/distributed-make-project-1.0.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  5.213 s
+[[1;34mINFO[m] Finished at: 2024-12-16T11:51:29+01:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[0;36mSetting up Spark master on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mCopying [0;33m/tmp/setup_spark_master.sh[0;36m to [0;33mrennes[0;36m : [0;33m[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        chmod +x setup_spark_master.sh &&
+        ./setup_spark_master.sh &&
+        rm -f setup_spark_master.sh
+    [0m
+no org.apache.spark.deploy.master.Master to stop
+starting org.apache.spark.deploy.master.Master, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.master.Master-1-paradoxe-5.rennes.grid5000.fr.out
+no org.apache.spark.deploy.worker.Worker to stop
+starting org.apache.spark.deploy.worker.Worker, logging to /home/anasmane/spark-3.5.3-bin-hadoop3/logs/spark-anasmane-org.apache.spark.deploy.worker.Worker-1-paradoxe-5.rennes.grid5000.fr.out
+[0;36mKilling ServeFile on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling FileLocatorServer on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ FileLocatorServer\ 9999[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mLaunching FileLocatorServer on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java  FileLocatorServer 9999 /tmp/systemes-distribues/src/test/resources/test8[0m
+Server started on port 8888
+File Locator Server is running on port 9999...
+[0;36mSubmitting Spark app from [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        /home/anasmane/spark-3.5.3-bin-hadoop3/bin/spark-submit --master spark://172.16.101.5:3000 --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main /tmp/systemes-distribues/target/distributed-make-project-1.0.jar /tmp/systemes-distribues/src/test/resources/test8/Makefile all spark://172.16.101.5:3000 NO_NFS
+    [0m
+
+[32m==============================[0m
+[32m  Global Time : 82.075010278 seconds  [0m
+[32m==============================[0m
+[33m--------------------------------[0m
+	[33mParsing Time           : 0.232599187 seconds[0m
+	[33mGraph Build Time       : 1.025746445 seconds[0m
+	[33mSpark Configuration Time: 1.458766088 seconds[0m
+	[33mExecution Time         : 79.357864752 seconds[0m
+[33m--------------------------------[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling FileLocatorServer on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ FileLocatorServer\ 9999[0m
+Cloning into 'systemes-distribues'...
+Updating files:  97% (727/745)
+Updating files:  98% (731/745)
+Updating files:  99% (738/745)
+Updating files: 100% (745/745)
+Updating files: 100% (745/745), done.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+24/12/16 11:51:47 INFO SparkContext: Running Spark version 3.5.3
+24/12/16 11:51:47 INFO SparkContext: OS info Linux, 5.10.0-33-amd64, amd64
+24/12/16 11:51:47 INFO SparkContext: Java version 1.8.0_332
+24/12/16 11:51:47 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/12/16 11:51:47 INFO ResourceUtils: ==============================================================
+24/12/16 11:51:47 INFO ResourceUtils: No custom resources configured for spark.driver.
+24/12/16 11:51:47 INFO ResourceUtils: ==============================================================
+24/12/16 11:51:47 INFO SparkContext: Submitted application: DistributedMakeExecutor
+24/12/16 11:51:47 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memory -> name: memory, amount: 51200, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+24/12/16 11:51:47 INFO ResourceProfile: Limiting resource is cpu
+24/12/16 11:51:47 INFO ResourceProfileManager: Added ResourceProfile id: 0
+24/12/16 11:51:47 INFO SecurityManager: Changing view acls to: anasmane
+24/12/16 11:51:47 INFO SecurityManager: Changing modify acls to: anasmane
+24/12/16 11:51:47 INFO SecurityManager: Changing view acls groups to: 
+24/12/16 11:51:47 INFO SecurityManager: Changing modify acls groups to: 
+24/12/16 11:51:47 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: anasmane; groups with view permissions: EMPTY; users with modify permissions: anasmane; groups with modify permissions: EMPTY
+24/12/16 11:51:47 INFO Utils: Successfully started service 'sparkDriver' on port 43955.
+24/12/16 11:51:47 INFO SparkEnv: Registering MapOutputTracker
+24/12/16 11:51:47 INFO SparkEnv: Registering BlockManagerMaster
+24/12/16 11:51:47 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+24/12/16 11:51:47 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+24/12/16 11:51:47 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+24/12/16 11:51:48 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-3011f348-910c-4421-bd75-547fb3b0915a
+24/12/16 11:51:48 INFO MemoryStore: MemoryStore started with capacity 26.5 GiB
+24/12/16 11:51:48 INFO SparkEnv: Registering OutputCommitCoordinator
+24/12/16 11:51:48 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+24/12/16 11:51:48 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+24/12/16 11:51:48 INFO Utils: Successfully started service 'SparkUI' on port 4041.
+24/12/16 11:51:48 INFO SparkContext: Added JAR file:/tmp/systemes-distribues/target/distributed-make-project-1.0.jar at spark://paradoxe-5.rennes.grid5000.fr:43955/jars/distributed-make-project-1.0.jar with timestamp 1734346307309
+24/12/16 11:51:48 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://172.16.101.5:3000...
+24/12/16 11:51:48 INFO TransportClientFactory: Successfully created connection to /172.16.101.5:3000 after 25 ms (0 ms spent in bootstraps)
+24/12/16 11:51:48 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20241216115148-0000
+24/12/16 11:51:48 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37833.
+24/12/16 11:51:48 INFO NettyBlockTransferService: Server created on paradoxe-5.rennes.grid5000.fr:37833
+24/12/16 11:51:48 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+24/12/16 11:51:48 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 37833, None)
+24/12/16 11:51:48 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216115148-0000/0 on worker-20241216115135-172.16.101.5-42587 (172.16.101.5:42587) with 104 core(s)
+24/12/16 11:51:48 INFO BlockManagerMasterEndpoint: Registering block manager paradoxe-5.rennes.grid5000.fr:37833 with 26.5 GiB RAM, BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 37833, None)
+24/12/16 11:51:48 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216115148-0000/0 on hostPort 172.16.101.5:42587 with 104 core(s), 50.0 GiB RAM
+24/12/16 11:51:48 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 37833, None)
+24/12/16 11:51:48 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 37833, None)
+24/12/16 11:51:48 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216115148-0000/0 is now RUNNING
+24/12/16 11:51:48 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
+[31mFatal Error: Task failure detected at level 2. Exiting...[0m
