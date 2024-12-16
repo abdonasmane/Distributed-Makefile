@@ -1,0 +1,12 @@
+master_site_name=rennes
+master_node_name=paradoxe-1
+master_node_ip=172.16.101.1
+master_node_port=3000
+worker_site_name=rennes
+worker_node_name=paradoxe-16
+worker_site_name=rennes
+worker_node_name=paradoxe-11
+worker_site_name=rennes
+worker_node_name=paradoxe-26
+worker_site_name=rennes
+worker_node_name=paradoxe-24

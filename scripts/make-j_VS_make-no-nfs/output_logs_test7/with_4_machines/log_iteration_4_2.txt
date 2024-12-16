@@ -1,0 +1,118 @@
+[0;33mNO_NFS mode enabled : nodes can be from different sites[0m
+[0;36mReading configuration from [0;33moutput_logs_test7/with_4_machines/config4.txt[0m...
+[0;32mMaster site name set to: [0;33mrennes[0m
+[0;32mMaster node name set to: [0;33mparadoxe-1[0m
+[0;32mMaster node IP set to: [0;33m172.16.101.1[0m
+[0;32mMaster node port set to: [0;33m3000[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-16[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-11[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-26[0m
+[0;36mConfiguration reading complete.[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-16[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-16[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-11[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-11[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-26[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-26[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling FileLocatorServer on [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35mpkill -f java\ FileLocatorServer\ 9999[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test7[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-16[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-16[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test7[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-11[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-11[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test7[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-26[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mLaunching FileLocatorServer on [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-26[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test7[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java  FileLocatorServer 9999 /tmp/systemes-distribues/src/test/resources/test7[0m
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+File Locator Server is running on port 9999...
+[0;36mSubmitting Spark app from [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35m
+        /home/anasmane/spark-3.5.3-bin-hadoop3/bin/spark-submit --master spark://172.16.101.1:3000 --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main /tmp/systemes-distribues/target/distributed-make-project-1.0.jar /tmp/systemes-distribues/src/test/resources/test7/Makefile all spark://172.16.101.1:3000 NO_NFS
+    [0m
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+[33mSkipping last target 'all' (no commands).[0m
+
+[32m==============================[0m
+[32m  Global Time : 107.559807274 seconds  [0m
+[32m==============================[0m
+[33m--------------------------------[0m
+	[33mParsing Time           : 0.014121469 seconds[0m
+	[33mGraph Build Time       : 0.087455351 seconds[0m
+	[33mSpark Configuration Time: 1.174872679 seconds[0m
+	[33mExecution Time         : 106.283315735 seconds[0m
+[33m--------------------------------[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-16[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-16[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-11[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-11[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-26[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-26[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling FileLocatorServer on [0;33mparadoxe-1[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-1[0;36m: [0;35mpkill -f java\ FileLocatorServer\ 9999[0m
+24/12/16 18:28:53 INFO SparkContext: Running Spark version 3.5.3
+24/12/16 18:28:53 INFO SparkContext: OS info Linux, 5.10.0-33-amd64, amd64
+24/12/16 18:28:53 INFO SparkContext: Java version 1.8.0_332
+24/12/16 18:28:54 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/12/16 18:28:54 INFO ResourceUtils: ==============================================================
+24/12/16 18:28:54 INFO ResourceUtils: No custom resources configured for spark.driver.
+24/12/16 18:28:54 INFO ResourceUtils: ==============================================================
+24/12/16 18:28:54 INFO SparkContext: Submitted application: DistributedMakeExecutor
+24/12/16 18:28:54 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memory -> name: memory, amount: 51200, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+24/12/16 18:28:54 INFO ResourceProfile: Limiting resource is cpu
+24/12/16 18:28:54 INFO ResourceProfileManager: Added ResourceProfile id: 0
+24/12/16 18:28:54 INFO SecurityManager: Changing view acls to: anasmane
+24/12/16 18:28:54 INFO SecurityManager: Changing modify acls to: anasmane
+24/12/16 18:28:54 INFO SecurityManager: Changing view acls groups to: 
+24/12/16 18:28:54 INFO SecurityManager: Changing modify acls groups to: 
+24/12/16 18:28:54 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: anasmane; groups with view permissions: EMPTY; users with modify permissions: anasmane; groups with modify permissions: EMPTY
+24/12/16 18:28:54 INFO Utils: Successfully started service 'sparkDriver' on port 41115.
+24/12/16 18:28:54 INFO SparkEnv: Registering MapOutputTracker
+24/12/16 18:28:54 INFO SparkEnv: Registering BlockManagerMaster
+24/12/16 18:28:54 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+24/12/16 18:28:54 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+24/12/16 18:28:54 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+24/12/16 18:28:54 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-388616de-fd26-4c10-8450-4c83b887e237
+24/12/16 18:28:54 INFO MemoryStore: MemoryStore started with capacity 26.5 GiB
+24/12/16 18:28:54 INFO SparkEnv: Registering OutputCommitCoordinator
+24/12/16 18:28:54 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+24/12/16 18:28:54 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+24/12/16 18:28:54 INFO SparkContext: Added JAR file:/tmp/systemes-distribues/target/distributed-make-project-1.0.jar at spark://paradoxe-1.rennes.grid5000.fr:41115/jars/distributed-make-project-1.0.jar with timestamp 1734370133968
+24/12/16 18:28:54 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://172.16.101.1:3000...
+24/12/16 18:28:54 INFO TransportClientFactory: Successfully created connection to /172.16.101.1:3000 after 23 ms (0 ms spent in bootstraps)
+24/12/16 18:28:54 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20241216182854-0001
+24/12/16 18:28:54 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216182854-0001/0 on worker-20241216182643-172.16.101.26-45553 (172.16.101.26:45553) with 104 core(s)
+24/12/16 18:28:54 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216182854-0001/0 on hostPort 172.16.101.26:45553 with 104 core(s), 50.0 GiB RAM
+24/12/16 18:28:54 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216182854-0001/1 on worker-20241216182641-172.16.101.16-42395 (172.16.101.16:42395) with 104 core(s)
+24/12/16 18:28:54 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216182854-0001/1 on hostPort 172.16.101.16:42395 with 104 core(s), 50.0 GiB RAM
+24/12/16 18:28:54 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216182854-0001/2 on worker-20241216182642-172.16.101.11-36359 (172.16.101.11:36359) with 104 core(s)
+24/12/16 18:28:54 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216182854-0001/2 on hostPort 172.16.101.11:36359 with 104 core(s), 50.0 GiB RAM
+24/12/16 18:28:54 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216182854-0001/3 on worker-20241216182637-172.16.101.1-46427 (172.16.101.1:46427) with 104 core(s)
+24/12/16 18:28:54 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216182854-0001/3 on hostPort 172.16.101.1:46427 with 104 core(s), 50.0 GiB RAM
+24/12/16 18:28:54 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 33537.
+24/12/16 18:28:54 INFO NettyBlockTransferService: Server created on paradoxe-1.rennes.grid5000.fr:33537
+24/12/16 18:28:54 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+24/12/16 18:28:54 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, paradoxe-1.rennes.grid5000.fr, 33537, None)
+24/12/16 18:28:54 INFO BlockManagerMasterEndpoint: Registering block manager paradoxe-1.rennes.grid5000.fr:33537 with 26.5 GiB RAM, BlockManagerId(driver, paradoxe-1.rennes.grid5000.fr, 33537, None)
+24/12/16 18:28:54 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, paradoxe-1.rennes.grid5000.fr, 33537, None)
+24/12/16 18:28:54 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, paradoxe-1.rennes.grid5000.fr, 33537, None)
+24/12/16 18:28:54 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216182854-0001/1 is now RUNNING
+24/12/16 18:28:54 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216182854-0001/3 is now RUNNING
+24/12/16 18:28:54 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216182854-0001/2 is now RUNNING
+24/12/16 18:28:54 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216182854-0001/0 is now RUNNING
+24/12/16 18:28:55 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
