@@ -31,4 +31,3 @@ if __name__ == "__main__":
     max_targets_per_level = int(sys.argv[2])
     sleep_matrix_2 = generate_sleep_alea_makefile2(num_levels, max_targets_per_level)
     print("All To All files 2 dependencies Makefile generated successfully!")
-    print("The matrix of times for this test :\n", sleep_matrix_2)

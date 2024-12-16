@@ -82,22 +82,22 @@ def launch_tests(username, test_directory_suffix, base_path, spark_path, nfs_mod
                 config_file.write(f"worker_node_name={machines[j][0]}\n")
         
         for k in range(1, number_of_samples+1):
-            # if k > 1:
-            #     clean_command = [
-            #         clean_script,
-            #         username,
-            #         f"{store_file_in}/{config_filename}",
-            #         f"{base_path}/src/test/resources/{test_directory_suffix}/Makefile",
-            #         nfs_mode,
-            #         tmp_mode
-            #     ]
-            #     try:
-            #         print(Fore.YELLOW + f"Executing :\n{clean_command} for the {k}th time with {i} machines")
-            #         result = subprocess.run(clean_command, capture_output=True, text=True, check=True)
-            #         print(Fore.GREEN + f"Cleaned Successfully in iteration {i}_{k}")
-            #     except subprocess.CalledProcessError as e:
-            #         print(Fore.RED + f"Clean Failed in iteration {i}_{k}")
-            #         print(Fore.RED + " Error : " + e.stderr)
+            if k > 1:
+                clean_command = [
+                    clean_script,
+                    username,
+                    f"{store_file_in}/{config_filename}",
+                    f"{base_path}/src/test/resources/{test_directory_suffix}/Makefile",
+                    nfs_mode,
+                    tmp_mode
+                ]
+                try:
+                    print(Fore.YELLOW + f"Executing :\n{clean_command} for the {k}th time with {i} machines")
+                    result = subprocess.run(clean_command, capture_output=True, text=True, check=True)
+                    print(Fore.GREEN + f"Cleaned Successfully in iteration {i}_{k}")
+                except subprocess.CalledProcessError as e:
+                    print(Fore.RED + f"Clean Failed in iteration {i}_{k}")
+                    print(Fore.RED + " Error : " + e.stderr)
             # Command to execute
             command = []
             if k == 1:

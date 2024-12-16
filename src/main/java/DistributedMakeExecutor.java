@@ -81,6 +81,10 @@ public class DistributedMakeExecutor implements Serializable {
                     Set<String> allTargetDependencies = broadcastDependenciesTree.value().getOrDefault(target, null);
                     if (allTargetDependencies != null) {
                         Map<String, Set<String>> assocIpFiles = GetTargetExecutor.retrieveTargetExecutor(broadcastMasterIp.value(), broadcastFileLocatorPort.value(), allTargetDependencies);
+                        if (assocIpFiles == null) {
+                            System.err.println("\u001B[31mFailed to retrieve targets executors\u001B[0m");
+                            return false;
+                        }
                         // initial stages
                         for (String machineIp : assocIpFiles.keySet()) {
                             Set<String> files = assocIpFiles.get(machineIp);
