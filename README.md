@@ -1,44 +1,44 @@
-# Distributed Make Project
+# Projet de Construction de Make GNU Distribué
 
-## Description
-This project is a simple Java-based parser for Makefiles that generates a task dependency graph and prints the execution order of tasks. It includes topological sorting to handle dependencies and avoid cycles, making it useful for sequential and distributed task execution setups.
+## Description du Projet
 
-## Prerequisites
-- Java 8 or later
-- Maven
+Ce projet consiste à développer une version distribuée de **Make** en utilisant **Java** et **Apache Spark**.  
+Il vise à exploiter une architecture **Master-Worker** afin de paralléliser l'exécution des tâches décrites dans un **Makefile**.
 
-## Installation
-1. Clone this repository:
-   ```bash
-   git clone <repository-url>
-   cd <repository-directory>
-   ```
+### Objectifs
+- Modéliser un Make distribué en respectant la **localité des fichiers**.
+- Gérer l'exécution des tâches avec **RDDs Spark**.
+- Assurer une **tolérance aux pannes** et un déploiement automatique.
+- Proposer une version avec et sans **NFS** pour comparaison.
 
-2. Compile the code using Maven:
-    ```bash
-    mvn compile
-    ```
+---
 
-## Usage
-After compiling, you can run the MakefileParser with a specified Makefile to view its task dependencies. Replace path/to/Makefile with the path to the Makefile you want to parse:
-```bash
-mvn exec:java -Dexec.mainClass="MakefileParser" -Dexec.args="path/to/Makefile"
-```
+## Fonctionnalités Clés
 
+### Architecture Master-Worker
+- **Version avec NFS** :  
+   - Construction d’un graphe de dépendances via l'algorithme de Kahn.  
+   - Exécution parallèle des tâches par niveau (RDD Spark).  
+- **Version sans NFS** :  
+   - Calcul complet des dépendances (directes et indirectes).  
+   - Utilisation de serveurs de fichiers pour le transfert.  
+   - Création de répertoires temporaires pour chaque cœur.
 
-### This command will:
-- Parse the Makefile.
-- Display the task dependency graph.
-- Print the execution order of tasks according to dependencies.
+---
 
-## Example
+## Performances et Tests Réalisés
 
-To parse a sample Makefile located at src/test/resources/test0/matrix/Makefile, run:
-```bash
-mvn exec:java -Dexec.mainClass="MakefileParser" -Dexec.args="src/test/resources/test0/matrix/Makefile"
-```
-The output will display the dependency graph and the order for task execution.
+### Modèle Théorique et Expérimental
+Les performances ont été évaluées sur les clusters de Grid5000 selon trois tests :  
+1. **Test 7** : Exécution réelle sur un Makefile de 3 niveaux avec calculs.  
+2. **Test 8** : Analyse du coût ajouté par le **driver Spark**.  
+3. **Test 9** : Comparaison entre le modèle théorique et les performances réelles.
 
-## Troubleshooting
+Les résultats montrent une bonne **scalabilité horizontale** tout en identifiant des limites liées à Spark, telles que :
+- L’exécution par niveaux imposée par RDDs.
+- Des problèmes de mémoire sur des Makefiles complexes, surtout dans la version sans NFS.
 
-Ensure Maven and Java are installed and available in your PATH. If there are issues, verify the Makefile path is correct relative to the project root.
+---
+
+## Execution et tests sur le make
+Vous trouverez plus de détails dans le fichier CahierDeLaboratoire.pdf, et sur les slides de la Présentation.
