@@ -77,8 +77,8 @@ maven is already the newest version (3.6.3-5).
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
 [[1;34mINFO[m] [1;32mBUILD SUCCESS[m
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
-[[1;34mINFO[m] Total time:  5.213 s
-[[1;34mINFO[m] Finished at: 2024-12-16T11:51:29+01:00
+[[1;34mINFO[m] Total time:  5.286 s
+[[1;34mINFO[m] Finished at: 2024-12-16T12:32:52+01:00
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
 [0;36mSetting up Spark master on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
 [0;36mCopying [0;33m/tmp/setup_spark_master.sh[0;36m to [0;33mrennes[0;36m : [0;33m[0m
@@ -105,70 +105,118 @@ File Locator Server is running on port 9999...
 [0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
         /home/anasmane/spark-3.5.3-bin-hadoop3/bin/spark-submit --master spark://172.16.101.5:3000 --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main /tmp/systemes-distribues/target/distributed-make-project-1.0.jar /tmp/systemes-distribues/src/test/resources/test8/Makefile all spark://172.16.101.5:3000 NO_NFS
     [0m
+[33mSkipping last target 'all' (no commands).[0m
 
 [32m==============================[0m
-[32m  Global Time : 82.075010278 seconds  [0m
+[32m  Global Time : 182.849298399 seconds  [0m
 [32m==============================[0m
 [33m--------------------------------[0m
-	[33mParsing Time           : 0.232599187 seconds[0m
-	[33mGraph Build Time       : 1.025746445 seconds[0m
-	[33mSpark Configuration Time: 1.458766088 seconds[0m
-	[33mExecution Time         : 79.357864752 seconds[0m
+	[33mParsing Time           : 0.233650064 seconds[0m
+	[33mGraph Build Time       : 1.091805257 seconds[0m
+	[33mSpark Configuration Time: 1.451999123 seconds[0m
+	[33mExecution Time         : 180.071810153 seconds[0m
 [33m--------------------------------[0m
 [0;36mKilling ServeFile on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
 [0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
 [0;36mKilling FileLocatorServer on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
 [0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ FileLocatorServer\ 9999[0m
 Cloning into 'systemes-distribues'...
-Updating files:  97% (727/745)
-Updating files:  98% (731/745)
-Updating files:  99% (738/745)
-Updating files: 100% (745/745)
-Updating files: 100% (745/745), done.
+Updating files:  50% (448/885)
+Updating files:  51% (452/885)
+Updating files:  52% (461/885)
+Updating files:  53% (470/885)
+Updating files:  54% (478/885)
+Updating files:  55% (487/885)
+Updating files:  56% (496/885)
+Updating files:  57% (505/885)
+Updating files:  58% (514/885)
+Updating files:  59% (523/885)
+Updating files:  60% (531/885)
+Updating files:  61% (540/885)
+Updating files:  62% (549/885)
+Updating files:  63% (558/885)
+Updating files:  64% (567/885)
+Updating files:  65% (576/885)
+Updating files:  66% (585/885)
+Updating files:  67% (593/885)
+Updating files:  68% (602/885)
+Updating files:  69% (611/885)
+Updating files:  70% (620/885)
+Updating files:  71% (629/885)
+Updating files:  72% (638/885)
+Updating files:  73% (647/885)
+Updating files:  74% (655/885)
+Updating files:  75% (664/885)
+Updating files:  76% (673/885)
+Updating files:  77% (682/885)
+Updating files:  78% (691/885)
+Updating files:  79% (700/885)
+Updating files:  80% (708/885)
+Updating files:  81% (717/885)
+Updating files:  82% (726/885)
+Updating files:  83% (735/885)
+Updating files:  84% (744/885)
+Updating files:  85% (753/885)
+Updating files:  86% (762/885)
+Updating files:  87% (770/885)
+Updating files:  88% (779/885)
+Updating files:  89% (788/885)
+Updating files:  90% (797/885)
+Updating files:  91% (806/885)
+Updating files:  92% (815/885)
+Updating files:  93% (824/885)
+Updating files:  93% (829/885)
+Updating files:  94% (832/885)
+Updating files:  95% (841/885)
+Updating files:  96% (850/885)
+Updating files:  97% (859/885)
+Updating files:  98% (868/885)
+Updating files:  99% (877/885)
+Updating files: 100% (885/885)
+Updating files: 100% (885/885), done.
 
 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
 
-24/12/16 11:51:47 INFO SparkContext: Running Spark version 3.5.3
-24/12/16 11:51:47 INFO SparkContext: OS info Linux, 5.10.0-33-amd64, amd64
-24/12/16 11:51:47 INFO SparkContext: Java version 1.8.0_332
-24/12/16 11:51:47 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-24/12/16 11:51:47 INFO ResourceUtils: ==============================================================
-24/12/16 11:51:47 INFO ResourceUtils: No custom resources configured for spark.driver.
-24/12/16 11:51:47 INFO ResourceUtils: ==============================================================
-24/12/16 11:51:47 INFO SparkContext: Submitted application: DistributedMakeExecutor
-24/12/16 11:51:47 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memory -> name: memory, amount: 51200, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
-24/12/16 11:51:47 INFO ResourceProfile: Limiting resource is cpu
-24/12/16 11:51:47 INFO ResourceProfileManager: Added ResourceProfile id: 0
-24/12/16 11:51:47 INFO SecurityManager: Changing view acls to: anasmane
-24/12/16 11:51:47 INFO SecurityManager: Changing modify acls to: anasmane
-24/12/16 11:51:47 INFO SecurityManager: Changing view acls groups to: 
-24/12/16 11:51:47 INFO SecurityManager: Changing modify acls groups to: 
-24/12/16 11:51:47 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: anasmane; groups with view permissions: EMPTY; users with modify permissions: anasmane; groups with modify permissions: EMPTY
-24/12/16 11:51:47 INFO Utils: Successfully started service 'sparkDriver' on port 43955.
-24/12/16 11:51:47 INFO SparkEnv: Registering MapOutputTracker
-24/12/16 11:51:47 INFO SparkEnv: Registering BlockManagerMaster
-24/12/16 11:51:47 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
-24/12/16 11:51:47 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
-24/12/16 11:51:47 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
-24/12/16 11:51:48 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-3011f348-910c-4421-bd75-547fb3b0915a
-24/12/16 11:51:48 INFO MemoryStore: MemoryStore started with capacity 26.5 GiB
-24/12/16 11:51:48 INFO SparkEnv: Registering OutputCommitCoordinator
-24/12/16 11:51:48 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
-24/12/16 11:51:48 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
-24/12/16 11:51:48 INFO Utils: Successfully started service 'SparkUI' on port 4041.
-24/12/16 11:51:48 INFO SparkContext: Added JAR file:/tmp/systemes-distribues/target/distributed-make-project-1.0.jar at spark://paradoxe-5.rennes.grid5000.fr:43955/jars/distributed-make-project-1.0.jar with timestamp 1734346307309
-24/12/16 11:51:48 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://172.16.101.5:3000...
-24/12/16 11:51:48 INFO TransportClientFactory: Successfully created connection to /172.16.101.5:3000 after 25 ms (0 ms spent in bootstraps)
-24/12/16 11:51:48 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20241216115148-0000
-24/12/16 11:51:48 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 37833.
-24/12/16 11:51:48 INFO NettyBlockTransferService: Server created on paradoxe-5.rennes.grid5000.fr:37833
-24/12/16 11:51:48 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
-24/12/16 11:51:48 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 37833, None)
-24/12/16 11:51:48 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216115148-0000/0 on worker-20241216115135-172.16.101.5-42587 (172.16.101.5:42587) with 104 core(s)
-24/12/16 11:51:48 INFO BlockManagerMasterEndpoint: Registering block manager paradoxe-5.rennes.grid5000.fr:37833 with 26.5 GiB RAM, BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 37833, None)
-24/12/16 11:51:48 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216115148-0000/0 on hostPort 172.16.101.5:42587 with 104 core(s), 50.0 GiB RAM
-24/12/16 11:51:48 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 37833, None)
-24/12/16 11:51:48 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 37833, None)
-24/12/16 11:51:48 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216115148-0000/0 is now RUNNING
-24/12/16 11:51:48 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
-[31mFatal Error: Task failure detected at level 2. Exiting...[0m
+24/12/16 12:33:10 INFO SparkContext: Running Spark version 3.5.3
+24/12/16 12:33:10 INFO SparkContext: OS info Linux, 5.10.0-33-amd64, amd64
+24/12/16 12:33:10 INFO SparkContext: Java version 1.8.0_332
+24/12/16 12:33:10 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/12/16 12:33:10 INFO ResourceUtils: ==============================================================
+24/12/16 12:33:10 INFO ResourceUtils: No custom resources configured for spark.driver.
+24/12/16 12:33:10 INFO ResourceUtils: ==============================================================
+24/12/16 12:33:10 INFO SparkContext: Submitted application: DistributedMakeExecutor
+24/12/16 12:33:10 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memory -> name: memory, amount: 51200, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+24/12/16 12:33:10 INFO ResourceProfile: Limiting resource is cpu
+24/12/16 12:33:10 INFO ResourceProfileManager: Added ResourceProfile id: 0
+24/12/16 12:33:10 INFO SecurityManager: Changing view acls to: anasmane
+24/12/16 12:33:10 INFO SecurityManager: Changing modify acls to: anasmane
+24/12/16 12:33:10 INFO SecurityManager: Changing view acls groups to: 
+24/12/16 12:33:10 INFO SecurityManager: Changing modify acls groups to: 
+24/12/16 12:33:10 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: anasmane; groups with view permissions: EMPTY; users with modify permissions: anasmane; groups with modify permissions: EMPTY
+24/12/16 12:33:10 INFO Utils: Successfully started service 'sparkDriver' on port 39217.
+24/12/16 12:33:10 INFO SparkEnv: Registering MapOutputTracker
+24/12/16 12:33:10 INFO SparkEnv: Registering BlockManagerMaster
+24/12/16 12:33:10 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+24/12/16 12:33:10 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+24/12/16 12:33:10 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+24/12/16 12:33:11 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-9124eaab-f63a-4120-a0a2-c2168510da77
+24/12/16 12:33:11 INFO MemoryStore: MemoryStore started with capacity 26.5 GiB
+24/12/16 12:33:11 INFO SparkEnv: Registering OutputCommitCoordinator
+24/12/16 12:33:11 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+24/12/16 12:33:11 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+24/12/16 12:33:11 INFO Utils: Successfully started service 'SparkUI' on port 4041.
+24/12/16 12:33:11 INFO SparkContext: Added JAR file:/tmp/systemes-distribues/target/distributed-make-project-1.0.jar at spark://paradoxe-5.rennes.grid5000.fr:39217/jars/distributed-make-project-1.0.jar with timestamp 1734348790512
+24/12/16 12:33:11 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://172.16.101.5:3000...
+24/12/16 12:33:11 INFO TransportClientFactory: Successfully created connection to /172.16.101.5:3000 after 25 ms (0 ms spent in bootstraps)
+24/12/16 12:33:11 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20241216123311-0000
+24/12/16 12:33:11 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 42119.
+24/12/16 12:33:11 INFO NettyBlockTransferService: Server created on paradoxe-5.rennes.grid5000.fr:42119
+24/12/16 12:33:11 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+24/12/16 12:33:11 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 42119, None)
+24/12/16 12:33:11 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216123311-0000/0 on worker-20241216123258-172.16.101.5-39675 (172.16.101.5:39675) with 104 core(s)
+24/12/16 12:33:11 INFO BlockManagerMasterEndpoint: Registering block manager paradoxe-5.rennes.grid5000.fr:42119 with 26.5 GiB RAM, BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 42119, None)
+24/12/16 12:33:11 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216123311-0000/0 on hostPort 172.16.101.5:39675 with 104 core(s), 50.0 GiB RAM
+24/12/16 12:33:11 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 42119, None)
+24/12/16 12:33:11 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 42119, None)
+24/12/16 12:33:11 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216123311-0000/0 is now RUNNING
+24/12/16 12:33:11 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0

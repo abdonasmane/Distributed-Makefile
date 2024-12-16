@@ -118,7 +118,6 @@ def theoric_make_nfs(number_of_cores, number_of_machines, sleep_matrix):
         sum_per_line = sum(times)
         s += (sum_per_line)/(number_of_cores*number_of_machines) + t_largest
     s += random.gauss(1.18, 0.1) # spark context
-    # s += random.gauss(4.0, 0.2) # spark messages
     return s
 
 def plot_performance_with_confidence(test_suffix, output_dir, sleep_test):
@@ -134,9 +133,10 @@ def plot_performance_with_confidence(test_suffix, output_dir, sleep_test):
     theoric_times = []
     if sleep_test:
         number_of_cores_per_machine = 104
-        if sleep_test == 1:
-            theoric_times = [theoric_make_nfs(number_of_cores_per_machine, x, SLEEP_MATRIX_1) for x in machine_counts]
-            spark_loss_time = predict_graph_time(SPARK_LOSS_MODEL_COEFFICIENTS_FILE, len((SLEEP_MATRIX_1)), max([len(line) for line in SLEEP_MATRIX_1]))
+        if sleep_test:
+            matrix = SLEEP_MATRIX_1 if sleep_test == 1 else SLEEP_MATRIX_2
+            theoric_times = [theoric_make_nfs(number_of_cores_per_machine, x, matrix) for x in machine_counts]
+            spark_loss_time = predict_graph_time(SPARK_LOSS_MODEL_COEFFICIENTS_FILE, len(matrix), max([len(line) for line in matrix]))
             theoric_times = [x + spark_loss_time for x in theoric_times]
         # elif sleep_test == 2:
         #     theoric_times = [theoric_make_nfs(number_of_cores_per_machine, x, SLEEP_MATRIX_2) for x in machine_counts]

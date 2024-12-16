@@ -19,17 +19,61 @@ File Locator Server is running on port 9999...
 [0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
         /home/anasmane/spark-3.5.3-bin-hadoop3/bin/spark-submit --master spark://172.16.101.5:3000 --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main /tmp/systemes-distribues/target/distributed-make-project-1.0.jar /tmp/systemes-distribues/src/test/resources/test8/Makefile all spark://172.16.101.5:3000 NO_NFS
     [0m
+[33mSkipping last target 'all' (no commands).[0m
 
 [32m==============================[0m
-[32m  Global Time : 82.598996472 seconds  [0m
+[32m  Global Time : 182.620768851 seconds  [0m
 [32m==============================[0m
 [33m--------------------------------[0m
-	[33mParsing Time           : 0.233984649 seconds[0m
-	[33mGraph Build Time       : 1.124537899 seconds[0m
-	[33mSpark Configuration Time: 1.398481459 seconds[0m
-	[33mExecution Time         : 79.841961106 seconds[0m
+	[33mParsing Time           : 0.236423298 seconds[0m
+	[33mGraph Build Time       : 1.123346007 seconds[0m
+	[33mSpark Configuration Time: 1.369200654 seconds[0m
+	[33mExecution Time         : 179.89176755 seconds[0m
 [33m--------------------------------[0m
 [0;36mKilling ServeFile on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
 [0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
 [0;36mKilling FileLocatorServer on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
 [0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ FileLocatorServer\ 9999[0m
+24/12/16 12:36:25 INFO SparkContext: Running Spark version 3.5.3
+24/12/16 12:36:25 INFO SparkContext: OS info Linux, 5.10.0-33-amd64, amd64
+24/12/16 12:36:25 INFO SparkContext: Java version 1.8.0_332
+24/12/16 12:36:25 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/12/16 12:36:25 INFO ResourceUtils: ==============================================================
+24/12/16 12:36:25 INFO ResourceUtils: No custom resources configured for spark.driver.
+24/12/16 12:36:25 INFO ResourceUtils: ==============================================================
+24/12/16 12:36:25 INFO SparkContext: Submitted application: DistributedMakeExecutor
+24/12/16 12:36:25 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memory -> name: memory, amount: 51200, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+24/12/16 12:36:25 INFO ResourceProfile: Limiting resource is cpu
+24/12/16 12:36:25 INFO ResourceProfileManager: Added ResourceProfile id: 0
+24/12/16 12:36:25 INFO SecurityManager: Changing view acls to: anasmane
+24/12/16 12:36:25 INFO SecurityManager: Changing modify acls to: anasmane
+24/12/16 12:36:25 INFO SecurityManager: Changing view acls groups to: 
+24/12/16 12:36:25 INFO SecurityManager: Changing modify acls groups to: 
+24/12/16 12:36:25 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: anasmane; groups with view permissions: EMPTY; users with modify permissions: anasmane; groups with modify permissions: EMPTY
+24/12/16 12:36:25 INFO Utils: Successfully started service 'sparkDriver' on port 42003.
+24/12/16 12:36:25 INFO SparkEnv: Registering MapOutputTracker
+24/12/16 12:36:25 INFO SparkEnv: Registering BlockManagerMaster
+24/12/16 12:36:25 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+24/12/16 12:36:25 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+24/12/16 12:36:25 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+24/12/16 12:36:25 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-44cc23b1-3a6e-409b-8f85-8adc9890c077
+24/12/16 12:36:25 INFO MemoryStore: MemoryStore started with capacity 26.5 GiB
+24/12/16 12:36:25 INFO SparkEnv: Registering OutputCommitCoordinator
+24/12/16 12:36:26 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+24/12/16 12:36:26 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+24/12/16 12:36:26 INFO Utils: Successfully started service 'SparkUI' on port 4041.
+24/12/16 12:36:26 INFO SparkContext: Added JAR file:/tmp/systemes-distribues/target/distributed-make-project-1.0.jar at spark://paradoxe-5.rennes.grid5000.fr:42003/jars/distributed-make-project-1.0.jar with timestamp 1734348985167
+24/12/16 12:36:26 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://172.16.101.5:3000...
+24/12/16 12:36:26 INFO TransportClientFactory: Successfully created connection to /172.16.101.5:3000 after 23 ms (0 ms spent in bootstraps)
+24/12/16 12:36:26 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20241216123626-0001
+24/12/16 12:36:26 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216123626-0001/0 on worker-20241216123258-172.16.101.5-39675 (172.16.101.5:39675) with 104 core(s)
+24/12/16 12:36:26 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216123626-0001/0 on hostPort 172.16.101.5:39675 with 104 core(s), 50.0 GiB RAM
+24/12/16 12:36:26 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 42281.
+24/12/16 12:36:26 INFO NettyBlockTransferService: Server created on paradoxe-5.rennes.grid5000.fr:42281
+24/12/16 12:36:26 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+24/12/16 12:36:26 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 42281, None)
+24/12/16 12:36:26 INFO BlockManagerMasterEndpoint: Registering block manager paradoxe-5.rennes.grid5000.fr:42281 with 26.5 GiB RAM, BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 42281, None)
+24/12/16 12:36:26 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 42281, None)
+24/12/16 12:36:26 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 42281, None)
+24/12/16 12:36:26 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216123626-0001/0 is now RUNNING
+24/12/16 12:36:26 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0

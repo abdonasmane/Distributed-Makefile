@@ -1,0 +1,332 @@
+[0;33mNO_NFS mode enabled : nodes can be from different sites[0m
+[0;36mReading configuration from [0;33moutput_logs_test8/with_13_machines/config13.txt[0m...
+[0;32mMaster site name set to: [0;33mrennes[0m
+[0;32mMaster node name set to: [0;33mparadoxe-5[0m
+[0;32mMaster node IP set to: [0;33m172.16.101.5[0m
+[0;32mMaster node port set to: [0;33m3000[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-6[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-7[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-9[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-22[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-24[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-25[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-26[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-27[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-28[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-29[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-30[0m
+[0;32mWorker site name set to: [0;33mrennes[0m
+[0;32mAdded worker: [0;33mrennes:paradoxe-31[0m
+[0;36mConfiguration reading complete.[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-6[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-6[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-7[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-7[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-9[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-9[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-22[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-22[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-24[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-24[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-25[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-25[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-26[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-26[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-27[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-27[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-28[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-28[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-29[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-29[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-30[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-30[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-31[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-31[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling FileLocatorServer on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ FileLocatorServer\ 9999[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-6[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-6[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-7[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-7[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-9[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-9[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-22[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-22[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-24[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-24[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-25[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-25[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-26[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-26[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-27[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-27[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-28[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-28[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-29[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-29[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-30[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-30[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mLaunching ServeFile on [0;33mparadoxe-31[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mLaunching FileLocatorServer on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-31[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java ServeFile 8888 /tmp/systemes-distribues/src/test/resources/test8[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mcd /tmp/systemes-distribues/target/classes && java  FileLocatorServer 9999 /tmp/systemes-distribues/src/test/resources/test8[0m
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+Server started on port 8888
+File Locator Server is running on port 9999...
+Server started on port 8888
+[0;36mSubmitting Spark app from [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35m
+        /home/anasmane/spark-3.5.3-bin-hadoop3/bin/spark-submit --master spark://172.16.101.5:3000 --driver-memory 50G --executor-memory 50G --conf 'spark.executor.extraJavaOptions=-XX:-UseGCOverheadLimit' --conf 'spark.driver.extraJavaOptions=-XX:-UseGCOverheadLimit' --deploy-mode client --class Main /tmp/systemes-distribues/target/distributed-make-project-1.0.jar /tmp/systemes-distribues/src/test/resources/test8/Makefile all spark://172.16.101.5:3000 NO_NFS
+    [0m
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+Error handling client: null
+[33mSkipping last target 'all' (no commands).[0m
+
+[32m==============================[0m
+[32m  Global Time : 50.073341283 seconds  [0m
+[32m==============================[0m
+[33m--------------------------------[0m
+	[33mParsing Time           : 0.230326969 seconds[0m
+	[33mGraph Build Time       : 1.200057153 seconds[0m
+	[33mSpark Configuration Time: 1.404407968 seconds[0m
+	[33mExecution Time         : 47.238516776 seconds[0m
+[33m--------------------------------[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-6[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-6[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-7[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-7[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-9[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-9[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-22[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-22[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-24[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-24[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-25[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-25[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-26[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-26[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-27[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-27[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-28[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-28[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-29[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-29[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-30[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-30[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling ServeFile on [0;33mparadoxe-31[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-31[0;36m: [0;35mpkill -f java\ ServeFile\ 8888[0m
+[0;36mKilling FileLocatorServer on [0;33mparadoxe-5[0;36m ([0;33mrennes[0;36m)...[0m
+[0;36mExecuting on [0;33mrennes[0;36m -> [0;33mparadoxe-5[0;36m: [0;35mpkill -f java\ FileLocatorServer\ 9999[0m
+24/12/16 13:51:33 INFO SparkContext: Running Spark version 3.5.3
+24/12/16 13:51:33 INFO SparkContext: OS info Linux, 5.10.0-33-amd64, amd64
+24/12/16 13:51:33 INFO SparkContext: Java version 1.8.0_332
+24/12/16 13:51:33 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/12/16 13:51:33 INFO ResourceUtils: ==============================================================
+24/12/16 13:51:33 INFO ResourceUtils: No custom resources configured for spark.driver.
+24/12/16 13:51:33 INFO ResourceUtils: ==============================================================
+24/12/16 13:51:33 INFO SparkContext: Submitted application: DistributedMakeExecutor
+24/12/16 13:51:33 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memory -> name: memory, amount: 51200, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+24/12/16 13:51:33 INFO ResourceProfile: Limiting resource is cpu
+24/12/16 13:51:33 INFO ResourceProfileManager: Added ResourceProfile id: 0
+24/12/16 13:51:33 INFO SecurityManager: Changing view acls to: anasmane
+24/12/16 13:51:33 INFO SecurityManager: Changing modify acls to: anasmane
+24/12/16 13:51:33 INFO SecurityManager: Changing view acls groups to: 
+24/12/16 13:51:33 INFO SecurityManager: Changing modify acls groups to: 
+24/12/16 13:51:33 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: anasmane; groups with view permissions: EMPTY; users with modify permissions: anasmane; groups with modify permissions: EMPTY
+24/12/16 13:51:33 INFO Utils: Successfully started service 'sparkDriver' on port 44327.
+24/12/16 13:51:33 INFO SparkEnv: Registering MapOutputTracker
+24/12/16 13:51:33 INFO SparkEnv: Registering BlockManagerMaster
+24/12/16 13:51:34 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+24/12/16 13:51:34 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+24/12/16 13:51:34 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+24/12/16 13:51:34 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-7bafad53-253c-4180-8c16-889f5984c57c
+24/12/16 13:51:34 INFO MemoryStore: MemoryStore started with capacity 26.5 GiB
+24/12/16 13:51:34 INFO SparkEnv: Registering OutputCommitCoordinator
+24/12/16 13:51:34 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+24/12/16 13:51:34 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+24/12/16 13:51:34 INFO Utils: Successfully started service 'SparkUI' on port 4041.
+24/12/16 13:51:34 INFO SparkContext: Added JAR file:/tmp/systemes-distribues/target/distributed-make-project-1.0.jar at spark://paradoxe-5.rennes.grid5000.fr:44327/jars/distributed-make-project-1.0.jar with timestamp 1734353493442
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://172.16.101.5:3000...
+24/12/16 13:51:34 INFO TransportClientFactory: Successfully created connection to /172.16.101.5:3000 after 22 ms (0 ms spent in bootstraps)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20241216135134-0002
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/0 on worker-20241216134911-172.16.101.26-36057 (172.16.101.26:36057) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/0 on hostPort 172.16.101.26:36057 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/1 on worker-20241216134910-172.16.101.24-43127 (172.16.101.24:43127) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/1 on hostPort 172.16.101.24:43127 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/2 on worker-20241216134909-172.16.101.9-43013 (172.16.101.9:43013) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/2 on hostPort 172.16.101.9:43013 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/3 on worker-20241216134911-172.16.101.25-46437 (172.16.101.25:46437) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/3 on hostPort 172.16.101.25:46437 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/4 on worker-20241216134912-172.16.101.27-38961 (172.16.101.27:38961) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/4 on hostPort 172.16.101.27:38961 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/5 on worker-20241216134908-172.16.101.7-32795 (172.16.101.7:32795) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/5 on hostPort 172.16.101.7:32795 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/6 on worker-20241216134910-172.16.101.22-32799 (172.16.101.22:32799) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/6 on hostPort 172.16.101.22:32799 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/7 on worker-20241216134915-172.16.101.31-34255 (172.16.101.31:34255) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/7 on hostPort 172.16.101.31:34255 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/8 on worker-20241216134912-172.16.101.28-33417 (172.16.101.28:33417) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/8 on hostPort 172.16.101.28:33417 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/9 on worker-20241216134903-172.16.101.5-38329 (172.16.101.5:38329) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/9 on hostPort 172.16.101.5:38329 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/10 on worker-20241216134908-172.16.101.6-38737 (172.16.101.6:38737) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/10 on hostPort 172.16.101.6:38737 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/11 on worker-20241216134914-172.16.101.30-38135 (172.16.101.30:38135) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/11 on hostPort 172.16.101.30:38135 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20241216135134-0002/12 on worker-20241216134913-172.16.101.29-42629 (172.16.101.29:42629) with 104 core(s)
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: Granted executor ID app-20241216135134-0002/12 on hostPort 172.16.101.29:42629 with 104 core(s), 50.0 GiB RAM
+24/12/16 13:51:34 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 45681.
+24/12/16 13:51:34 INFO NettyBlockTransferService: Server created on paradoxe-5.rennes.grid5000.fr:45681
+24/12/16 13:51:34 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+24/12/16 13:51:34 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 45681, None)
+24/12/16 13:51:34 INFO BlockManagerMasterEndpoint: Registering block manager paradoxe-5.rennes.grid5000.fr:45681 with 26.5 GiB RAM, BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 45681, None)
+24/12/16 13:51:34 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 45681, None)
+24/12/16 13:51:34 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, paradoxe-5.rennes.grid5000.fr, 45681, None)
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/9 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/8 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/11 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/7 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/6 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/1 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/10 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/0 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/12 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/3 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/2 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/4 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20241216135134-0002/5 is now RUNNING
+24/12/16 13:51:34 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
