@@ -12,18 +12,41 @@ graph_time_pattern = r"Graph Build Time\s*:\s*([\d\.]+)"
 spark_conf_time_pattern = r"Spark Configuration Time\s*:\s*([\d\.]+)"
 execution_time_pattern = r"Execution Time\s*:\s*([\d\.]+)"
 
-# Parameters
-machines = [("paradoxe-1","rennes"),
-            ("paradoxe-10","rennes"),
-            ("paradoxe-11","rennes"),
-            ("paradoxe-20","rennes")
-            ]
+with open("config.txt", "r") as file:
+    config_text = file.read()
+
+master_pattern = r"master_site_name=(\w+)\s+master_node_name=(paradoxe-\d+)"
+worker_pattern = r"worker_site_name=(\w+)\s+worker_node_name=(paradoxe-\d+)"
+ip_pattern = r"master_node_ip=(\d+\.\d+\.\d+\.\d+)"
+
+# Extract the master node
+master_match = re.search(master_pattern, config_text)
+master_node = (master_match.group(2), master_match.group(1)) if master_match else None
+
+# Extract worker nodes
+worker_matches = re.findall(worker_pattern, config_text)
+for i in range(len(worker_matches)):
+    worker_matches[i] = (worker_matches[i][1], worker_matches[i][0])
+
+# Combine master and worker nodes
+machines = [master_node] + worker_matches if master_node else worker_matches
+
+master_ip = re.findall(ip_pattern, config_text)[0]
+print(Fore.GREEN + f"Machines : ")
+print(Fore.YELLOW + f"\tMaster -> [{machines[0][0]}, {machines[0][1]}]")
+print(Fore.YELLOW + f"\tWorkers ->")
+for i in range(1, len(machines)):
+    print(Fore.YELLOW + f"\t\t[{machines[i][0]}, {machines[i][1]}]")
+print("")
+print(Fore.GREEN + f"Master IP : {master_ip}")
+print("")
+
 script_name = "./setup_spark_clusters.sh"
 clean_script = "./clean_after_iteration.sh"
 after_setup_script = "./run_after_iteration.sh"
 kill_all_machines = "./stop-all-spark.sh"
 
-def launch_tests(username, master_ip, test_directory_suffix, base_path, spark_path, nfs_mode, tmp_mode, number_of_samples):
+def launch_tests(username, test_directory_suffix, base_path, spark_path, nfs_mode, tmp_mode, number_of_samples):
     # Ensure output directory exists
     kill_machines = [
         kill_all_machines,
@@ -148,13 +171,12 @@ if __name__ == "__main__":
         sys.exit(1)
     
     p_username = sys.argv[1]
-    p_master_ip = sys.argv[2]
-    p_test_directory_suffix = sys.argv[3]
-    p_base_path = sys.argv[4]
+    p_test_directory_suffix = sys.argv[2]
+    p_base_path = sys.argv[3]
     p_spark_path = f"/home/{p_username}/spark-3.5.3-bin-hadoop3"
-    p_nfs_mode = sys.argv[5] 
-    p_tmp_mode = sys.argv[6] 
-    p_number_of_samples = int(sys.argv[7])
+    p_nfs_mode = sys.argv[4] 
+    p_tmp_mode = sys.argv[5] 
+    p_number_of_samples = int(sys.argv[6])
 
-    launch_tests(p_username, p_master_ip, p_test_directory_suffix, p_base_path, p_spark_path, p_nfs_mode, p_tmp_mode, p_number_of_samples)
+    launch_tests(p_username, p_test_directory_suffix, p_base_path, p_spark_path, p_nfs_mode, p_tmp_mode, p_number_of_samples)
     print(Fore.GREEN + "\n\nTests Done")

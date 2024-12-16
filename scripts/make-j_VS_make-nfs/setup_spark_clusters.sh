@@ -156,7 +156,7 @@ clone_repo() {
         cd ~/systemes-distribues/src/test/resources/test7/
         ./generateAllToAllTree.py 50_000_000 3 1000
         cd ~/systemes-distribues/src/test/resources/test8/
-        ./generateATATvarTargetsPerLev.py 50_000_000 3 1000
+        ./generate_sleep_alea_makefile2.py 4 2000
         cd ~/systemes-distribues/src/test/resources/test9/
         ./generateHeavyTasks.py 3952
         rm -rf compressed_alea_tests  

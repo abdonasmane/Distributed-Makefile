@@ -11,7 +11,7 @@ random.seed(42)
 # test9 matrix, all tasks are sleep5
 SLEEP_MATRIX_1 = [[5 for _ in range(3952)]]
 # test8 matrix
-SLEEP_MATRIX_2 = [[random.randint(1, 10) for _  in range(random.randint(2, 1500))] for _ in range(5)]
+SLEEP_MATRIX_2 = [[random.randint(1, 10) for _  in range(random.randint(2, 2000))] for _ in range(4)]
 # File containing the model coefficients
 MODEL_COEFFICIENTS_FILE = "../graph_build_estimation/model_coefficients.txt"
 SPARK_LOSS_MODEL_COEFFICIENTS_FILE = "../spark_losses_estimation/model_coefficients.txt"
